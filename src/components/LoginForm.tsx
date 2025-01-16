@@ -1,27 +1,41 @@
-import { signIn } from '@/auth';
-import GoogleIcon from '@mui/icons-material/Google';
-import { Button, Typography } from '@mui/material';
+'use client';
+import { Grid2 as Grid, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 
 export const LoginForm = () => {
+  const theme = useTheme();
   const handleGoogleLogin = async () => {
-    'use server';
-    await signIn('google', { redirectTo: '/home' });
+    // 'use server';
+    // await signIn('google', { redirectTo: '/home' });
   };
 
   return (
-    <div className='h-full w-full justify-center items-center flex-col flex gap-4 bg_gradient'>
-      <Typography variant='h2' className='font-extrabold'>
-        Gym Manager
-      </Typography>
-      <Image src='/logo.png' height={256} width={256} alt='Logo' />
-      <Button
-        startIcon={<GoogleIcon />}
-        variant='contained'
-        onClick={handleGoogleLogin}
+    <Grid container height='100%'>
+      <Grid
+        size={{ xs: 8 }}
+        display='flex'
+        alignItems='center'
+        height='full'
+        sx={{ bgcolor: theme.palette.background.paper }}
       >
-        Login with google
-      </Button>
-    </div>
+        <Typography variant='h1' color={theme.palette.text.primary}>
+          Login
+        </Typography>
+      </Grid>
+      <Grid
+        size={{ xs: 4 }}
+        display='flex'
+        justifyContent='center'
+        height='full'
+      >
+        <Image
+          height='60'
+          width='220'
+          alt='login'
+          src='/googl_login_icon.svg'
+          onClick={handleGoogleLogin}
+        />
+      </Grid>
+    </Grid>
   );
 };
