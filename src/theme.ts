@@ -4,44 +4,49 @@ import { createTheme } from '@mui/material/styles';
 
 export const gymThemePalette = {
   primary: {
-    main: '#1F1F1F', // Deep black-gray for primary elements
-    light: '#333333', // Lighter black-gray for hover and focus
-    dark: '#000000', // Pure black for high contrast
-    contrastText: '#FFFFFF', // White text for readability
+    main: '#587AB5', // Slightly darker soft blue for primary elements
+    light: '#8EA5DB', // Slightly darker lighter blue for hover or backgrounds
+    dark: '#34548A', // Darker blue for focus states
+    contrastText: '#FFFFFF', // White text for buttons and primary elements
   },
   secondary: {
-    main: '#00BFA6', // Teal for energetic accents
-    light: '#5DF2D6', // Light teal for softer highlights
-    dark: '#00867D', // Dark teal for buttons and focus
-    contrastText: '#000000', // Black text for secondary elements
+    main: '#D8901F', // Slightly darker orange for accents
+    light: '#F0B560', // Slightly darker lighter orange for highlights
+    dark: '#A96C11', // Darker orange for strong accents
+    contrastText: '#FFFFFF', // White text for secondary elements
   },
   background: {
-    default: '#121212', // Dark gray background
-    paper: '#1C1C1C', // Slightly lighter gray for cards and containers
+    main: '#FAFCFE', // Light Bluish tone for main App Bg
+    default: '#E9EFF8', // Slightly darker blue-gray for background
+    paper: '#FFFFFF', // Slightly darker white for cards and containers
   },
   text: {
-    primary: '#E0E0E0', // Light gray text for high readability
-    secondary: '#B3B3B3', // Medium gray text for subtle emphasis
-    disabled: '#8C8C8C', // Muted gray for disabled elements
+    primary: '#26334E', // Darker gray-blue for primary text
+    secondary: '#4C617C', // Slightly darker medium gray-blue for secondary text
+    disabled: '#9CA4B2', // Slightly darker muted gray for disabled text
   },
   action: {
-    active: '#5DF2D6', // Active teal for icons and active states
-    hover: '#00BFA6', // Teal hover for interactivity
-    selected: '#333333', // Subtle dark gray for selected items
+    active: '#587AB5', // Darker active blue for icons
+    hover: '#8EA5DB', // Darker hover blue for buttons or links
+    selected: '#D7E2F2', // Slightly darker light blue background for selected items
+    disabled: '#9CA4B2', // Slightly darker muted gray for disabled actions
   },
+  divider: '#C5D0E3', // Slightly darker blue-gray divider color
   error: {
-    main: '#FF5252', // Bright red for errors
+    main: '#E64545', // Slightly darker red for error states
   },
   success: {
-    main: '#4CAF50', // Calm green for success
+    main: '#3D8F43', // Slightly darker green for success states
   },
-  custom: { name: 'aniket' },
 };
 
 // Create a theme function for the dark gym theme
 const theme = createTheme({
   cssVariables: true,
   palette: gymThemePalette,
+  custom: {
+    leftPanelWidth: '20rem',
+  },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontSize: 16,
@@ -60,23 +65,28 @@ const theme = createTheme({
       fontWeight: 500,
       color: gymThemePalette.text.primary,
     },
-    h4: { fontSize: '2rem', color: gymThemePalette.text.primary },
-    h5: { fontSize: '1.75rem', color: gymThemePalette.text.primary },
-    h6: { fontSize: '1.5rem', color: gymThemePalette.text.primary },
-    body1: { fontSize: '1.25rem', color: gymThemePalette.text.primary },
-    body2: { fontSize: '1rem', color: gymThemePalette.text.primary },
+    body1: { fontSize: '1.25rem', color: gymThemePalette.text.secondary },
+    body2: { fontSize: '1rem', color: gymThemePalette.text.secondary },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none', // Keep button text case as-is
+          borderRadius: '8px', // Softer, rounded corners
         },
         containedPrimary: {
-          backgroundColor: '#00BFA6', // Teal button for primary actions
-          color: '#000000', // Black text
+          backgroundColor: gymThemePalette.primary.main, // Primary main (slightly darker soft blue)
+          color: gymThemePalette.primary.contrastText, // White text for contrast
           '&:hover': {
-            backgroundColor: '#00867D', // Darker teal on hover
+            backgroundColor: gymThemePalette.primary.dark, // Primary dark (darker blue on hover)
+          },
+        },
+        containedSecondary: {
+          backgroundColor: gymThemePalette.secondary.main, // Secondary main (softer orange)
+          color: gymThemePalette.primary.contrastText, // White text for contrast
+          '&:hover': {
+            backgroundColor: gymThemePalette.secondary.dark, // Secondary dark (darker orange on hover)
           },
         },
       },
@@ -84,18 +94,39 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          backgroundColor: '#1C1C1C', // Dark gray paper background
-          color: '#E0E0E0', // Light gray text
-          padding: '1rem', // Consistent spacing
-          borderRadius: 8, // Rounded edges
+          backgroundColor: gymThemePalette.background.default, // Background default (soothing light blue-gray)
+          color: gymThemePalette.text.primary, // Text primary (dark gray-blue)
+          padding: '2rem', // Slightly reduced spacing for modern look
+          borderRadius: '12px', // Rounded corners for better aesthetics
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#000000', // Solid black AppBar
-          color: '#FFFFFF', // White text
+          backgroundColor: gymThemePalette.primary.main, // Primary main (soothing blue AppBar)
+          color: gymThemePalette.primary.contrastText, // White text for good contrast
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow for elevation
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FFFFFF', // White background for lists
+          borderRadius: '8px', // Rounded corners
+          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
+          padding: '0.5rem', // Consistent padding
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'rgba(0, 191, 166, 0.15)', // Subtle secondary color overlay
+          },
         },
       },
     },

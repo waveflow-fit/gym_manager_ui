@@ -1,5 +1,6 @@
 'use client';
 
+import { clientSideSignIn } from '@/auth.utils';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import FlatwareIcon from '@mui/icons-material/Flatware';
@@ -11,7 +12,6 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 const whatYouCanDoText = [
   {
@@ -34,7 +34,7 @@ const whatYouCanDoText = [
 export const LoginForm = () => {
   const theme = useTheme();
   const handleGoogleLogin = async () => {
-    signIn('google', { redirectTo: '/home' });
+    clientSideSignIn('google', { redirectTo: '/dashboard' });
   };
 
   return (
@@ -44,18 +44,13 @@ export const LoginForm = () => {
         display={{ xs: 'none', sm: 'flex' }}
         justifyContent='center'
         height='100%'
-        sx={{ bgcolor: theme.palette.background.paper }}
+        sx={{ bgcolor: theme.palette.background.default }}
         flexDirection='column'
         gap='3.75rem'
         padding={{ sm: '2.5rem', md: '3.75rem', lg: '5rem', xl: '7.5rem' }}
       >
         <Typography variant='h1'>Your Personal Gym Manager</Typography>
-        <Box
-          color={theme.palette.text.primary}
-          display='flex'
-          flexDirection='column'
-          gap='2rem'
-        >
+        <Box display='flex' flexDirection='column' gap='2rem'>
           {whatYouCanDoText.map(({ text, icon }, index) => {
             return (
               <Box display='flex' key={index} gap='0.5rem'>
@@ -77,11 +72,7 @@ export const LoginForm = () => {
               mb={'3rem'}
             >
               <Image src='/logo.png' width={180} height={180} alt='login' />
-              <Typography
-                variant='h1'
-                color={theme.palette.primary.dark}
-                textAlign={'center'}
-              >
+              <Typography variant='h1' textAlign={'center'}>
                 Welcome Back!
               </Typography>
             </Box>
@@ -97,12 +88,7 @@ export const LoginForm = () => {
                 className='cursor-pointer'
               />
             </Box>
-            <Typography
-              variant='body2'
-              color={theme.palette.text.secondary}
-              position={'absolute'}
-              bottom={0}
-            >
+            <Typography variant='body2' position={'absolute'} bottom={0}>
               Having queries? Lets connect, you can reach us via our email:{' '}
               <Typography
                 component='a'

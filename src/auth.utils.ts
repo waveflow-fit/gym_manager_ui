@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { redirect } from 'next/navigation';
 
 export const {
   handlers: { GET, POST },
@@ -27,3 +28,13 @@ export const {
     },
   },
 });
+
+export { signIn as clientSideSignIn } from 'next-auth/react';
+
+export const requireAuth = async () => {
+  const session = await auth();
+
+  if (!session) {
+    redirect('/');
+  }
+};
