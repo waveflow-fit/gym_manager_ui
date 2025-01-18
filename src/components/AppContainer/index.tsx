@@ -1,12 +1,12 @@
 'use client';
 
-import FloatingSidebar from '@/components/DashboardContainer/FloatingSidebar';
-import FloatingTopBar from '@/components/DashboardContainer/FloatingTopBar';
+import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
+import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 type TAppContainer = { children: React.ReactNode };
 
-const DashboardContainer = ({ children }: TAppContainer) => {
+const AppContainer = ({ children }: TAppContainer) => {
   const theme = useTheme();
   const sidebarWidth = theme.custom.leftPanelWidthExpanded;
   return (
@@ -36,4 +36,4 @@ const DashboardContainer = ({ children }: TAppContainer) => {
   );
 };
 
-export default DashboardContainer;
+export default AppContainer;

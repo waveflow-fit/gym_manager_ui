@@ -1,5 +1,5 @@
 import { requireAuth } from '@/auth.utils';
-import DashboardContainer from '@/components/DashboardContainer';
+import AppContainer from '@/components/AppContainer';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 
@@ -16,7 +16,7 @@ const DashboardLayout = async ({
   await requireAuth();
   return (
     <SessionProvider>
-      <DashboardContainer>{children}</DashboardContainer>
+      <AppContainer>{children}</AppContainer>
     </SessionProvider>
   );
 };

@@ -16,21 +16,33 @@ import {
   ListItemText,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { signOut } from 'next-auth/react';
+import { useMemo, useState } from 'react';
 
-const sidebarOptions = [
-  { text: 'Home', icon: <HomeIcon color='inherit' /> },
-  { text: 'Trainees', icon: <SportsGymnasticsIcon color='inherit' /> },
-  { text: 'Workout plan', icon: <FitnessCenterIcon color='inherit' /> },
-  { text: 'Diet plan', icon: <FlatwareIcon color='inherit' /> },
-  { text: 'Todo List', icon: <FormatListBulletedIcon color='inherit' /> },
-  { text: 'Sign out', icon: <LogoutIcon color='inherit' /> },
-];
 const FloatingSidebar = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
   const toggleFloatingBarMinimization = () =>
     setIsSidebarMinimized(!isSidebarMinimized);
   const theme = useTheme();
+  const sidebarOptions = useMemo(
+    () => [
+      {
+        text: 'Home',
+        icon: <HomeIcon color='inherit' />,
+        handleClick: toggleFloatingBarMinimization,
+      },
+      { text: 'Trainees', icon: <SportsGymnasticsIcon color='inherit' /> },
+      { text: 'Workout plan', icon: <FitnessCenterIcon color='inherit' /> },
+      { text: 'Diet plan', icon: <FlatwareIcon color='inherit' /> },
+      { text: 'Todo List', icon: <FormatListBulletedIcon color='inherit' /> },
+      {
+        text: 'Sign out',
+        icon: <LogoutIcon color='inherit' />,
+        handleClick: () => signOut({ redirectTo: '/' }),
+      },
+    ],
+    []
+  );
   return (
     <Box width='fit-content' padding={'1rem'} borderRadius={'0.75rem'}>
       <Box width={'100%'} height={'100%'} position={'relative'}>
@@ -42,9 +54,9 @@ const FloatingSidebar = () => {
           }}
           component='nav'
         >
-          {sidebarOptions.map(({ text, icon }) => {
+          {sidebarOptions.map(({ text, icon, handleClick }) => {
             return (
-              <ListItemButton key={text}>
+              <ListItemButton key={text} onClick={handleClick}>
                 <ListItemIcon
                   sx={{
                     color: theme.palette.text.secondary,
