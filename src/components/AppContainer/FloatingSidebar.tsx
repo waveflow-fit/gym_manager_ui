@@ -17,12 +17,14 @@ import {
   useTheme,
 } from '@mui/material';
 import { signOut } from 'next-auth/react';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 const FloatingSidebar = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
-  const toggleFloatingBarMinimization = () =>
-    setIsSidebarMinimized(!isSidebarMinimized);
+  const toggleFloatingBarMinimization = useCallback(
+    () => setIsSidebarMinimized(!isSidebarMinimized),
+    [isSidebarMinimized]
+  );
   const theme = useTheme();
   const sidebarOptions = useMemo(
     () => [
@@ -41,7 +43,7 @@ const FloatingSidebar = () => {
         handleClick: () => signOut({ redirectTo: '/' }),
       },
     ],
-    []
+    [toggleFloatingBarMinimization]
   );
   return (
     <Box width='fit-content' padding={'1rem'} borderRadius={'0.75rem'}>

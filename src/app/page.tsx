@@ -1,6 +1,7 @@
+import { redirect } from 'next/navigation';
+
 import { auth } from '@/auth.utils';
 import { LoginForm } from '@/components/LoginForm';
-import { redirect } from 'next/navigation';
 
 const Home = async () => {
   const session = await auth();

@@ -1,9 +1,10 @@
 'use client';
 
-import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
-import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
+
+import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
+import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
 type TAppContainer = { children: React.ReactNode };
 
 const AppContainer = ({ children }: TAppContainer) => {

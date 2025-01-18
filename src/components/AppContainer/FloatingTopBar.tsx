@@ -1,7 +1,8 @@
-import { MaxCharTypography } from '@/components/StyledComponents';
 import { Avatar, Box, Paper, Skeleton, styled } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
+
+import { MaxCharTypography } from '@/components/StyledComponents';
 
 const StyledProfileDetailsHolder = styled(Paper)(({ theme }) => {
   return {
@@ -24,7 +25,7 @@ const FloatingTopBar = () => {
       userName: session.data?.user?.name || 'Manager',
       isLoading: session.status === 'loading',
     }),
-    [session]
+    [session.data?.user?.image, session.data?.user?.name, session.status]
   );
 
   return (

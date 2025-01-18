@@ -1,6 +1,5 @@
 'use client';
 
-import { clientSideSignIn } from '@/auth.utils';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import FlatwareIcon from '@mui/icons-material/Flatware';
@@ -13,6 +12,8 @@ import {
   useTheme,
 } from '@mui/material';
 import Image from 'next/image';
+
+import { clientSideSignIn } from '@/auth.utils';
 const whatYouCanDoText = [
   {
     icon: <FitnessCenterIcon color='inherit' />,
@@ -51,9 +52,9 @@ export const LoginForm = () => {
       >
         <Typography variant='h1'>Your Personal Gym Manager</Typography>
         <Box display='flex' flexDirection='column' gap='2rem'>
-          {whatYouCanDoText.map(({ text, icon }, index) => {
+          {whatYouCanDoText.map(({ text, icon }) => {
             return (
-              <Box display='flex' key={index} gap='0.5rem'>
+              <Box display='flex' key={text} gap='0.5rem'>
                 {icon}
                 <Typography variant='body1'>{text}</Typography>
               </Box>

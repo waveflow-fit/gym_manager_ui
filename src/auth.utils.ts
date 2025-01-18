@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+// eslint-disable-next-line import/order
 import { redirect } from 'next/navigation';
 
 export const {
