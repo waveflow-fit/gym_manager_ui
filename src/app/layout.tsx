@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     'Gym manager application, helps you to manage you daily gym activities',
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang='en'>
       <body>
@@ -24,4 +24,5 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+export default RootLayout;

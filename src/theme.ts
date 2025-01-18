@@ -45,7 +45,8 @@ const theme = createTheme({
   cssVariables: true,
   palette: gymThemePalette,
   custom: {
-    leftPanelWidth: '20rem',
+    leftPanelWidthExpanded: '18rem',
+    headerHeight: '5rem',
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -73,7 +74,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none', // Keep button text case as-is
-          borderRadius: '8px', // Softer, rounded corners
+          borderRadius: '0.5rem', // Softer, rounded corners
         },
         containedPrimary: {
           backgroundColor: gymThemePalette.primary.main, // Primary main (slightly darker soft blue)
@@ -96,9 +97,8 @@ const theme = createTheme({
         root: {
           backgroundColor: gymThemePalette.background.default, // Background default (soothing light blue-gray)
           color: gymThemePalette.text.primary, // Text primary (dark gray-blue)
-          padding: '2rem', // Slightly reduced spacing for modern look
-          borderRadius: '12px', // Rounded corners for better aesthetics
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
+          borderRadius: '1rem', // Rounded corners for better aesthetics
+          boxShadow: '0 0.25rem 0.625rem rgba(0, 0, 0, 0.1)', // Soft shadow for depth
         },
       },
     },
@@ -107,7 +107,7 @@ const theme = createTheme({
         root: {
           backgroundColor: gymThemePalette.primary.main, // Primary main (soothing blue AppBar)
           color: gymThemePalette.primary.contrastText, // White text for good contrast
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow for elevation
+          boxShadow: '0 0.125rem 0.25rem rgba(0, 0, 0, 0.1)', // Subtle shadow for elevation
         },
       },
     },
@@ -115,8 +115,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#FFFFFF', // White background for lists
-          borderRadius: '8px', // Rounded corners
-          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
+          borderRadius: '0.5rem', // Rounded corners
+          boxShadow: '0 0.125rem 0.375rem rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
           padding: '0.5rem', // Consistent padding
         },
       },

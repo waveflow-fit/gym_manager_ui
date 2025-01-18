@@ -20,32 +20,25 @@ import { useState } from 'react';
 
 const sidebarOptions = [
   { text: 'Home', icon: <HomeIcon color='inherit' /> },
-  { text: 'Diet plan', icon: <FlatwareIcon color='inherit' /> },
-  { text: 'Workout plan', icon: <FitnessCenterIcon color='inherit' /> },
-  { text: 'Todo List', icon: <FormatListBulletedIcon color='inherit' /> },
   { text: 'Trainees', icon: <SportsGymnasticsIcon color='inherit' /> },
+  { text: 'Workout plan', icon: <FitnessCenterIcon color='inherit' /> },
+  { text: 'Diet plan', icon: <FlatwareIcon color='inherit' /> },
+  { text: 'Todo List', icon: <FormatListBulletedIcon color='inherit' /> },
   { text: 'Sign out', icon: <LogoutIcon color='inherit' /> },
 ];
 const FloatingSidebar = () => {
-  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-  const toggleFloatingBarSize = () =>
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
+  const toggleFloatingBarMinimization = () =>
     setIsSidebarMinimized(!isSidebarMinimized);
   const theme = useTheme();
   return (
-    <Box
-      {...(!isSidebarMinimized ? { width: '100%' } : {})}
-      padding={'1rem'}
-      borderRadius={'0.75rem'}
-      top={'50%'}
-      sx={{ transform: 'translateY(-50%)' }}
-      position={'absolute'}
-    >
+    <Box width='fit-content' padding={'1rem'} borderRadius={'0.75rem'}>
       <Box width={'100%'} height={'100%'} position={'relative'}>
         <List
           sx={{
             width: '100%',
-            maxWidth: 360,
             bgcolor: 'background.paper',
+            borderRadius: '1.5rem',
           }}
           component='nav'
         >
@@ -62,13 +55,15 @@ const FloatingSidebar = () => {
                 >
                   {icon}
                 </ListItemIcon>
-                {!isSidebarMinimized && <ListItemText primary={text} />}
+                {!isSidebarMinimized && (
+                  <ListItemText sx={{ whiteSpace: 'nowrap' }} primary={text} />
+                )}
               </ListItemButton>
             );
           })}
         </List>
         <Box
-          onClick={toggleFloatingBarSize}
+          onClick={toggleFloatingBarMinimization}
           color={theme.palette.text.secondary}
           position={'absolute'}
           left={'100%'}

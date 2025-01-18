@@ -3,7 +3,9 @@ import '@mui/material/styles';
 
 interface IVariables {
   custom: {
-    leftPanelWidth: string;
+    leftPanelWidthExpanded: string;
+    headerHeight: string;
+    headerHeight: string;
   };
 }
 declare module '@mui/material/styles' {

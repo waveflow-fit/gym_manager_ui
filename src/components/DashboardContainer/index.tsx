@@ -1,16 +1,14 @@
 'use client';
 
 import FloatingSidebar from '@/components/DashboardContainer/FloatingSidebar';
+import FloatingTopBar from '@/components/DashboardContainer/FloatingTopBar';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
-
 type TAppContainer = { children: React.ReactNode };
 
 const DashboardContainer = ({ children }: TAppContainer) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const theme = useTheme();
-
+  const sidebarWidth = theme.custom.leftPanelWidthExpanded;
   return (
     <Box
       height='100%'
@@ -18,18 +16,21 @@ const DashboardContainer = ({ children }: TAppContainer) => {
       width='100%'
       bgcolor={theme.palette.background.main}
     >
-      <Box
-        width={theme.custom.leftPanelWidth}
-        border={'1px solid black'}
-        position='relative'
-      >
+      <Box maxWidth={sidebarWidth} display={'flex'} alignItems={'center'}>
         <FloatingSidebar />
       </Box>
       <Box
-        width={`calc(100% - ${theme.custom.leftPanelWidth})`}
-        border={'1px solid black'}
+        display={'flex'}
+        flexDirection={'column'}
+        height={'100%'}
+        width={'100%'}
       >
-        {children}
+        <Box height={theme.custom.headerHeight}>
+          <FloatingTopBar />
+        </Box>
+        <Box height={`calc(100% - ${theme.custom.headerHeight})`}>
+          {children}
+        </Box>
       </Box>
     </Box>
   );

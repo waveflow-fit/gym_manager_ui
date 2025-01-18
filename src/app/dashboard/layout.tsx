@@ -1,17 +1,24 @@
 import { requireAuth } from '@/auth.utils';
 import DashboardContainer from '@/components/DashboardContainer';
 import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'Gym manager application, Dashboard for activity management',
 };
 
-export default async function DashboardLayout({
+const DashboardLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   await requireAuth();
-  return <DashboardContainer>{children}</DashboardContainer>;
-}
+  return (
+    <SessionProvider>
+      <DashboardContainer>{children}</DashboardContainer>
+    </SessionProvider>
+  );
+};
+
+export default DashboardLayout;
