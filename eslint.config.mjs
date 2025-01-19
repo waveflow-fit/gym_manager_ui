@@ -14,8 +14,16 @@ const eslintConfig = [
   ...compat.config({
     extends: ['next', 'next/core-web-vitals', 'next/typescript'],
     rules: {
+      'react/jsx-curly-brace-presence': [
+        'error',
+        { props: 'never', children: 'never' },
+      ],
       'react/no-unescaped-entities': 'off',
       '@next/next/no-page-custom-font': 'off',
+
+      // Enforce single quotes
+      quotes: ['error', 'single', { avoidEscape: true }],
+
       // TypeScript-specific rules
       '@typescript-eslint/no-explicit-any': 'off', // Discourage `any` usage, warn instead of off
       '@typescript-eslint/no-unused-vars': [

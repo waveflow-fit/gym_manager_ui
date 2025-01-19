@@ -17,14 +17,14 @@ const AppContainer = ({ children }: TAppContainer) => {
       width='100%'
       bgcolor={theme.palette.background.main}
     >
-      <Box maxWidth={sidebarWidth} display={'flex'} alignItems={'center'}>
+      <Box maxWidth={sidebarWidth} display="flex" alignItems="center">
         <FloatingSidebar />
       </Box>
       <Box
-        display={'flex'}
-        flexDirection={'column'}
-        height={'100%'}
-        width={'100%'}
+        display="flex"
+        flexDirection="column"
+        height="100%"
+        width="100%"
       >
         <Box height={theme.custom.headerHeight}>
           <FloatingTopBar />

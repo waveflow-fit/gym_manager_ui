@@ -32,7 +32,7 @@ const FloatingSidebar = () => {
   const theme = useTheme();
   const pathname = usePathname();
   console.log(pathname);
-  
+
   const sidebarOptions = useMemo(
     () => [
       {
@@ -69,8 +69,8 @@ const FloatingSidebar = () => {
     []
   );
   return (
-    <Box width='fit-content' padding={'1rem'} borderRadius={'0.75rem'}>
-      <Box width={'100%'} height={'100%'} position={'relative'}>
+    <Box width='fit-content' padding='1rem' borderRadius='0.75rem'>
+      <Box width='100%' height='100%' position='relative'>
         <List
           sx={{
             width: '100%',
@@ -102,7 +102,9 @@ const FloatingSidebar = () => {
               </ListItemButton>
             );
             return navigateTo ? (
-              <Link href={navigateTo} key={text}>{sidebarItem}</Link>
+              <Link href={navigateTo} key={text}>
+                {sidebarItem}
+              </Link>
             ) : (
               sidebarItem
             );
@@ -111,8 +113,8 @@ const FloatingSidebar = () => {
         <Box
           onClick={toggleFloatingBarMinimization}
           color={theme.palette.text.secondary}
-          position={'absolute'}
-          left={'100%'}
+          position='absolute'
+          left='100%'
           sx={{
             transform: 'translateX(-50%)',
             top: '10%',
@@ -122,7 +124,7 @@ const FloatingSidebar = () => {
           {isSidebarMinimized ? (
             <AddCircleIcon color='inherit' />
           ) : (
-            <RemoveCircleIcon color={'inherit'} />
+            <RemoveCircleIcon color='inherit' />
           )}
         </Box>
       </Box>

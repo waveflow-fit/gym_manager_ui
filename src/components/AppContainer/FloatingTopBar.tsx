@@ -30,12 +30,12 @@ const FloatingTopBar = () => {
 
   return (
     <Box
-      width={'100%'}
-      height={'100%'}
-      px={'1.5rem'}
-      display={'flex'}
-      justifyContent={'flex-end'}
-      alignItems={'center'}
+      width='100%'
+      height='100%'
+      px='1.5rem'
+      display='flex'
+      justifyContent='flex-end'
+      alignItems='center'
     >
       <StyledProfileDetailsHolder>
         {isLoading ? (
