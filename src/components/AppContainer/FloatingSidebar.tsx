@@ -16,8 +16,11 @@ import {
   ListItemText,
   useTheme,
 } from '@mui/material';
+import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useCallback, useMemo, useState } from 'react';
+
+import { urls } from '@/appUrls';
 
 const FloatingSidebar = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
@@ -31,19 +34,35 @@ const FloatingSidebar = () => {
       {
         text: 'Home',
         icon: <HomeIcon color='inherit' />,
-        handleClick: toggleFloatingBarMinimization,
+        navigateTo: urls.root,
       },
-      { text: 'Trainees', icon: <SportsGymnasticsIcon color='inherit' /> },
-      { text: 'Workout plan', icon: <FitnessCenterIcon color='inherit' /> },
-      { text: 'Diet plan', icon: <FlatwareIcon color='inherit' /> },
-      { text: 'Todo List', icon: <FormatListBulletedIcon color='inherit' /> },
+      {
+        text: 'Trainees',
+        icon: <SportsGymnasticsIcon color='inherit' />,
+        navigateTo: urls.trainees,
+      },
+      {
+        text: 'Workout plan',
+        icon: <FitnessCenterIcon color='inherit' />,
+        navigateTo: urls.workout,
+      },
+      {
+        text: 'Diet plan',
+        icon: <FlatwareIcon color='inherit' />,
+        navigateTo: urls.diet,
+      },
+      {
+        text: 'Todo List',
+        icon: <FormatListBulletedIcon color='inherit' />,
+        navigateTo: urls.todo,
+      },
       {
         text: 'Sign out',
         icon: <LogoutIcon color='inherit' />,
-        handleClick: () => signOut({ redirectTo: '/' }),
+        handleClick: () => signOut({ redirectTo: urls.root }),
       },
     ],
-    [toggleFloatingBarMinimization]
+    []
   );
   return (
     <Box width='fit-content' padding={'1rem'} borderRadius={'0.75rem'}>
@@ -56,9 +75,12 @@ const FloatingSidebar = () => {
           }}
           component='nav'
         >
-          {sidebarOptions.map(({ text, icon, handleClick }) => {
-            return (
-              <ListItemButton key={text} onClick={handleClick}>
+          {sidebarOptions.map(({ text, icon, handleClick, navigateTo }) => {
+            const sidebarItem = (
+              <ListItemButton
+                key={text}
+                {...(handleClick ? { onClick: handleClick } : {})}
+              >
                 <ListItemIcon
                   sx={{
                     color: theme.palette.text.secondary,
@@ -73,6 +95,11 @@ const FloatingSidebar = () => {
                   <ListItemText sx={{ whiteSpace: 'nowrap' }} primary={text} />
                 )}
               </ListItemButton>
+            );
+            return navigateTo ? (
+              <Link href={navigateTo} key={text}>{sidebarItem}</Link>
+            ) : (
+              sidebarItem
             );
           })}
         </List>

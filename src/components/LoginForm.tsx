@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 
+import { urls } from '@/appUrls';
 import { clientSideSignIn } from '@/auth.utils';
 const whatYouCanDoText = [
   {
@@ -35,7 +36,7 @@ const whatYouCanDoText = [
 export const LoginForm = () => {
   const theme = useTheme();
   const handleGoogleLogin = async () => {
-    clientSideSignIn('google', { redirectTo: '/dashboard' });
+    clientSideSignIn('google', { redirectTo: urls.home });
   };
 
   return (

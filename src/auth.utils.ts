@@ -1,7 +1,8 @@
+import { redirect } from 'next/navigation';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-// eslint-disable-next-line import/order
-import { redirect } from 'next/navigation';
+
+import { urls } from '@/appUrls';
 
 export const {
   handlers: { GET, POST },
@@ -36,6 +37,6 @@ export const requireAuth = async () => {
   const session = await auth();
 
   if (!session) {
-    redirect('/');
+    redirect(urls.root);
   }
 };
