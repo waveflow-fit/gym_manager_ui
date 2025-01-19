@@ -1,8 +1,8 @@
 export const urls = Object.freeze({
   root: '/',
-  home: '/home',
-  trainees: '/trainees',
-  workout: '/workout',
-  diet: '/diet',
-  todo: '/todo',
+  dashboard: '/dashboard',
+  trainees: '/dashboard/trainees',
+  workout: '/dashboard/workout',
+  diet: '/dashboard/diet',
+  todo: '/dashboard/todo',
 });

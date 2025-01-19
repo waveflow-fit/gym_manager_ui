@@ -36,7 +36,7 @@ const whatYouCanDoText = [
 export const LoginForm = () => {
   const theme = useTheme();
   const handleGoogleLogin = async () => {
-    clientSideSignIn('google', { redirectTo: urls.home });
+    clientSideSignIn('google', { redirectTo: urls.dashboard });
   };
 
   return (
@@ -75,7 +75,7 @@ export const LoginForm = () => {
             >
               <Image src='/logo.png' width={180} height={180} alt='login' />
               <Typography variant='h1' textAlign={'center'}>
-                Welcome Back!
+                Welcome
               </Typography>
             </Box>
 

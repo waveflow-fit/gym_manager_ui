@@ -5,11 +5,11 @@ import { requireAuth } from '@/auth.utils';
 import AppContainer from '@/components/AppContainer';
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Gym manager',
   description: 'Gym manager application, Dashboard for activity management',
 };
 
-const HomeLayout = async ({
+const DashboardLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -22,4 +22,4 @@ const HomeLayout = async ({
   );
 };
 
-export default HomeLayout;
+export default DashboardLayout;

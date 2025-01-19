@@ -4,13 +4,13 @@ import { urls } from '@/appUrls';
 import { auth } from '@/auth.utils';
 import { LoginForm } from '@/components/LoginForm';
 
-const Home = async () => {
+const Dashboard = async () => {
   const session = await auth();
 
   if (session) {
-    redirect(urls.home);
+    redirect(urls.dashboard);
   }
   return <LoginForm />;
 };
 
-export default Home;
+export default Dashboard;

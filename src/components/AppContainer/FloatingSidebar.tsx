@@ -17,6 +17,7 @@ import {
   useTheme,
 } from '@mui/material';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { useCallback, useMemo, useState } from 'react';
 
@@ -29,12 +30,15 @@ const FloatingSidebar = () => {
     [isSidebarMinimized]
   );
   const theme = useTheme();
+  const pathname = usePathname();
+  console.log(pathname);
+  
   const sidebarOptions = useMemo(
     () => [
       {
         text: 'Home',
         icon: <HomeIcon color='inherit' />,
-        navigateTo: urls.root,
+        navigateTo: urls.dashboard,
       },
       {
         text: 'Trainees',
@@ -79,6 +83,7 @@ const FloatingSidebar = () => {
             const sidebarItem = (
               <ListItemButton
                 key={text}
+                selected={navigateTo === pathname}
                 {...(handleClick ? { onClick: handleClick } : {})}
               >
                 <ListItemIcon
