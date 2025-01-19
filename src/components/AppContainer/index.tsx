@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 
 import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
 import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
+
 type TAppContainer = { children: React.ReactNode };
 
 const AppContainer = ({ children }: TAppContainer) => {
@@ -17,15 +18,10 @@ const AppContainer = ({ children }: TAppContainer) => {
       width='100%'
       bgcolor={theme.palette.background.main}
     >
-      <Box maxWidth={sidebarWidth} display="flex" alignItems="center">
+      <Box maxWidth={sidebarWidth} display='flex' alignItems='center'>
         <FloatingSidebar />
       </Box>
-      <Box
-        display="flex"
-        flexDirection="column"
-        height="100%"
-        width="100%"
-      >
+      <Box display='flex' flexDirection='column' height='100%' width='100%'>
         <Box height={theme.custom.headerHeight}>
           <FloatingTopBar />
         </Box>
