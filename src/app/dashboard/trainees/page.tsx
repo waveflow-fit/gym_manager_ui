@@ -9,7 +9,6 @@ const Trainees = () => {
       alignItems='center'
       height='100%'
       width='100%'
-      border='1px solid black'
     >
       <Image
         src='/coming_soon.svg'
