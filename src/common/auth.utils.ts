@@ -3,7 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import { redirect } from 'next/navigation';
 
 import { api } from '@/common/api.utils';
-import { USER_ENDPOINTS } from '@/common/apiEndpoints';
 import { ROUTE_URLS } from '@/common/appUrls';
 
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -27,13 +26,21 @@ export const {
   ],
   callbacks: {
     async signIn({ account, profile }: any) {
-      const { access_token, refresh_token, id_token } = account;
-      console.log('here');
-      api.post(USER_ENDPOINTS.GOOGLE_SIGN_IN, { id_token });
-      if (account.provider === 'google') {
-        return profile.email_verified;
+      const { id_token } = account;
+      try {
+        const res = await api.post('/user/google-sign-in', { id_token });
+        if (
+          account.provider === 'google' &&
+          profile.email_verified &&
+          res.user
+        ) {
+          const token = res.user.token;
+          return true;
+        }
+        return false;
+      } catch {
+        return false;
       }
-      return true;
     },
   },
 });
