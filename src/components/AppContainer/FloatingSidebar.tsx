@@ -16,12 +16,12 @@ import {
   ListItemText,
   useTheme,
 } from '@mui/material';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 import { useCallback, useMemo, useState } from 'react';
 
-import { urls } from '@/appUrls';
+import { ROUTE_URLS } from '@/common/appUrls';
 
 const FloatingSidebar = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
@@ -38,32 +38,32 @@ const FloatingSidebar = () => {
       {
         text: 'Home',
         icon: <HomeIcon color='inherit' />,
-        navigateTo: urls.dashboard,
+        navigateTo: ROUTE_URLS.dashboard,
       },
       {
         text: 'Trainees',
         icon: <SportsGymnasticsIcon color='inherit' />,
-        navigateTo: urls.trainees,
+        navigateTo: ROUTE_URLS.trainees,
       },
       {
-        text: 'Workout plan',
+        text: 'Workout plans',
         icon: <FitnessCenterIcon color='inherit' />,
-        navigateTo: urls.workout,
+        navigateTo: ROUTE_URLS.workout,
       },
       {
-        text: 'Diet plan',
+        text: 'Diet plans',
         icon: <FlatwareIcon color='inherit' />,
-        navigateTo: urls.diet,
+        navigateTo: ROUTE_URLS.diet,
       },
       {
         text: 'Todo List',
         icon: <FormatListBulletedIcon color='inherit' />,
-        navigateTo: urls.todo,
+        navigateTo: ROUTE_URLS.todo,
       },
       {
         text: 'Sign out',
         icon: <LogoutIcon color='inherit' />,
-        handleClick: () => signOut({ redirectTo: urls.root }),
+        handleClick: () => signOut({ redirectTo: ROUTE_URLS.root }),
       },
     ],
     []

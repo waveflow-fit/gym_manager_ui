@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 
-import { urls } from '@/appUrls';
-import { clientSideSignIn } from '@/auth.utils';
+import { ROUTE_URLS } from '@/common/appUrls';
+import { clientSideSignIn } from '@/common/auth.utils';
 const whatYouCanDoText = [
   {
     icon: <FitnessCenterIcon color='inherit' />,
@@ -36,7 +36,7 @@ const whatYouCanDoText = [
 export const LoginForm = () => {
   const theme = useTheme();
   const handleGoogleLogin = async () => {
-    clientSideSignIn('google', { redirectTo: urls.dashboard });
+    clientSideSignIn('google', { redirectTo: ROUTE_URLS.dashboard });
   };
 
   return (
@@ -65,22 +65,22 @@ export const LoginForm = () => {
       </Grid>
       <Grid size={{ xs: 12, sm: 4 }} height='100%'>
         <Box padding={{ xs: '2.5rem', sm: '2rem', md: '2.5rem' }} height='100%'>
-          <Box position="relative" height="100%">
+          <Box position='relative' height='100%'>
             <Box
               display='flex'
               alignItems='center'
-              flexDirection="column"
-              gap="3rem"
-              mb="3rem"
+              flexDirection='column'
+              gap='3rem'
+              mb='3rem'
             >
               <Image src='/logo.png' width={180} height={180} alt='login' />
-              <Typography variant='h1' textAlign="center">
+              <Typography variant='h1' textAlign='center'>
                 Welcome
               </Typography>
             </Box>
 
             <Divider>LogIn With Google</Divider>
-            <Box display="flex" justifyContent="center" mt="3rem">
+            <Box display='flex' justifyContent='center' mt='3rem'>
               <Image
                 height='60'
                 width='220'
@@ -90,7 +90,7 @@ export const LoginForm = () => {
                 className='cursor-pointer'
               />
             </Box>
-            <Typography variant='body2' position="absolute" bottom={0}>
+            <Typography variant='body2' position='absolute' bottom={0}>
               Having queries? Lets connect, you can reach us via our email:{' '}
               <Typography
                 component='a'

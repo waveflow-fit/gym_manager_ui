@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
 
-import { requireAuth } from '@/auth.utils';
+import { requireAuth } from '@/common/auth.utils';
 import AppContainer from '@/components/AppContainer';
 
 export const metadata: Metadata = {
