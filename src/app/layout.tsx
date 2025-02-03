@@ -2,6 +2,7 @@ import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Metadata } from 'next';
 
+import ToastProvider from '@/components/Toast/ToastProvider';
 import theme from '@/theme';
 import './globals.css';
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     'Gym manager application, helps you to manage you daily gym activities',
 };
 
-const RootLayout = ({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -19,9 +20,11 @@ const RootLayout = ({
   return (
     <html lang='en'>
       <body>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </AppRouterCacheProvider>
+        <ToastProvider>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </AppRouterCacheProvider>
+        </ToastProvider>
       </body>
     </html>
   );

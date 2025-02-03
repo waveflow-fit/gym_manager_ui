@@ -9,33 +9,35 @@ interface RequestOptions {
 
 const request = async (
   url: string,
-  { method, body, headers, token }: RequestOptions
+  { method, body, headers }: RequestOptions
 ) => {
   const config: RequestInit = {
     method,
     headers: {
       'Content-Type': 'application/json',
-      ...(token && { Authorization: `Bearer ${token}` }),
-      ...headers,
+      ...(headers ? headers : {}),
     },
     ...(body && { body: JSON.stringify(body) }),
+    credentials: 'include',
   };
 
   const response = await fetch(`${API_BASE_URL}${url}`, config);
   if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+    const { errors } = await response.json();
+    console.log(url);
+    throw new Error(errors.toString() || `Error! Status: ${response.status}`);
   }
   return response.json();
 };
 
 export const api = {
-  get: (url: string, token?: string) => request(url, { method: 'GET', token }),
-  post: (url: string, body: any, token?: string) =>
-    request(url, { method: 'POST', body, token }),
-  put: (url: string, body: any, token?: string) =>
-    request(url, { method: 'PUT', body, token }),
-  patch: (url: string, body: any, token?: string) =>
-    request(url, { method: 'PATCH', body, token }),
-  delete: (url: string, token?: string) =>
-    request(url, { method: 'DELETE', token }),
+  get: (url: string, headers?: any) => request(url, { method: 'GET', headers }),
+  post: (url: string, body: any, headers?: any) =>
+    request(url, { method: 'POST', body, headers }),
+  put: (url: string, body: any, headers?: any) =>
+    request(url, { method: 'PUT', body, headers }),
+  patch: (url: string, body: any, headers?: any) =>
+    request(url, { method: 'PATCH', body, headers }),
+  delete: (url: string, headers?: any) =>
+    request(url, { method: 'DELETE', headers }),
 };

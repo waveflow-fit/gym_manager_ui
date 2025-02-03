@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
-import { SessionProvider } from 'next-auth/react';
 
-import { requireAuth } from '@/common/auth.utils';
+import { ROUTE_URLS } from '@/common/appUrls';
 import AppContainer from '@/components/AppContainer';
+import { getSession } from '@/components/SessionProvider/auth.utils';
+import SessionProvider from '@/components/SessionProvider/SessionProvider';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Gym manager',
@@ -14,9 +17,14 @@ const DashboardLayout = async ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  await requireAuth();
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token');
+  const session = await getSession(token?.value);
+  if (!session) {
+    redirect(ROUTE_URLS.root);
+  }
   return (
-    <SessionProvider>
+    <SessionProvider serverSession={session}>
       <AppContainer>{children}</AppContainer>
     </SessionProvider>
   );

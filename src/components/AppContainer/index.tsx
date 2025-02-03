@@ -1,16 +1,31 @@
 'use client';
 
-import { useTheme } from '@mui/material';
+import { CircularProgress, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
 import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
+import useSession from '@/components/SessionProvider/useSession';
 
 type TAppContainer = { children: React.ReactNode };
 
 const AppContainer = ({ children }: TAppContainer) => {
   const theme = useTheme();
   const sidebarWidth = theme.custom.leftPanelWidthExpanded;
+  const { isLoading } = useSession();
+  if (isLoading) {
+    return (
+      <Box
+        height='100%'
+        width='100%'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <Box
       height='100%'

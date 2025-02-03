@@ -10,18 +10,20 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics';
 import {
   Box,
+  CircularProgress,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   useTheme,
 } from '@mui/material';
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ROUTE_URLS } from '@/common/appUrls';
+import { handleLogout } from '@/components/SessionProvider/auth.utils';
+import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const FloatingSidebar = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
@@ -31,7 +33,9 @@ const FloatingSidebar = () => {
   );
   const theme = useTheme();
   const pathname = usePathname();
-  console.log(pathname);
+  const { showToast } = useToast();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const router = useRouter();
 
   const sidebarOptions = useMemo(
     () => [
@@ -62,11 +66,28 @@ const FloatingSidebar = () => {
       },
       {
         text: 'Sign out',
-        icon: <LogoutIcon color='inherit' />,
-        handleClick: () => signOut({ redirectTo: ROUTE_URLS.root }),
+        icon: isLoggingOut ? (
+          <CircularProgress size='24px' />
+        ) : (
+          <LogoutIcon color='inherit' />
+        ),
+        handleClick: async () => {
+          try {
+            setIsLoggingOut(true);
+            await handleLogout();
+            router.push(ROUTE_URLS.root);
+          } catch (e: any) {
+            showToast({
+              severity: EToastType.ERROR,
+              message: e.message,
+            });
+          } finally {
+            setIsLoggingOut(false);
+          }
+        },
       },
     ],
-    []
+    [isLoggingOut, router, showToast]
   );
   return (
     <Box width='fit-content' padding='1rem' borderRadius='0.75rem'>

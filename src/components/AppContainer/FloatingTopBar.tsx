@@ -1,7 +1,7 @@
 import { Avatar, Box, Paper, Skeleton, styled } from '@mui/material';
-import { useSession } from 'next-auth/react';
 import { useMemo } from 'react';
 
+import useSession from '@/components/SessionProvider/useSession';
 import { MaxCharTypography } from '@/components/StyledComponents';
 
 const StyledProfileDetailsHolder = styled(Paper)(({ theme }) => {
@@ -17,15 +17,15 @@ const StyledProfileDetailsHolder = styled(Paper)(({ theme }) => {
   };
 });
 const FloatingTopBar = () => {
-  const session = useSession();
+  const { session, isLoading: isSessionLoading } = useSession();
 
   const { userImage, userName, isLoading } = useMemo(
     () => ({
-      userImage: session.data?.user?.image || '',
-      userName: session.data?.user?.name || 'Manager',
-      isLoading: session.status === 'loading',
+      userImage: session?.image || '',
+      userName: session?.name || 'Manager',
+      isLoading: isSessionLoading,
     }),
-    [session.data?.user?.image, session.data?.user?.name, session.status]
+    [isSessionLoading, session?.image, session?.name]
   );
 
   return (
