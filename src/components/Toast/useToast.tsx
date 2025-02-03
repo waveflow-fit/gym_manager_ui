@@ -1,5 +1,6 @@
-import { ToastContext } from '@/components/Toast/ToastProvider';
 import { useContext } from 'react';
+
+import { ToastContext } from '@/components/Toast/ToastProvider';
 
 export enum EToastType {
   SUCCESS = 'success',
