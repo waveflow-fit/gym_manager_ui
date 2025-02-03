@@ -6,15 +6,21 @@ import FlatwareIcon from '@mui/icons-material/Flatware';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {
   Box,
+  CircularProgress,
   Divider,
   Grid2 as Grid,
   Typography,
   useTheme,
 } from '@mui/material';
+import { GoogleLogin } from '@react-oauth/google';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
+import { api } from '@/common/api.utils';
+import { USER_ENDPOINTS } from '@/common/apiEndpoints';
 import { ROUTE_URLS } from '@/common/appUrls';
-import { clientSideSignIn } from '@/common/auth.utils';
+import useToast, { EToastType } from '@/components/Toast/useToast';
 const whatYouCanDoText = [
   {
     icon: <FitnessCenterIcon color='inherit' />,
@@ -35,8 +41,33 @@ const whatYouCanDoText = [
 ];
 export const LoginForm = () => {
   const theme = useTheme();
-  const handleGoogleLogin = async () => {
-    clientSideSignIn('google', { redirectTo: ROUTE_URLS.dashboard });
+  const { showToast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleGoogleAuth = async (credentialResponse) => {
+    try {
+      if (!credentialResponse.credential) {
+        throw new Error(
+          'Unable to authenticate via google, Please try again later.'
+        );
+      }
+      await api.post(USER_ENDPOINTS.GOOGLE_SIGN_IN, {
+        id_token: credentialResponse.credential,
+      });
+      showToast({
+        severity: EToastType.SUCCESS,
+        message: 'Successfully signed in',
+      });
+      router.push(ROUTE_URLS.dashboard);
+    } catch (e: any) {
+      showToast({
+        severity: EToastType.ERROR,
+        message: e?.message as string,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -81,14 +112,27 @@ export const LoginForm = () => {
 
             <Divider>LogIn With Google</Divider>
             <Box display='flex' justifyContent='center' mt='3rem'>
-              <Image
-                height='60'
-                width='220'
-                alt='login'
-                src='/googl_login_icon.svg'
-                onClick={handleGoogleLogin}
-                className='cursor-pointer'
-              />
+              {isLoading ? (
+                <CircularProgress />
+              ) : (
+                <GoogleLogin
+                  width='300'
+                  onSuccess={handleGoogleAuth}
+                  click_listener={() => {
+                    setIsLoading(true);
+                  }}
+                  onError={() => {
+                    showToast({
+                      severity: EToastType.ERROR,
+                      message:
+                        'Something went wrong unable to login with google',
+                    });
+                    setIsLoading(false);
+                  }}
+                  shape='circle'
+                  size='large'
+                />
+              )}
             </Box>
             <Typography variant='body2' position='absolute' bottom={0}>
               Having queries? Lets connect, you can reach us via our email:{' '}
