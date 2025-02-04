@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 import { ROUTE_URLS } from '@/common/appUrls';
 import AppContainer from '@/components/AppContainer';
 import { getSession } from '@/components/SessionProvider/auth.utils';
 import SessionProvider from '@/components/SessionProvider/SessionProvider';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import UserOnBoarding from '@/components/UserOnBoarding/UserOnBoardingModal';
 
 export const metadata: Metadata = {
   title: 'Gym manager',
@@ -26,6 +27,7 @@ const DashboardLayout = async ({
   return (
     <SessionProvider serverSession={session}>
       <AppContainer>{children}</AppContainer>
+      <UserOnBoarding />
     </SessionProvider>
   );
 };

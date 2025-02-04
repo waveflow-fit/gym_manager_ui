@@ -1,7 +1,8 @@
 'use client';
+import { createContext, useEffect, useState } from 'react';
+
 import { EUserRole } from '@/common/constants';
 import { getSession } from '@/components/SessionProvider/auth.utils';
-import { createContext, useEffect, useState } from 'react';
 
 export type TUserSession = {
   id: string;
@@ -14,9 +15,13 @@ export type TUserSession = {
 export const SessionContext = createContext<{
   session: TUserSession;
   isLoading: boolean;
+  fetchSession: () => void;
 }>({
   session: null,
   isLoading: false,
+  fetchSession: () => {
+    throw new Error('Implement function: fetchSessionFromServer');
+  },
 });
 
 const SessionProvider = ({
@@ -28,18 +33,24 @@ const SessionProvider = ({
 }) => {
   const [session, setSession] = useState<TUserSession>(serverSession || null);
   const [isSessionLoading, setIsSessionLoading] = useState(false);
+  const fetchSession = async () => {
+    setIsSessionLoading(true);
+    const userSessionDetails = await getSession();
+    setSession(userSessionDetails);
+    setIsSessionLoading(false);
+  };
 
   useEffect(() => {
     (async () => {
       if (session) return;
-      const userSessionDetails = await getSession();
-      setSession(userSessionDetails);
-      setIsSessionLoading(false);
+      fetchSession();
     })();
-  }, []);
+  }, [session]);
 
   return (
-    <SessionContext value={{ session, isLoading: isSessionLoading }}>
+    <SessionContext
+      value={{ session, isLoading: isSessionLoading, fetchSession }}
+    >
       {children}
     </SessionContext>
   );

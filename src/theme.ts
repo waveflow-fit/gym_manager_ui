@@ -27,7 +27,7 @@ export const gymThemePalette = {
   },
   action: {
     active: '#587AB5', // Darker active blue for icons
-    hover: '#8EA5DB', // Darker hover blue for buttons or links
+    // hover: '#8EA5DB', // Darker hover blue for buttons or links
     selected: '#D7E2F2', // Slightly darker light blue background for selected items
     disabled: '#9CA4B2', // Slightly darker muted gray for disabled actions
   },

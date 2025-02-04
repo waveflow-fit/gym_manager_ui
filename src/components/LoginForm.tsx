@@ -116,7 +116,6 @@ export const LoginForm = () => {
                 <CircularProgress />
               ) : (
                 <GoogleLogin
-                  width='300'
                   onSuccess={handleGoogleAuth}
                   click_listener={() => {
                     setIsLoading(true);
@@ -131,11 +130,12 @@ export const LoginForm = () => {
                   }}
                   shape='circle'
                   size='large'
+                  containerProps={{ style: { transform: 'scale(1.19)' } }}
                 />
               )}
             </Box>
             <Typography variant='body2' position='absolute' bottom={0}>
-              Having queries? Lets connect, you can reach us via our email:{' '}
+              Having queries? Lets connect, you can reach us via{' '}
               <Typography
                 component='a'
                 variant='body2'
@@ -149,7 +149,7 @@ export const LoginForm = () => {
                   },
                 }}
               >
-                aniket.chanana@gmail.com
+                email
               </Typography>
             </Typography>
           </Box>
