@@ -23,9 +23,12 @@ const request = async (
 
   const response = await fetch(`${API_BASE_URL}${url}`, config);
   if (!response.ok) {
-    const { errors } = await response.json();
-    console.log(url);
-    throw new Error(errors.toString() || `Error! Status: ${response.status}`);
+    try {
+      const { message } = await response.json();
+      throw new Error(message)
+    } catch {
+      throw new Error(`Something went wrong, Error! Status: ${response.status}`);
+    }
   }
   return response.json();
 };
