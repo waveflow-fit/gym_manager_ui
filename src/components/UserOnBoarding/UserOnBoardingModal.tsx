@@ -15,11 +15,12 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useFormStatus } from 'react-dom';
 
 import { api } from '@/common/api.utils';
 import { USER_ENDPOINTS } from '@/common/apiEndpoints';
+import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
 import useSession from '@/components/SessionProvider/useSession';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -41,7 +42,9 @@ const UserOnBoarding = () => {
   const [open, setOpen] = useState(!session?.role);
   const handleClose = () => setOpen(!open);
   const [userRole, setUserRole] = useState<EUserRole>(EUserRole.TRAINER);
-  const { pending } = useFormStatus();
+  const [isSavingUserOnboardingDetails, setIsSavingUserOnBoardingDetails] =
+    useState(false);
+  const router = useRouter();
 
   const [formValues, setFormValues] = useState(initialValues);
   const { showToast } = useToast();
@@ -61,6 +64,7 @@ const UserOnBoarding = () => {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     try {
+      setIsSavingUserOnBoardingDetails(true);
       await api.post(USER_ENDPOINTS.USER_SAVE_ONBOARDING_DETAILS, {
         healthInfo: {
           ...formValues,
@@ -73,12 +77,15 @@ const UserOnBoarding = () => {
       });
       handleClose();
       refetchSession();
+      router.push(ROUTE_URLS.dashboard);
       showToast({
         severity: EToastType.ERROR,
         message: 'Details saved successfully',
       });
     } catch (e: any) {
       showToast({ severity: EToastType.ERROR, message: e.message });
+    } finally {
+      setIsSavingUserOnBoardingDetails(false);
     }
   }
 
@@ -196,9 +203,9 @@ const UserOnBoarding = () => {
           type='submit'
           variant='contained'
           color='primary'
-          disabled={pending}
+          loading={isSavingUserOnboardingDetails}
         >
-          {pending ? 'Submitting...' : 'Submit'}
+          Submit
         </Button>
       </form>
     </Dialog>
