@@ -23,6 +23,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { ROUTE_URLS } from '@/common/appUrls';
 import { handleLogout } from '@/components/SessionProvider/auth.utils';
+import { SectionContainer } from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const FloatingSidebar = () => {
@@ -92,45 +93,50 @@ const FloatingSidebar = () => {
   return (
     <Box width='fit-content' padding='1rem' borderRadius='0.75rem'>
       <Box width='100%' height='100%' position='relative'>
-        <List
-          sx={{
-            width: '100%',
-            bgcolor: 'background.paper',
-            borderRadius: '1.5rem',
-          }}
-          component='nav'
-        >
-          {sidebarOptions.map(({ text, icon, handleClick, navigateTo }) => {
-            const sidebarItem = (
-              <ListItemButton
-                key={text}
-                selected={navigateTo === pathname}
-                {...(handleClick ? { onClick: handleClick } : {})}
-              >
-                <ListItemIcon
-                  sx={{
-                    color: theme.palette.text.secondary,
-                    ...(isSidebarMinimized
-                      ? { display: 'flex', justifyContent: 'center' }
-                      : {}),
-                  }}
+        <SectionContainer sx={{ padding: 0 }}>
+          <List
+            sx={{
+              width: '100%',
+              bgcolor: 'background.paper',
+              borderRadius: '1.5rem',
+            }}
+            component='nav'
+          >
+            {sidebarOptions.map(({ text, icon, handleClick, navigateTo }) => {
+              const sidebarItem = (
+                <ListItemButton
+                  key={text}
+                  selected={navigateTo === pathname}
+                  {...(handleClick ? { onClick: handleClick } : {})}
                 >
-                  {icon}
-                </ListItemIcon>
-                {!isSidebarMinimized && (
-                  <ListItemText sx={{ whiteSpace: 'nowrap' }} primary={text} />
-                )}
-              </ListItemButton>
-            );
-            return navigateTo ? (
-              <Link href={navigateTo} key={text}>
-                {sidebarItem}
-              </Link>
-            ) : (
-              sidebarItem
-            );
-          })}
-        </List>
+                  <ListItemIcon
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      ...(isSidebarMinimized
+                        ? { display: 'flex', justifyContent: 'center' }
+                        : {}),
+                    }}
+                  >
+                    {icon}
+                  </ListItemIcon>
+                  {!isSidebarMinimized && (
+                    <ListItemText
+                      sx={{ whiteSpace: 'nowrap' }}
+                      primary={text}
+                    />
+                  )}
+                </ListItemButton>
+              );
+              return navigateTo ? (
+                <Link href={navigateTo} key={text}>
+                  {sidebarItem}
+                </Link>
+              ) : (
+                sidebarItem
+              );
+            })}
+          </List>
+        </SectionContainer>
         <Box
           onClick={toggleFloatingBarMinimization}
           color={theme.palette.text.secondary}

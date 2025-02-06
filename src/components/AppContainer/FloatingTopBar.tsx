@@ -1,21 +1,13 @@
-import { Avatar, Box, Paper, Skeleton, styled } from '@mui/material';
+import { Avatar, Box, Skeleton } from '@mui/material';
 import { useMemo } from 'react';
 
+import NotificationCenter from '@/components/AppContainer/NotificationCenter';
 import useSession from '@/components/SessionProvider/useSession';
-import { MaxCharTypography } from '@/components/StyledComponents';
+import {
+  MaxCharTypography,
+  SectionContainer,
+} from '@/components/StyledComponents';
 
-const StyledProfileDetailsHolder = styled(Paper)(({ theme }) => {
-  return {
-    height: 'fit-content',
-    width: 'fit-content',
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0.5rem 0.75rem',
-    gap: '0.5rem',
-  };
-});
 const FloatingTopBar = () => {
   const { session, isLoading: isSessionLoading } = useSession();
 
@@ -36,8 +28,11 @@ const FloatingTopBar = () => {
       display='flex'
       justifyContent='flex-end'
       alignItems='center'
+      gap='1.2rem'
+      py={1}
     >
-      <StyledProfileDetailsHolder>
+      <NotificationCenter />
+      <SectionContainer>
         {isLoading ? (
           <>
             <Skeleton variant='circular' width={40} height={40} />
@@ -55,7 +50,7 @@ const FloatingTopBar = () => {
             </MaxCharTypography>
           </>
         )}
-      </StyledProfileDetailsHolder>
+      </SectionContainer>
     </Box>
   );
 };

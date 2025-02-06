@@ -27,7 +27,7 @@ export const gymThemePalette = {
   },
   action: {
     active: '#587AB5', // Darker active blue for icons
-    // hover: '#8EA5DB', // Darker hover blue for buttons or links
+    hover: '#8EA5DB', // Darker hover blue for buttons or links
     selected: '#D7E2F2', // Slightly darker light blue background for selected items
     disabled: '#9CA4B2', // Slightly darker muted gray for disabled actions
   },
@@ -116,12 +116,20 @@ const theme = createTheme({
         root: {
           backgroundColor: '#FFFFFF', // White background for lists
           borderRadius: '0.5rem', // Rounded corners
-          boxShadow: '0 0.125rem 0.375rem rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
           padding: '0.5rem', // Consistent padding
         },
       },
     },
     MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'rgba(0, 191, 166, 0.15)', // Subtle secondary color overlay
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
       styleOverrides: {
         root: {
           '&:hover': {
