@@ -23,12 +23,17 @@ const request = async (
 
   const response = await fetch(`${API_BASE_URL}${url}`, config);
   if (!response.ok) {
+    const DEFAULT_API_ERR_MSG = `Something went wrong, Error! Status: ${response.status}`
+    let toastMessage = DEFAULT_API_ERR_MSG;
     try {
       const { message } = await response.json();
-      throw new Error(message)
+      if (message) {
+        toastMessage = message;
+      }
     } catch {
-      throw new Error(`Something went wrong, Error! Status: ${response.status}`);
+      toastMessage = DEFAULT_API_ERR_MSG
     }
+    throw new Error(toastMessage)
   }
   return response.json();
 };
