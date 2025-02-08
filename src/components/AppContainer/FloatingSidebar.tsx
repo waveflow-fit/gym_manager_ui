@@ -27,7 +27,7 @@ import { SectionContainer } from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const FloatingSidebar = () => {
-  const [isSidebarMinimized, setIsSidebarMinimized] = useState(true);
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
   const toggleFloatingBarMinimization = useCallback(
     () => setIsSidebarMinimized(!isSidebarMinimized),
     [isSidebarMinimized]

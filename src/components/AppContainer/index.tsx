@@ -40,7 +40,7 @@ const AppContainer = ({ children }: TAppContainer) => {
         <Box height={theme.custom.headerHeight}>
           <FloatingTopBar />
         </Box>
-        <Box height={`calc(100% - ${theme.custom.headerHeight})`} py={4} px={6}>
+        <Box height={`calc(100% - ${theme.custom.headerHeight})`} px='1rem'>
           {children}
         </Box>
       </Box>
