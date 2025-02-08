@@ -71,7 +71,7 @@ const UserOnBoarding = () => {
         refetchSession();
         router.push(ROUTE_URLS.dashboard);
         showToast({
-          severity: EToastType.ERROR,
+          severity: EToastType.SUCCESS,
           message: 'Details saved successfully',
         });
       } catch (e: any) {

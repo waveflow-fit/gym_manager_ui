@@ -32,7 +32,14 @@ const FloatingTopBar = () => {
       py={1}
     >
       <NotificationCenter />
-      <SectionContainer>
+      <SectionContainer
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 'fit-content',
+        }}
+      >
         {isLoading ? (
           <>
             <Skeleton variant='circular' width={40} height={40} />
