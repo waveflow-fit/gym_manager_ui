@@ -54,7 +54,7 @@ const ListInvites = () => {
         setIsLoading(false);
       }
     })();
-  }, [showToast, inputTraineeEmail, setInvites]);
+  }, [setInvites, showToast]);
 
   const handleDelete = useCallback(
     async ({ inviteId }) => {
@@ -72,6 +72,11 @@ const ListInvites = () => {
     },
     [deleteTraineeInvite, showToast]
   );
+  const filteredInvites = useMemo(() => {
+    return invitedTrainees.filter(({ invite_to_email }) =>
+      invite_to_email.toLowerCase().includes(inputTraineeEmail)
+    );
+  }, [inputTraineeEmail, invitedTrainees]);
 
   const list = useMemo(() => {
     if (isLoading) {
@@ -81,10 +86,10 @@ const ListInvites = () => {
         </div>
       );
     }
-    if (invitedTrainees.length > 0) {
+    if (filteredInvites.length > 0) {
       return (
         <List sx={{ width: '100%' }}>
-          {invitedTrainees.map(({ id, invite_to_email }) => {
+          {filteredInvites.map(({ id, invite_to_email }) => {
             return (
               <div key={id}>
                 <Box
@@ -138,7 +143,7 @@ const ListInvites = () => {
         </Typography>
       </div>
     );
-  }, [handleDelete, invitedTrainees, isLoading]);
+  }, [handleDelete, filteredInvites, isLoading]);
 
   return (
     <SectionContainer sx={{ height: '500px' }}>
