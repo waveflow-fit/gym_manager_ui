@@ -38,10 +38,10 @@ const AddNewTraineeWidget = () => {
       value={{ invites, setInvites, addNewTraineeInvite, deleteTraineeInvite }}
     >
       <Grid container height='50%' spacing={3}>
-        <Grid size={{ xs: 12, sm: 6, lg: 4 }} height='fit-content'>
+        <Grid size={{ xs: 12, sm: 6, lg: 6 }} height='fit-content'>
           <AddNewTrainee />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, lg: 4 }} height='fit-content'>
+        <Grid size={{ xs: 12, sm: 6, lg: 6 }} height='fit-content'>
           <ListInvites />
         </Grid>
       </Grid>
