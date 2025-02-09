@@ -14,10 +14,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINT } from '@/common/apiEndpoints';
-import {
-  endpointWithQueryParams,
-  endpointWithUrlParams,
-} from '@/common/app.utils';
+import { endpointWithUrlParams } from '@/common/app.utils';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget';
 import {
@@ -41,13 +38,16 @@ const ListInvites = () => {
     (async () => {
       try {
         setIsLoading(true);
-        const response = await api.get(
-          endpointWithQueryParams(MANAGEMENT_ENDPOINT.GET_ALL_PENDING_INVITES, {
-            status: EInviteStatus.PENDING,
+        const response = await api.post(
+          MANAGEMENT_ENDPOINT.GET_ALL_PENDING_INVITES,
+          {
+            filters: {
+              status: EInviteStatus.PENDING,
+            },
             limit: PAGINATION.LARGE_LIMIT,
-          })
+          }
         );
-        setInvites(response.invites);
+        setInvites(response.data);
       } catch (e: any) {
         showToast({ severity: EToastType.ERROR, message: e.message });
       } finally {
