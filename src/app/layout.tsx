@@ -2,7 +2,6 @@ import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Metadata } from 'next';
 
-import ApiRefresher from '@/components/ApiRefresher';
 import ToastProvider from '@/components/Toast/ToastProvider';
 import theme from '@/theme';
 import './globals.css';
@@ -23,9 +22,7 @@ const RootLayout = async ({
       <body>
         <ToastProvider>
           <AppRouterCacheProvider>
-            <ApiRefresher>
-              <ThemeProvider theme={theme}>{children}</ThemeProvider>
-            </ApiRefresher>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
           </AppRouterCacheProvider>
         </ToastProvider>
       </body>

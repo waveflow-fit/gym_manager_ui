@@ -10,14 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import {
-  startTransition,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useState,
-} from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINT } from '@/common/apiEndpoints';
@@ -25,84 +18,73 @@ import {
   endpointWithQueryParams,
   endpointWithUrlParams,
 } from '@/common/app.utils';
-import { API_KEYS, EInviteStatus } from '@/common/constants';
-import { useApiRefresher } from '@/components/ApiRefresher';
+import { EInviteStatus, PAGINATION } from '@/common/constants';
+import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget';
 import {
   MaxCharTypography,
   SectionContainer,
 } from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
-const initialState = { isLoading: true, invitedTrainees: [], isError: false };
-
 const ListInvites = () => {
-  const [state, setState] = useReducer((prevState, action) => {
-    return { ...prevState, ...action };
-  }, initialState);
-  // TODO: Add debounce to input trainee email
+  const {
+    invites: invitedTrainees,
+    setInvites,
+    deleteTraineeInvite,
+  } = useContext(AddNewTraineeWidgetCtx);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [inputTraineeEmail, setInputTraineeEmail] = useState('');
   const { showToast } = useToast();
-  const {
-    isApiRefreshed: isPendingInvitesApiRefreshed,
-    refreshApi: refreshPendingTraineeInvites,
-  } = useApiRefresher(API_KEYS.PENDING_TRAINEE_INVITES_DASHBOARD);
 
   useEffect(() => {
     (async () => {
       try {
-        startTransition(() => {
-          setState({ isLoading: true, isError: false, invitedTrainees: [] });
-        });
+        setIsLoading(true);
         const response = await api.get(
-          endpointWithQueryParams(
-            MANAGEMENT_ENDPOINT.GET_ALL_PENDING_INVITES,
-            {
-              status: EInviteStatus.PENDING,
-              ...(inputTraineeEmail ? { traineeEmail: inputTraineeEmail } : {}),
-            },
-            true
-          )
+          endpointWithQueryParams(MANAGEMENT_ENDPOINT.GET_ALL_PENDING_INVITES, {
+            status: EInviteStatus.PENDING,
+            limit: PAGINATION.LARGE_LIMIT,
+          })
         );
-        setState({
-          isLoading: false,
-          isError: false,
-          invitedTrainees: response.invites,
-        });
-      } catch (e: any) {
-        showToast({ severity: EToastType.ERROR, message: e.message });
-        setState({ isLoading: false, isError: true });
-      }
-    })();
-  }, [showToast, isPendingInvitesApiRefreshed, inputTraineeEmail]);
-
-  const handleDelete = useCallback(
-    async (inviteId) => {
-      try {
-        setState({ isLoading: true });
-        await api.delete(
-          endpointWithUrlParams(MANAGEMENT_ENDPOINT.DELETE_INVITE, { inviteId })
-        );
+        setInvites(response.invites);
       } catch (e: any) {
         showToast({ severity: EToastType.ERROR, message: e.message });
       } finally {
-        refreshPendingTraineeInvites();
+        setIsLoading(false);
+      }
+    })();
+  }, [showToast, inputTraineeEmail, setInvites]);
+
+  const handleDelete = useCallback(
+    async ({ inviteId }) => {
+      try {
+        setIsDeleting(true);
+        await api.delete(
+          endpointWithUrlParams(MANAGEMENT_ENDPOINT.DELETE_INVITE, { inviteId })
+        );
+        deleteTraineeInvite(inviteId);
+      } catch (e: any) {
+        showToast({ severity: EToastType.ERROR, message: e.message });
+      } finally {
+        setIsDeleting(false);
       }
     },
-    [refreshPendingTraineeInvites, showToast]
+    [deleteTraineeInvite, showToast]
   );
 
   const list = useMemo(() => {
-    if (state.isLoading) {
+    if (isLoading) {
       return (
         <div className='flex items-center justify-center flex-col w-full h-full gap-4'>
           <CircularProgress />
         </div>
       );
     }
-    if (state.invitedTrainees.length > 0) {
+    if (invitedTrainees.length > 0) {
       return (
         <List sx={{ width: '100%' }}>
-          {state.invitedTrainees.map(({ id, invite_to_email }) => {
+          {invitedTrainees.map(({ id, invite_to_email }) => {
             return (
               <div key={id}>
                 <Box
@@ -126,7 +108,11 @@ const ListInvites = () => {
                         color: 'primary.dark',
                       },
                     }}
-                    onClick={() => handleDelete(id)}
+                    onClick={() =>
+                      handleDelete({
+                        inviteId: id,
+                      })
+                    }
                   >
                     <DeleteIcon />
                   </ListItemIcon>
@@ -152,7 +138,7 @@ const ListInvites = () => {
         </Typography>
       </div>
     );
-  }, [handleDelete, state.invitedTrainees, state.isLoading]);
+  }, [handleDelete, invitedTrainees, isLoading]);
 
   return (
     <SectionContainer sx={{ height: '500px' }}>
@@ -173,7 +159,16 @@ const ListInvites = () => {
           fullWidth
           sx={{ '& input': { height: '2rem', py: '0.5rem', px: '1rem' } }}
         />
-        {list}
+        <Box
+          sx={{
+            opacity: isDeleting ? 0.7 : 1,
+            pointerEvents: isDeleting ? 'none' : 'initial',
+          }}
+          width='100%'
+          height='100%'
+        >
+          {list}
+        </Box>
       </Box>
     </SectionContainer>
   );

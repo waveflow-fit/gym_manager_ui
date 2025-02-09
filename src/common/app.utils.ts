@@ -10,14 +10,14 @@ export const convertFormDataToJson = (formData: FormData) => {
 
 export const endpointWithQueryParams = (
   url: string,
-  queryParams: Record<string, string>,
+  queryParams: Record<string, any>,
   addDefaultPagination?: boolean
 ) => {
   const query = Object.entries({
-    ...queryParams,
     ...(addDefaultPagination
       ? { limit: PAGINATION.DEFAULT_LIMIT, offset: PAGINATION.START_OFFSET }
       : {}),
+    ...queryParams,
   }).reduce((prevVal, [key, val]) => {
     return `${prevVal}${prevVal ? '&' : ''}${key}=${val}`;
   }, '');
