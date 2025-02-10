@@ -139,7 +139,7 @@ const ListInvites = () => {
           color='textSecondary'
           fontStyle='italic'
         >
-          No pending invites!
+          No invites found!
         </Typography>
       </div>
     );
