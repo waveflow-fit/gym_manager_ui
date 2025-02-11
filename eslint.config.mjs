@@ -14,6 +14,8 @@ const eslintConfig = [
   ...compat.config({
     extends: ['next', 'next/core-web-vitals', 'next/typescript'],
     rules: {
+      'func-style': ['error', 'expression'],
+      'func-names': ['error', 'always'],
       'react/jsx-curly-brace-presence': [
         'error',
         { props: 'never', children: 'never' },
