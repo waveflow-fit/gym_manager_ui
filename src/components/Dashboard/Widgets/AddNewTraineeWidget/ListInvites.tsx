@@ -42,7 +42,7 @@ const ListInvites = () => {
           MANAGEMENT_ENDPOINT.GET_ALL_PENDING_INVITES,
           {
             filters: {
-              status: EInviteStatus.PENDING,
+              invite_status: EInviteStatus.PENDING,
             },
             limit: PAGINATION.LARGE_LIMIT,
           }

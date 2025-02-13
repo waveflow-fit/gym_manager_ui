@@ -6,14 +6,17 @@ import Box from '@mui/material/Box';
 import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
 import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
 import useSession from '@/components/SessionProvider/useSession';
+import UserOnBoarding from '@/components/UserOnBoarding/UserOnBoardingModal';
 
 type TAppContainer = { children: React.ReactNode };
 
 const AppContainer = ({ children }: TAppContainer) => {
+  const { session } = useSession();
+  const mountApp = Boolean(session?.role);
   const theme = useTheme();
   const sidebarWidth = theme.custom.leftPanelWidthExpanded;
-  const { isLoading } = useSession();
-  if (isLoading) {
+  const { isLoading: isSessionLoading } = useSession();
+  if (isSessionLoading) {
     return (
       <Box
         height='100%'
@@ -26,6 +29,8 @@ const AppContainer = ({ children }: TAppContainer) => {
       </Box>
     );
   }
+  if (!mountApp) return <UserOnBoarding />;
+
   return (
     <Box
       height='100%'
