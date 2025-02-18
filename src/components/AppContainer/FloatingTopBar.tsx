@@ -1,7 +1,6 @@
 import { Avatar, Box, Skeleton } from '@mui/material';
 import { useMemo } from 'react';
 
-import NotificationCenter from '@/components/AppContainer/NotificationCenter';
 import useSession from '@/components/SessionProvider/useSession';
 import {
   MaxCharTypography,
@@ -31,7 +30,7 @@ const FloatingTopBar = () => {
       gap='1.2rem'
       py={1}
     >
-      <NotificationCenter />
+      {/* <NotificationCenter /> */}
       <SectionContainer
         sx={{
           display: 'flex',

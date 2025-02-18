@@ -22,6 +22,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ROUTE_URLS } from '@/common/appUrls';
+import { EUserRole } from '@/common/constants';
+import RoleFlag from '@/components/RoleFlag';
 import { handleLogout } from '@/components/SessionProvider/auth.utils';
 import { SectionContainer } from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -49,16 +51,19 @@ const FloatingSidebar = () => {
         text: 'Trainees',
         icon: <SportsGymnasticsIcon color='inherit' />,
         navigateTo: ROUTE_URLS.trainees,
+        allowedFor: EUserRole.TRAINER,
       },
       {
         text: 'Workout plans',
         icon: <FitnessCenterIcon color='inherit' />,
         navigateTo: ROUTE_URLS.workout,
+        allowedFor: EUserRole.TRAINER,
       },
       {
         text: 'Diet plans',
         icon: <FlatwareIcon color='inherit' />,
         navigateTo: ROUTE_URLS.diet,
+        allowedFor: EUserRole.TRAINER,
       },
       {
         text: 'Todo List',
@@ -102,39 +107,43 @@ const FloatingSidebar = () => {
             }}
             component='nav'
           >
-            {sidebarOptions.map(({ text, icon, handleClick, navigateTo }) => {
-              const sidebarItem = (
-                <ListItemButton
-                  key={text}
-                  selected={navigateTo === pathname}
-                  {...(handleClick ? { onClick: handleClick } : {})}
-                >
-                  <ListItemIcon
-                    sx={{
-                      color: theme.palette.text.secondary,
-                      ...(isSidebarMinimized
-                        ? { display: 'flex', justifyContent: 'center' }
-                        : {}),
-                    }}
+            {sidebarOptions.map(
+              ({ text, icon, handleClick, navigateTo, allowedFor }) => {
+                const sidebarItem = (
+                  <ListItemButton
+                    key={text}
+                    selected={navigateTo === pathname}
+                    {...(handleClick ? { onClick: handleClick } : {})}
                   >
-                    {icon}
-                  </ListItemIcon>
-                  {!isSidebarMinimized && (
-                    <ListItemText
-                      sx={{ whiteSpace: 'nowrap' }}
-                      primary={text}
-                    />
-                  )}
-                </ListItemButton>
-              );
-              return navigateTo ? (
-                <Link href={navigateTo} key={text}>
-                  {sidebarItem}
-                </Link>
-              ) : (
-                sidebarItem
-              );
-            })}
+                    <ListItemIcon
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        ...(isSidebarMinimized
+                          ? { display: 'flex', justifyContent: 'center' }
+                          : {}),
+                      }}
+                    >
+                      {icon}
+                    </ListItemIcon>
+                    {!isSidebarMinimized && (
+                      <ListItemText
+                        sx={{ whiteSpace: 'nowrap' }}
+                        primary={text}
+                      />
+                    )}
+                  </ListItemButton>
+                );
+                return (
+                  <RoleFlag key={text} allowedFor={allowedFor}>
+                    {navigateTo ? (
+                      <Link href={navigateTo}>{sidebarItem}</Link>
+                    ) : (
+                      sidebarItem
+                    )}
+                  </RoleFlag>
+                );
+              }
+            )}
           </List>
         </SectionContainer>
         <Box

@@ -37,7 +37,7 @@ const AddNewTraineeWidget = () => {
     <AddNewTraineeWidgetCtx
       value={{ invites, setInvites, addNewTraineeInvite, deleteTraineeInvite }}
     >
-      <Grid container height='50%' spacing={3}>
+      <Grid container spacing={3}>
         <Grid size={{ xs: 12, sm: 6, lg: 6 }} height='fit-content'>
           <AddNewTrainee />
         </Grid>
