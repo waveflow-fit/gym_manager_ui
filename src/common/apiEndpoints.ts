@@ -1,19 +1,15 @@
-export enum USER_ENDPOINTS {
-  ROOT = '/user',
-  GOOGLE_SIGN_IN = `${USER_ENDPOINTS.ROOT}/google-sign-in`,
-  GET_USER_SESSION = `${USER_ENDPOINTS.ROOT}/get-session`,
-  USER_LOGOUT = `${USER_ENDPOINTS.ROOT}/logout`,
-  USER_SAVE_ONBOARDING_DETAILS = `${USER_ENDPOINTS.ROOT}/onboarding-details`,
-}
+export const USER_ENDPOINTS = Object.freeze({
+  GOOGLE_SIGN_IN: '/user/google-sign-in',
+  GET_USER_SESSION: '/user/get-session',
+  USER_LOGOUT: '/user/logout',
+  USER_SAVE_ONBOARDING_DETAILS: '/user/onboarding-details',
+});
 
-export enum MANAGEMENT_ENDPOINTS {
-  ROOT = '/management',
-  SEND_INVITE = `${MANAGEMENT_ENDPOINTS.ROOT}/send-invite`,
-}
-
-export enum MANAGEMENT_ENDPOINT {
-  ROOT = '/management',
-  SEND_INVITE = `${MANAGEMENT_ENDPOINTS.ROOT}/send-invite`,
-  GET_ALL_PENDING_INVITES = `${MANAGEMENT_ENDPOINTS.ROOT}/get-all-invites-of-trainer`,
-  DELETE_INVITE = `${MANAGEMENT_ENDPOINTS.ROOT}/delete-invite/:inviteId`,
-}
+export const MANAGEMENT_ENDPOINTS = Object.freeze({
+  SEND_INVITE: '/management/send-invite',
+  GET_ALL_PENDING_INVITES: '/management/get-all-invites-of-trainer',
+  DELETE_INVITE: '/management/delete-invite/:inviteId',
+  GET_ALL_INVITES_OF_TRAINEE: '/management/get-all-invites-of-trainee',
+  ACCEPT_INVITE: (inviteId: string) => `/management/accept-invite/${inviteId}`,
+  REJECT_INVITE: (inviteId: string) => `/management/reject-invite/${inviteId}`,
+});

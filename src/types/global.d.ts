@@ -30,6 +30,7 @@ interface IInvite extends IBasicModelProps {
   invite_to_email: string; // email if of person invite sent to
   invite_status: EInviteStatus;
   is_deleted: boolean;
+  invited_by?: IUser;
 }
 
 interface ReducerAction<T = any> {

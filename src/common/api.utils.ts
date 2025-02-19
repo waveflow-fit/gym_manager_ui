@@ -40,11 +40,11 @@ const request = async (
 
 export const api = {
   get: (url: string, headers?: any) => request(url, { method: 'GET', headers }),
-  post: (url: string, body: any, headers?: any) =>
+  post: (url: string, body?: any, headers?: any) =>
     request(url, { method: 'POST', body, headers }),
-  put: (url: string, body: any, headers?: any) =>
+  put: (url: string, body?: any, headers?: any) =>
     request(url, { method: 'PUT', body, headers }),
-  patch: (url: string, body: any, headers?: any) =>
+  patch: (url: string, body?: any, headers?: any) =>
     request(url, { method: 'PATCH', body, headers }),
   delete: (url: string, headers?: any) =>
     request(url, { method: 'DELETE', headers }),
