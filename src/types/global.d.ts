@@ -1,5 +1,5 @@
 interface IBasicModelProps {
-  id?: string;
+  id: string;
   metadata: Record<string, any>;
 }
 

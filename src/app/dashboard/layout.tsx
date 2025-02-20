@@ -3,9 +3,12 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { ROUTE_URLS } from '@/common/appUrls';
+import { EUserRole } from '@/common/constants';
 import AppContainer from '@/components/AppContainer';
+import RoleFlag from '@/components/RoleFlag';
 import { getSession } from '@/components/SessionProvider/auth.utils';
 import SessionProvider from '@/components/SessionProvider/SessionProvider';
+import Association from '@/context/Association';
 
 export const metadata: Metadata = {
   title: 'Gym manager',
@@ -25,7 +28,11 @@ const DashboardLayout = async ({
   }
   return (
     <SessionProvider serverSession={session}>
-      <AppContainer>{children}</AppContainer>
+      <AppContainer>
+        <RoleFlag allowedFor={EUserRole.TRAINEE} fallback={children}>
+          <Association>{children}</Association>
+        </RoleFlag>
+      </AppContainer>
     </SessionProvider>
   );
 };

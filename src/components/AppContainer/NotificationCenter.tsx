@@ -1,5 +1,3 @@
-// import NotificationsIcon from '@mui/icons-material/Notifications';
-
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Badge } from '@mui/material';
 

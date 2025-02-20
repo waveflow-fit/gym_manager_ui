@@ -5,13 +5,18 @@ import useSession from '@/components/SessionProvider/useSession';
 const RoleFlag = ({
   children,
   allowedFor,
+  fallback = null,
 }: {
   children: React.ReactNode;
-  allowedFor?: EUserRole;
+  allowedFor: EUserRole;
+  fallback?: React.ReactNode;
 }) => {
   const { session, isLoading } = useSession();
-  if (isLoading || (allowedFor && session?.role !== allowedFor)) {
+  if (isLoading || !session?.role) {
     return null;
+  }
+  if (allowedFor && session.role !== allowedFor) {
+    return fallback;
   }
   return children;
 };

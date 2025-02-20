@@ -8,6 +8,7 @@ import {
   FormLabel,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Radio,
   RadioGroup,
   Select,
@@ -169,10 +170,15 @@ const UserOnBoarding = () => {
               }
             />
             <FormControl fullWidth>
-              <InputLabel>Eating Preference</InputLabel>
+              <InputLabel id='meal-selector-label'>
+                Eating Preference
+              </InputLabel>
               <Select
+                labelId='meal-selector-label'
+                id='meal-selector'
                 name='eating_preference'
                 defaultValue={userHealthProfileInitialValues.eating_preference}
+                input={<OutlinedInput label='Eating Preference' />}
               >
                 <MenuItem value='none'>None</MenuItem>
                 <MenuItem value='veg'>Veg</MenuItem>
