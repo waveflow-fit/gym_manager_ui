@@ -33,6 +33,12 @@ interface IInvite extends IBasicModelProps {
   invited_by?: IUser;
 }
 
+interface IAssociation extends IBasicModelProps {
+  trainerId: string;
+  traineeId: string;
+  inviteId: string;
+}
+
 interface ReducerAction<T = any> {
   payload?: T;
   type?: string;

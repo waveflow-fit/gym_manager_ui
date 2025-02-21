@@ -20,7 +20,7 @@ import {
   SectionContainer,
 } from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';
-import { AssociationCtx } from '@/context/Association';
+import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 
 const ActionButton = ({
   status,
@@ -31,7 +31,7 @@ const ActionButton = ({
 }) => {
   const [isActionPending, setIsActionPending] = useState(false);
   const { showToast } = useToast();
-  const { updateTraineeInvite } = useContext(AssociationCtx);
+  const { updateTraineeInviteStatus } = useContext(TraineeRelationshipCtx);
 
   const handleAction = async (action: 'accept' | 'reject') => {
     try {
@@ -46,7 +46,7 @@ const ActionButton = ({
         updatedStatus = EInviteStatus.REJECTED;
       }
 
-      updateTraineeInvite(inviteId, { invite_status: updatedStatus });
+      updateTraineeInviteStatus(inviteId, updatedStatus);
     } catch (e: any) {
       showToast({ severity: EToastType.ERROR, message: e.message });
     } finally {
@@ -75,7 +75,7 @@ const ActionButton = ({
 };
 const AcceptInviteWidget = () => {
   const { traineeInvites, traineeInvitesById, isTraineeInvitesLoading } =
-    useContext(AssociationCtx);
+    useContext(TraineeRelationshipCtx);
   return (
     <SectionContainer
       sx={{

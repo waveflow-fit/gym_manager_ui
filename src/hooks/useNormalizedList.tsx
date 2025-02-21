@@ -13,6 +13,7 @@ type ListState<T extends ListItem> = {
 export const useNormalizedList = <T extends ListItem>(
   initialList: T[] = []
 ) => {
+  const [isListLoading, setIsListLoading] = useState(false);
   const transformList = useCallback((list: T[]): ListState<T> => {
     const byId = list.reduce<Record<string, T>>((acc, item) => {
       acc[item.id] = item;
@@ -63,8 +64,18 @@ export const useNormalizedList = <T extends ListItem>(
       updateItem,
       removeItem,
       setList,
+      isListLoading,
+      setIsListLoading,
     }),
-    [addItem, removeItem, setList, state.allIds, state.byId, updateItem]
+    [
+      addItem,
+      isListLoading,
+      removeItem,
+      setList,
+      state.allIds,
+      state.byId,
+      updateItem,
+    ]
   );
   return memoisedState;
 };

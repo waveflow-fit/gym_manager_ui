@@ -5,8 +5,10 @@ import {
   OutlinedInput,
   Select,
 } from '@mui/material';
+import { useContext } from 'react';
 
 import { SectionContainer } from '@/components/StyledComponents';
+import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,6 +23,10 @@ const MenuProps = {
 
 const TrainerSwitcher = () => {
   const handleChange = console.log;
+  const { isAssociationsLoading, associations } = useContext(
+    TraineeRelationshipCtx
+  );
+  if (isAssociationsLoading) return null;
   return (
     <SectionContainer sx={{ p: 2, width: 'fit-content' }}>
       <FormControl>
@@ -28,16 +34,19 @@ const TrainerSwitcher = () => {
         <Select
           labelId='trainer-selector-label'
           id='trainer-selector'
-          value='aniketaniketaniketaniketaniket'
+          value='traineeInvites'
           onChange={handleChange}
           input={<OutlinedInput label='Name' />}
           MenuProps={MenuProps}
         >
-          {['aniketaniketaniketaniketaniket', 'jatin'].map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
+          {associations.map((id) => {
+            // const { i } = associationsById[inviteId];
+            return (
+              <MenuItem key={id} value={id}>
+                Aniket
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
     </SectionContainer>

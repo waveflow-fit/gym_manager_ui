@@ -3,46 +3,66 @@ import {
   createContext,
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
 
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
-import { PAGINATION } from '@/common/constants';
+import { EInviteStatus, PAGINATION } from '@/common/constants';
 import LS, { LSKeys } from '@/common/ls.utils';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 import { useNormalizedList } from '@/hooks/useNormalizedList';
 
-export const AssociationCtx = createContext<{
+export const TraineeRelationshipCtx = createContext<{
   traineeInvites: string[];
   traineeInvitesById: Record<string, IInvite>;
   isTraineeInvitesLoading: boolean;
-  updateTraineeInvite: (id: string, updates: Partial<IInvite>) => void;
+  updateTraineeInviteStatus: (id: string, updatedStatus: EInviteStatus) => void;
+
+  associations: string[];
+  associationsById: Record<string, IAssociation>;
+  isAssociationsLoading: boolean;
+
   selectedAssociationId: string | null;
   setSelectedAssociationId: Dispatch<SetStateAction<string | null>>;
 }>({
   traineeInvites: [],
   traineeInvitesById: {},
   isTraineeInvitesLoading: false,
-  updateTraineeInvite: () => {
-    throw new Error('Function not implemented.');
+  updateTraineeInviteStatus: () => {
+    throw new Error('Out of context');
   },
+
+  associations: [],
+  associationsById: {},
+  isAssociationsLoading: false,
+
   selectedAssociationId: null,
   setSelectedAssociationId: () => {
-    throw new Error('Function not implemented.');
+    throw new Error('Out of context');
   },
 });
 
-const Association = ({ children }: { children: React.ReactNode }) => {
+const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
   const {
     setList: setTraineeInvites,
     allIds: traineeInvites,
     byId: traineeInvitesById,
     updateItem: updateTraineeInvite,
+    isListLoading: isTraineeInvitesLoading,
+    setIsListLoading: setIsTraineeInvitesLoading,
   } = useNormalizedList<IInvite>([]);
-  const [isTraineeInvitesLoading, setIsTraineeInvitesLoading] =
-    useState<boolean>(false);
+  const {
+    setList: setAssociations,
+    allIds: associations,
+    byId: associationsById,
+    isListLoading: isAssociationsLoading,
+    setIsListLoading: setIsAssociationLoading,
+  } = useNormalizedList<IAssociation>([]);
+  const [reFetchAssociation, setRefetchAssociations] = useState(true);
+
   const { showToast } = useToast();
   const [selectedAssociationId, setSelectedAssociationId] = useState<
     string | null
@@ -66,7 +86,7 @@ const Association = ({ children }: { children: React.ReactNode }) => {
         setIsTraineeInvitesLoading(false);
       }
     })();
-  }, [setTraineeInvites, showToast]);
+  }, [setIsTraineeInvitesLoading, setTraineeInvites, showToast]);
 
   useEffect(() => {
     if (traineeInvites.length <= 0) return;
@@ -87,20 +107,45 @@ const Association = ({ children }: { children: React.ReactNode }) => {
     }
   }, [traineeInvites, traineeInvitesById]);
 
+  useEffect(() => {
+    if (!reFetchAssociation) return;
+    try {
+      setIsAssociationLoading(true);
+    } catch (e: any) {
+      setAssociations([]);
+      showToast({ message: e.message, severity: EToastType.ERROR });
+    } finally {
+      setIsAssociationLoading(false);
+      setRefetchAssociations(false);
+    }
+  }, [reFetchAssociation, setAssociations, setIsAssociationLoading, showToast]);
+
+  const updateTraineeInviteStatus = useCallback(
+    (id: string, updatedStatus: EInviteStatus) => {
+      updateTraineeInvite(id, { invite_status: updatedStatus });
+    },
+    [updateTraineeInvite]
+  );
+
   return (
-    <AssociationCtx
+    <TraineeRelationshipCtx
       value={{
         traineeInvites,
         traineeInvitesById,
-        updateTraineeInvite,
+        updateTraineeInviteStatus,
         isTraineeInvitesLoading,
+
+        associations,
+        associationsById,
+        isAssociationsLoading,
+
         setSelectedAssociationId,
         selectedAssociationId,
       }}
     >
       {children}
-    </AssociationCtx>
+    </TraineeRelationshipCtx>
   );
 };
 
-export default Association;
+export default TraineeRelationship;

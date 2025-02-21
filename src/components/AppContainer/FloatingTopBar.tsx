@@ -1,7 +1,9 @@
 import { Avatar, Box, Skeleton } from '@mui/material';
 import { useMemo } from 'react';
 
+import { EUserRole } from '@/common/constants';
 import TrainerSwitcher from '@/components/AppContainer/TrainerSwitcher';
+import RoleFlag from '@/components/RoleFlag';
 import useSession from '@/components/SessionProvider/useSession';
 import {
   MaxCharTypography,
@@ -31,7 +33,9 @@ const FloatingTopBar = () => {
       gap='1.2rem'
       py={1}
     >
-      <TrainerSwitcher />
+      <RoleFlag allowedFor={EUserRole.TRAINEE}>
+        <TrainerSwitcher />
+      </RoleFlag>
       <SectionContainer
         sx={{
           display: 'flex',
