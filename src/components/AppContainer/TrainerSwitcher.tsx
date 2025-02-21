@@ -1,4 +1,5 @@
 import {
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -16,7 +17,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      minWidth: 180,
     },
   },
 };
@@ -26,27 +27,34 @@ const TrainerSwitcher = () => {
   const { isAssociationsLoading, associations } = useContext(
     TraineeRelationshipCtx
   );
-  if (isAssociationsLoading) return null;
+  if (isAssociationsLoading) return <CircularProgress size='30px' />;
   return (
-    <SectionContainer sx={{ p: 2, width: 'fit-content' }}>
-      <FormControl>
-        <InputLabel id='trainer-selector-label'>Name</InputLabel>
+    <SectionContainer
+      sx={{
+        px: 2,
+        py: 1,
+        height: '60px',
+        width: '180px',
+      }}
+    >
+      <FormControl fullWidth>
+        <InputLabel id='trainer-selector-label'>Trainer</InputLabel>
         <Select
           labelId='trainer-selector-label'
           id='trainer-selector'
-          value='traineeInvites'
+          value='aniket'
           onChange={handleChange}
-          input={<OutlinedInput label='Name' />}
+          input={<OutlinedInput label='Name' sx={{ height: '45px' }} />}
           MenuProps={MenuProps}
+          size='small'
         >
-          {associations.map((id) => {
-            // const { i } = associationsById[inviteId];
-            return (
-              <MenuItem key={id} value={id}>
-                Aniket
-              </MenuItem>
-            );
-          })}
+          {/* {associations.map((id) => { */}
+          {/* return ( */}
+          <MenuItem key='aniket' value='aniket'>
+            Aniket
+          </MenuItem>
+          {/* ); */}
+          {/* })} */}
         </Select>
       </FormControl>
     </SectionContainer>
