@@ -15,11 +15,9 @@ const RoleFlag = ({
   if (!session?.role) {
     return <>Session does't exit</>;
   }
-  // Allowed for both
-  if (!allowedFor) return children;
 
   // Allowed for specific role
-  if (session.role === allowedFor) {
+  if (!allowedFor || session.role === allowedFor) {
     return children;
   }
 

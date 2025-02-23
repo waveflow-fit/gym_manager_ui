@@ -7,7 +7,7 @@ export const getSession = async (token?: string) => {
     const headers = token ? { token } : {};
     const userSessionDetails = (await api.get(
       USER_ENDPOINTS.GET_USER_SESSION,
-      headers
+      headers as Record<string, string>
     )) as TUserSession;
     return userSessionDetails;
   } catch {

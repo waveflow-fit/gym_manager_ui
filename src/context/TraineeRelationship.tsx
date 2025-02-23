@@ -1,10 +1,8 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
-import { ROUTE_URLS } from '@/common/appUrls';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import LS, { LSKeys } from '@/common/ls.utils';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -60,19 +58,15 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
   const [reFetchAssociation, setRefetchAssociations] = useState(true);
 
   const { showToast } = useToast();
-  const router = useRouter();
+
   const [selectedAssociationId, _setSelectedAssociationId] = useState<
     string | null
   >(null);
 
-  const setSelectedAssociationId = useCallback(
-    (id: string) => {
-      LS.setItem<string>(LSKeys.SELECTED_ASSOCIATION, id);
-      _setSelectedAssociationId(id);
-      router.push(ROUTE_URLS.dashboard);
-    },
-    [router]
-  );
+  const setSelectedAssociationId = useCallback((id: string) => {
+    LS.setItem<string>(LSKeys.SELECTED_ASSOCIATION, id);
+    _setSelectedAssociationId(id);
+  }, []);
 
   useEffect(() => {
     (async () => {

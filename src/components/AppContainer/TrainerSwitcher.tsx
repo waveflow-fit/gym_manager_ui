@@ -6,8 +6,10 @@ import {
   OutlinedInput,
   Select,
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
+import { ROUTE_URLS } from '@/common/appUrls';
 import { SectionContainer } from '@/components/StyledComponents';
 import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 
@@ -29,6 +31,7 @@ const TrainerSwitcher = () => {
     setSelectedAssociationId,
     selectedAssociationId,
   } = useContext(TraineeRelationshipCtx);
+  const router = useRouter();
   if (associations.length === 0) return null;
   if (isAssociationsLoading) return <CircularProgress size='30px' />;
   return (
@@ -48,6 +51,7 @@ const TrainerSwitcher = () => {
           value={selectedAssociationId || ''}
           onChange={(e) => {
             setSelectedAssociationId(e.target.value as string);
+            router.push(ROUTE_URLS.dashboard);
           }}
           input={
             <OutlinedInput label='Training with' sx={{ height: '45px' }} />
