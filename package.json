@@ -12,6 +12,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bprogress/next": "^3.0.6",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -20,6 +21,7 @@
     "@mui/material-nextjs": "^6.3.1",
     "@react-oauth/google": "^0.12.1",
     "formik": "^2.4.6",
+    "holy-loader": "^2.3.13",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

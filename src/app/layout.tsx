@@ -2,8 +2,10 @@ import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Metadata } from 'next';
 
+import NavigationLoader from '@/components/NavigationLoader/NavigationLoader';
 import ToastProvider from '@/components/Toast/ToastProvider';
 import theme from '@/theme';
+
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -20,11 +22,13 @@ const RootLayout = async ({
   return (
     <html lang='en'>
       <body>
-        <ToastProvider>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </AppRouterCacheProvider>
-        </ToastProvider>
+        <NavigationLoader>
+          <ToastProvider>
+            <AppRouterCacheProvider>
+              <ThemeProvider theme={theme}>{children}</ThemeProvider>
+            </AppRouterCacheProvider>
+          </ToastProvider>
+        </NavigationLoader>
       </body>
     </html>
   );
