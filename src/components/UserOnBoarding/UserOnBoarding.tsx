@@ -15,13 +15,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
 import { useActionState, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { USER_ENDPOINTS } from '@/common/apiEndpoints';
 import { convertFormDataToJson } from '@/common/app.utils';
-import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
 import useSession from '@/components/SessionProvider/useSession';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -40,12 +38,9 @@ const userHealthProfileInitialValues = {
 
 type TUserHealthProfile = typeof userHealthProfileInitialValues;
 
-const UserOnBoarding = () => {
-  const { session, fetchSession: refetchSession } = useSession();
-  const [open, setOpen] = useState(!session?.role);
-  const handleClose = () => setOpen(!open);
+const UserOnBoarding = ({ children }) => {
+  const { fetchSession: refetchSession, session } = useSession();
   const [userRole, setUserRole] = useState<EUserRole>(EUserRole.TRAINER);
-  const router = useRouter();
   const { showToast } = useToast();
   const [formState, formAction, isPending] = useActionState(
     async (prevState: TUserHealthProfile, formData: FormData) => {
@@ -54,7 +49,6 @@ const UserOnBoarding = () => {
         ...convertFormDataToJson(formData),
         diabetes: formData.get('diabetes') ? true : false,
       };
-
       try {
         await api.post(USER_ENDPOINTS.USER_SAVE_ONBOARDING_DETAILS, {
           healthInfo: {
@@ -68,9 +62,7 @@ const UserOnBoarding = () => {
           },
           userRole,
         });
-        handleClose();
-        refetchSession();
-        router.push(ROUTE_URLS.dashboard);
+        await refetchSession();
         showToast({
           severity: EToastType.SUCCESS,
           message: 'Details saved successfully',
@@ -82,6 +74,8 @@ const UserOnBoarding = () => {
     },
     userHealthProfileInitialValues
   );
+
+  if (Boolean(session?.role)) return children;
 
   return (
     <Box

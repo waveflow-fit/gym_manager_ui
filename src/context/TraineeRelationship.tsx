@@ -13,7 +13,7 @@ import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import LS, { LSKeys } from '@/common/ls.utils';
 import useToast, { EToastType } from '@/components/Toast/useToast';
-import { useNormalizedList } from '@/hooks/useNormalizedList';
+import { useDynamicNormalizedList } from '@/hooks/useDynamicNormalizedList';
 
 export const TraineeRelationshipCtx = createContext<{
   traineeInvites: string[];
@@ -53,14 +53,15 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
     updateItem: updateTraineeInvite,
     isListLoading: isTraineeInvitesLoading,
     setIsListLoading: setIsTraineeInvitesLoading,
-  } = useNormalizedList<IInvite>([]);
+  } = useDynamicNormalizedList<IInvite>([]);
   const {
     setList: setAssociations,
     allIds: associations,
     byId: associationsById,
     isListLoading: isAssociationsLoading,
     setIsListLoading: setIsAssociationLoading,
-  } = useNormalizedList<IAssociation>([]);
+  } = useDynamicNormalizedList<IAssociation>([]);
+
   const [reFetchAssociation, setRefetchAssociations] = useState(true);
 
   const { showToast } = useToast();
@@ -109,19 +110,29 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!reFetchAssociation) return;
-    try {
-      setIsAssociationLoading(true);
-    } catch (e: any) {
-      setAssociations([]);
-      showToast({ message: e.message, severity: EToastType.ERROR });
-    } finally {
-      setIsAssociationLoading(false);
-      setRefetchAssociations(false);
-    }
+    (async () => {
+      try {
+        setIsAssociationLoading(true);
+        const associations = await api.post<
+          { limit: number },
+          { data: IAssociation[] }
+        >(MANAGEMENT_ENDPOINTS.GET_ALL_ASSOCIATION_FOR_TRAINEE, {
+          limit: PAGINATION.LARGE_LIMIT,
+        });
+        setAssociations(associations.data);
+      } catch (e: any) {
+        setAssociations([]);
+        showToast({ message: e.message, severity: EToastType.ERROR });
+      } finally {
+        setIsAssociationLoading(false);
+        setRefetchAssociations(false);
+      }
+    })();
   }, [reFetchAssociation, setAssociations, setIsAssociationLoading, showToast]);
 
   const updateTraineeInviteStatus = useCallback(
     (id: string, updatedStatus: EInviteStatus) => {
+      setRefetchAssociations(true);
       updateTraineeInvite(id, { invite_status: updatedStatus });
     },
     [updateTraineeInvite]

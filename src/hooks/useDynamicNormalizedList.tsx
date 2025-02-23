@@ -10,10 +10,10 @@ type ListState<T extends ListItem> = {
   allIds: string[];
 };
 
-export const useNormalizedList = <T extends ListItem>(
+export const useDynamicNormalizedList = <T extends ListItem>(
   initialList: T[] = []
 ) => {
-  const [isListLoading, setIsListLoading] = useState(false);
+  const [isListLoading, setIsListLoading] = useState(true);
   const transformList = useCallback((list: T[]): ListState<T> => {
     const byId = list.reduce<Record<string, T>>((acc, item) => {
       acc[item.id] = item;

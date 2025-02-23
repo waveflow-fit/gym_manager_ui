@@ -8,17 +8,23 @@ const RoleFlag = ({
   fallback = null,
 }: {
   children: React.ReactNode;
-  allowedFor: EUserRole;
+  allowedFor?: EUserRole;
   fallback?: React.ReactNode;
 }) => {
-  const { session, isLoading } = useSession();
-  if (isLoading || !session?.role) {
-    return null;
+  const { session } = useSession();
+  if (!session?.role) {
+    return <>Session does't exit</>;
   }
-  if (allowedFor && session.role !== allowedFor) {
-    return fallback;
+  // Allowed for both
+  if (!allowedFor) return children;
+
+  // Allowed for specific role
+  if (session.role === allowedFor) {
+    return children;
   }
-  return children;
+
+  // Fallback if role doesn't match up
+  return fallback;
 };
 
 export default RoleFlag;

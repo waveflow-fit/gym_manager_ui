@@ -1,35 +1,19 @@
 'use client';
 
-import { CircularProgress, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
 import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
-import useSession from '@/components/SessionProvider/useSession';
-import UserOnBoarding from '@/components/UserOnBoarding/UserOnBoardingModal';
 
 type TAppContainer = { children: React.ReactNode };
 
+/**
+ * App container contains the sidebar and the top bar required in app shell
+ */
 const AppContainer = ({ children }: TAppContainer) => {
-  const { session } = useSession();
-  const mountApp = Boolean(session?.role);
   const theme = useTheme();
   const sidebarWidth = theme.custom.leftPanelWidthExpanded;
-  const { isLoading: isSessionLoading } = useSession();
-  if (isSessionLoading) {
-    return (
-      <Box
-        height='100%'
-        width='100%'
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-  if (!mountApp) return <UserOnBoarding />;
 
   return (
     <Box

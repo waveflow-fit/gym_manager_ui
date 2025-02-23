@@ -28,7 +28,7 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     setAlertOpts(null);
   };
   const showToast = useCallback((opts: TInputAlertOpts) => {
-    setAlertOpts({ duration: 10000, ...opts, show: true });
+    setAlertOpts({ duration: 3000, ...opts, show: true });
   }, []);
   return (
     <ToastContext value={{ showToast }}>

@@ -1,6 +1,9 @@
 'use client';
-import { createContext, useEffect, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import { createContext, useCallback, useEffect, useState } from 'react';
 
+import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
 import { getSession } from '@/components/SessionProvider/auth.utils';
 
@@ -14,11 +17,9 @@ export type TUserSession = {
 
 export const SessionContext = createContext<{
   session: TUserSession;
-  isLoading: boolean;
   fetchSession: () => void;
 }>({
   session: null,
-  isLoading: false,
   fetchSession: () => {
     throw new Error('Implement function: fetchSessionFromServer');
   },
@@ -32,25 +33,48 @@ const SessionProvider = ({
   serverSession?: TUserSession;
 }) => {
   const [session, setSession] = useState<TUserSession>(serverSession || null);
-  const [isSessionLoading, setIsSessionLoading] = useState(false);
-  const fetchSession = async () => {
-    setIsSessionLoading(true);
-    const userSessionDetails = await getSession();
-    setSession(userSessionDetails);
-    setIsSessionLoading(false);
-  };
+  const [isSessionLoading, setIsSessionLoading] = useState(!Boolean(session));
+  const router = useRouter();
+  const fetchSession = useCallback(async () => {
+    try {
+      setIsSessionLoading(true);
+      const userSessionDetails = await getSession();
+      if (!userSessionDetails) {
+        throw new Error("Session  doesn't exist");
+      }
+      setSession(userSessionDetails);
+      router.push(ROUTE_URLS.dashboard);
+    } catch {
+      setSession(null);
+      router.push(ROUTE_URLS.root);
+    } finally {
+      setIsSessionLoading(false);
+    }
+  }, [router]);
 
   useEffect(() => {
     (async () => {
       if (session) return;
       fetchSession();
     })();
-  }, [session]);
+  }, [fetchSession, session]);
+
+  if (isSessionLoading) {
+    return (
+      <Box
+        height='100%'
+        width='100%'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <SessionContext
-      value={{ session, isLoading: isSessionLoading, fetchSession }}
-    >
+    <SessionContext value={{ session, fetchSession }}>
       {children}
     </SessionContext>
   );

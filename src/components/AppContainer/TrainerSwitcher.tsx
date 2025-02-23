@@ -17,14 +17,14 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      minWidth: 180,
+      minWidth: 280,
     },
   },
 };
 
 const TrainerSwitcher = () => {
   const handleChange = console.log;
-  const { isAssociationsLoading, associations } = useContext(
+  const { isAssociationsLoading, associations, associationsById } = useContext(
     TraineeRelationshipCtx
   );
   if (isAssociationsLoading) return <CircularProgress size='30px' />;
@@ -38,7 +38,7 @@ const TrainerSwitcher = () => {
       }}
     >
       <FormControl fullWidth>
-        <InputLabel id='trainer-selector-label'>Trainer</InputLabel>
+        <InputLabel id='trainer-selector-label'>Training with</InputLabel>
         <Select
           labelId='trainer-selector-label'
           id='trainer-selector'
@@ -48,13 +48,15 @@ const TrainerSwitcher = () => {
           MenuProps={MenuProps}
           size='small'
         >
-          {/* {associations.map((id) => { */}
-          {/* return ( */}
-          <MenuItem key='aniket' value='aniket'>
-            Aniket
-          </MenuItem>
-          {/* ); */}
-          {/* })} */}
+          {associations.map((id) => {
+            const association = associationsById[id];
+            // console.log(association.trainee?.name);
+            return (
+              <MenuItem key={id} value={id}>
+                {association.trainer?.name}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
     </SectionContainer>

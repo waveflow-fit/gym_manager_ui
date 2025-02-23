@@ -10,6 +10,7 @@ export const MANAGEMENT_ENDPOINTS = Object.freeze({
   GET_ALL_PENDING_INVITES: '/management/get-all-invites-of-trainer',
   DELETE_INVITE: '/management/delete-invite/:inviteId',
   GET_ALL_INVITES_OF_TRAINEE: '/management/get-all-invites-of-trainee',
+  GET_ALL_ASSOCIATION_FOR_TRAINEE: '/management/get-all-association-of-trainee',
   ACCEPT_INVITE: (inviteId: string) => `/management/accept-invite/${inviteId}`,
   REJECT_INVITE: (inviteId: string) => `/management/reject-invite/${inviteId}`,
 });

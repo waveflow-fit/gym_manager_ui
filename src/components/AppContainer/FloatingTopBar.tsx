@@ -1,4 +1,4 @@
-import { Avatar, Box, Skeleton } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 import { useMemo } from 'react';
 
 import { EUserRole } from '@/common/constants';
@@ -11,15 +11,14 @@ import {
 } from '@/components/StyledComponents';
 
 const FloatingTopBar = () => {
-  const { session, isLoading: isSessionLoading } = useSession();
+  const { session } = useSession();
 
-  const { userImage, userName, isLoading } = useMemo(
+  const { userImage, userName } = useMemo(
     () => ({
       userImage: session?.image || '',
       userName: session?.name || 'Manager',
-      isLoading: isSessionLoading,
     }),
-    [isSessionLoading, session?.image, session?.name]
+    [session?.image, session?.name]
   );
 
   return (
@@ -44,23 +43,16 @@ const FloatingTopBar = () => {
           width: 'fit-content',
         }}
       >
-        {isLoading ? (
-          <>
-            <Skeleton variant='circular' width={40} height={40} />
-            <Skeleton variant='rectangular' width={120} height={30} />
-          </>
-        ) : (
-          <>
-            <Avatar
-              alt={userName}
-              src={userImage}
-              sx={{ width: 40, height: 40 }}
-            />
-            <MaxCharTypography variant='body1' maxchars={10}>
-              {userName}
-            </MaxCharTypography>
-          </>
-        )}
+        <>
+          <Avatar
+            alt={userName}
+            src={userImage}
+            sx={{ width: 40, height: 40 }}
+          />
+          <MaxCharTypography variant='body1' maxchars={10}>
+            {userName}
+          </MaxCharTypography>
+        </>
       </SectionContainer>
     </Box>
   );

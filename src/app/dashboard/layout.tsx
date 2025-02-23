@@ -8,6 +8,7 @@ import AppContainer from '@/components/AppContainer';
 import RoleFlag from '@/components/RoleFlag';
 import { getSession } from '@/components/SessionProvider/auth.utils';
 import SessionProvider from '@/components/SessionProvider/SessionProvider';
+import UserOnBoarding from '@/components/UserOnBoarding/UserOnBoarding';
 import TraineeRelationship from '@/context/TraineeRelationship';
 
 export const metadata: Metadata = {
@@ -26,13 +27,17 @@ const DashboardLayout = async ({
   if (!session) {
     redirect(ROUTE_URLS.root);
   }
+
+  // on session has a loading state without session app won't load
   return (
     <SessionProvider serverSession={session}>
-      <AppContainer>
-        <RoleFlag allowedFor={EUserRole.TRAINEE} fallback={children}>
-          <TraineeRelationship>{children}</TraineeRelationship>
-        </RoleFlag>
-      </AppContainer>
+      <UserOnBoarding>
+        <AppContainer>
+          <RoleFlag allowedFor={EUserRole.TRAINEE} fallback={children}>
+            <TraineeRelationship>{children}</TraineeRelationship>
+          </RoleFlag>
+        </AppContainer>
+      </UserOnBoarding>
     </SessionProvider>
   );
 };
