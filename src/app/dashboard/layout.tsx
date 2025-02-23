@@ -34,7 +34,7 @@ const DashboardLayout = async ({
       <UserOnBoarding>
         <RoleFlag
           allowedFor={EUserRole.TRAINEE}
-          fallback={<AppContainer>children</AppContainer>}
+          fallback={<AppContainer>{children}</AppContainer>}
         >
           <TraineeRelationship>
             <AppContainer>{children}</AppContainer>
