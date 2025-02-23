@@ -32,11 +32,14 @@ const DashboardLayout = async ({
   return (
     <SessionProvider serverSession={session}>
       <UserOnBoarding>
-        <AppContainer>
-          <RoleFlag allowedFor={EUserRole.TRAINEE} fallback={children}>
-            <TraineeRelationship>{children}</TraineeRelationship>
-          </RoleFlag>
-        </AppContainer>
+        <RoleFlag
+          allowedFor={EUserRole.TRAINEE}
+          fallback={<AppContainer>children</AppContainer>}
+        >
+          <TraineeRelationship>
+            <AppContainer>{children}</AppContainer>
+          </TraineeRelationship>
+        </RoleFlag>
       </UserOnBoarding>
     </SessionProvider>
   );

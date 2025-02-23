@@ -1,12 +1,5 @@
 'use client';
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
@@ -26,7 +19,7 @@ export const TraineeRelationshipCtx = createContext<{
   isAssociationsLoading: boolean;
 
   selectedAssociationId: string | null;
-  setSelectedAssociationId: Dispatch<SetStateAction<string | null>>;
+  setSelectedAssociationId: (id: string) => void;
 }>({
   traineeInvites: [],
   traineeInvitesById: {},
@@ -65,7 +58,7 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
   const [reFetchAssociation, setRefetchAssociations] = useState(true);
 
   const { showToast } = useToast();
-  const [selectedAssociationId, setSelectedAssociationId] = useState<
+  const [selectedAssociationId, _setSelectedAssociationId] = useState<
     string | null
   >(null);
 
@@ -90,25 +83,6 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
   }, [setIsTraineeInvitesLoading, setTraineeInvites, showToast]);
 
   useEffect(() => {
-    if (traineeInvites.length <= 0) return;
-    const selectFirstInvite = () => {
-      const firstInvite = traineeInvites[0];
-      LS.setItem<string>(LSKeys.SELECTED_ASSOCIATION, firstInvite);
-      setSelectedAssociationId(firstInvite);
-    };
-    if (!LS.hasItem(LSKeys.SELECTED_ASSOCIATION)) {
-      selectFirstInvite();
-    } else {
-      const savedInviteId = LS.getItem<string>(LSKeys.SELECTED_ASSOCIATION);
-      if (savedInviteId && traineeInvitesById[savedInviteId]) {
-        setSelectedAssociationId(savedInviteId);
-      } else {
-        selectFirstInvite();
-      }
-    }
-  }, [traineeInvites, traineeInvitesById]);
-
-  useEffect(() => {
     if (!reFetchAssociation) return;
     (async () => {
       try {
@@ -130,6 +104,26 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
     })();
   }, [reFetchAssociation, setAssociations, setIsAssociationLoading, showToast]);
 
+  useEffect(() => {
+    if (associations.length <= 0) return;
+    const selectFirstAssociation = () => {
+      const firstAssociationId = associations[0];
+      setSelectedAssociationId(firstAssociationId);
+    };
+    if (!LS.hasItem(LSKeys.SELECTED_ASSOCIATION)) {
+      selectFirstAssociation();
+    } else {
+      const savedAssociationId = LS.getItem<string>(
+        LSKeys.SELECTED_ASSOCIATION
+      );
+      if (savedAssociationId && associationsById[savedAssociationId]) {
+        setSelectedAssociationId(savedAssociationId);
+      } else {
+        selectFirstAssociation();
+      }
+    }
+  }, [associations, associationsById]);
+
   const updateTraineeInviteStatus = useCallback(
     (id: string, updatedStatus: EInviteStatus) => {
       setRefetchAssociations(true);
@@ -137,6 +131,11 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
     },
     [updateTraineeInvite]
   );
+
+  const setSelectedAssociationId = (id: string) => {
+    LS.setItem<string>(LSKeys.SELECTED_ASSOCIATION, id);
+    _setSelectedAssociationId(id);
+  };
 
   return (
     <TraineeRelationshipCtx

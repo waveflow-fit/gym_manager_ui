@@ -17,16 +17,19 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      minWidth: 280,
     },
   },
 };
 
 const TrainerSwitcher = () => {
-  const handleChange = console.log;
-  const { isAssociationsLoading, associations, associationsById } = useContext(
-    TraineeRelationshipCtx
-  );
+  const {
+    isAssociationsLoading,
+    associations,
+    associationsById,
+    setSelectedAssociationId,
+    selectedAssociationId,
+  } = useContext(TraineeRelationshipCtx);
+  if (associations.length === 0) return null;
   if (isAssociationsLoading) return <CircularProgress size='30px' />;
   return (
     <SectionContainer
@@ -34,7 +37,7 @@ const TrainerSwitcher = () => {
         px: 2,
         py: 1,
         height: '60px',
-        width: '180px',
+        width: '280px',
       }}
     >
       <FormControl fullWidth>
@@ -42,15 +45,18 @@ const TrainerSwitcher = () => {
         <Select
           labelId='trainer-selector-label'
           id='trainer-selector'
-          value='aniket'
-          onChange={handleChange}
-          input={<OutlinedInput label='Name' sx={{ height: '45px' }} />}
+          value={selectedAssociationId || ''}
+          onChange={(e) => {
+            setSelectedAssociationId(e.target.value as string);
+          }}
+          input={
+            <OutlinedInput label='Training with' sx={{ height: '45px' }} />
+          }
           MenuProps={MenuProps}
           size='small'
         >
           {associations.map((id) => {
             const association = associationsById[id];
-            // console.log(association.trainee?.name);
             return (
               <MenuItem key={id} value={id}>
                 {association.trainer?.name}
