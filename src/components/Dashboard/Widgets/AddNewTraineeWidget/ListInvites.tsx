@@ -12,7 +12,7 @@ import {
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { api } from '@/common/api.utils';
-import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
+import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';
 import { endpointWithUrlParams } from '@/common/app.utils';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
@@ -40,7 +40,7 @@ const ListInvites = () => {
       try {
         setIsLoading(true);
         const response = await api.post(
-          MANAGEMENT_ENDPOINTS.GET_ALL_PENDING_INVITES,
+          MANAGEMENT_TRAINER_ENDPOINTS.GET_ALL_PENDING_INVITES,
           {
             filters: {
               invite_status: EInviteStatus.PENDING,
@@ -62,7 +62,7 @@ const ListInvites = () => {
       try {
         setIsDeleting(true);
         await api.delete(
-          endpointWithUrlParams(MANAGEMENT_ENDPOINTS.DELETE_INVITE, {
+          endpointWithUrlParams(MANAGEMENT_TRAINER_ENDPOINTS.DELETE_INVITE, {
             inviteId,
           })
         );

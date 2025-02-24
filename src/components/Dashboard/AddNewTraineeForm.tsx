@@ -3,7 +3,7 @@ import { Button, TextField } from '@mui/material';
 import { useActionState, useContext, useState } from 'react';
 
 import { api } from '@/common/api.utils';
-import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
+import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';
 import { convertFormDataToJson } from '@/common/app.utils';
 import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -25,7 +25,7 @@ const AddNewTraineeForm = () => {
       };
       try {
         const response = await api.post(
-          MANAGEMENT_ENDPOINTS.SEND_INVITE,
+          MANAGEMENT_TRAINER_ENDPOINTS.SEND_INVITE,
           updatedFormState
         );
         setTraineeEmailInput('');

@@ -2,7 +2,7 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { api } from '@/common/api.utils';
-import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
+import { MANAGEMENT_TRAINEE_ENDPOINTS } from '@/common/apiEndpoints';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import LS, { LSKeys } from '@/common/ls.utils';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -73,7 +73,7 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
       try {
         setIsTraineeInvitesLoading(true);
         const invites = await api.post<{ limit: number }, { data: IInvite[] }>(
-          MANAGEMENT_ENDPOINTS.GET_ALL_INVITES_OF_TRAINEE,
+          MANAGEMENT_TRAINEE_ENDPOINTS.GET_ALL_INVITES,
           {
             limit: PAGINATION.LARGE_LIMIT,
           }
@@ -96,7 +96,7 @@ const TraineeRelationship = ({ children }: { children: React.ReactNode }) => {
         const associations = await api.post<
           { limit: number },
           { data: IAssociation[] }
-        >(MANAGEMENT_ENDPOINTS.GET_ALL_ASSOCIATION_FOR_TRAINEE, {
+        >(MANAGEMENT_TRAINEE_ENDPOINTS.GET_ALL_ASSOCIATION, {
           limit: PAGINATION.LARGE_LIMIT,
         });
         setAssociations(associations.data);

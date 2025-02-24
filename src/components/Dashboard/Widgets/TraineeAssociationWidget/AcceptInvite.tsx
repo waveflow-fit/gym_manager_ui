@@ -13,7 +13,7 @@ import {
 import { useContext, useState } from 'react';
 
 import { api } from '@/common/api.utils';
-import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
+import { MANAGEMENT_TRAINEE_ENDPOINTS } from '@/common/apiEndpoints';
 import { EInviteStatus } from '@/common/constants';
 import {
   CenterAlign,
@@ -40,11 +40,11 @@ const ActionButton = ({
       setIsActionPending(true);
       let updatedStatus;
       if (action === 'accept') {
-        await api.patch(MANAGEMENT_ENDPOINTS.ACCEPT_INVITE(inviteId));
+        await api.patch(MANAGEMENT_TRAINEE_ENDPOINTS.ACCEPT_INVITE(inviteId));
         updatedStatus = EInviteStatus.ACCEPTED;
       }
       if (action === 'reject') {
-        await api.patch(MANAGEMENT_ENDPOINTS.REJECT_INVITE(inviteId));
+        await api.patch(MANAGEMENT_TRAINEE_ENDPOINTS.REJECT_INVITE(inviteId));
         updatedStatus = EInviteStatus.REJECTED;
       }
 

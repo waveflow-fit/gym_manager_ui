@@ -5,12 +5,16 @@ export const USER_ENDPOINTS = Object.freeze({
   USER_SAVE_ONBOARDING_DETAILS: '/user/onboarding-details',
 });
 
-export const MANAGEMENT_ENDPOINTS = Object.freeze({
-  SEND_INVITE: '/management/send-invite',
-  GET_ALL_PENDING_INVITES: '/management/get-all-invites-of-trainer',
-  DELETE_INVITE: '/management/delete-invite/:inviteId',
-  GET_ALL_INVITES_OF_TRAINEE: '/management/get-all-invites-of-trainee',
-  GET_ALL_ASSOCIATION_FOR_TRAINEE: '/management/get-all-association-of-trainee',
-  ACCEPT_INVITE: (inviteId: string) => `/management/accept-invite/${inviteId}`,
-  REJECT_INVITE: (inviteId: string) => `/management/reject-invite/${inviteId}`,
+export const MANAGEMENT_TRAINER_ENDPOINTS = Object.freeze({
+  SEND_INVITE: '/management/trainer/send-invite',
+  GET_ALL_PENDING_INVITES: '/management/trainer/get-all-invites',
+  DELETE_INVITE: '/management/trainer/delete-invite/:inviteId',
+});
+export const MANAGEMENT_TRAINEE_ENDPOINTS = Object.freeze({
+  GET_ALL_INVITES: '/management/trainee/get-all-invites',
+  GET_ALL_ASSOCIATION: '/management/trainee/get-all-association',
+  ACCEPT_INVITE: (inviteId: string) =>
+    `/management/trainee/accept-invite/${inviteId}`,
+  REJECT_INVITE: (inviteId: string) =>
+    `/management/trainee/reject-invite/${inviteId}`,
 });
