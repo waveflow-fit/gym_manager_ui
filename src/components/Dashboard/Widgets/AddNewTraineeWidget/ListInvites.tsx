@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Image from 'next/image';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { api } from '@/common/api.utils';
@@ -18,9 +17,11 @@ import { endpointWithUrlParams } from '@/common/app.utils';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
 import {
+  CenterAlign,
   MaxCharTypography,
   SectionContainer,
 } from '@/components/StyledComponents';
+import { NoResultFound } from '@/components/StyledComponents/NoResultFound';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const ListInvites = () => {
@@ -83,9 +84,9 @@ const ListInvites = () => {
   const list = useMemo(() => {
     if (isLoading) {
       return (
-        <div className='flex items-center justify-center flex-col w-full h-full gap-4'>
+        <CenterAlign>
           <CircularProgress />
-        </div>
+        </CenterAlign>
       );
     }
     if (filteredInvites.length > 0) {
@@ -131,20 +132,7 @@ const ListInvites = () => {
         </List>
       );
     }
-    return (
-      <div className='flex items-center justify-center flex-col w-full gap-4 h-full'>
-        <Image alt='no results' src='/no_results.svg' width={80} height={80} />
-        <Typography
-          variant='h6'
-          textAlign='center'
-          width='100%'
-          color='textSecondary'
-          fontStyle='italic'
-        >
-          No invites found!
-        </Typography>
-      </div>
-    );
+    return <NoResultFound text='No invites found!' />;
   }, [handleDelete, filteredInvites, isLoading]);
 
   return (

@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 
 import { EUserRole } from '@/common/constants';
 import AddNewTraineeWidget from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
-import AcceptInviteWidget from '@/components/Dashboard/Widgets/TraineeAssociationWidget/AcceptInvite';
+import TraineeAssociationWidget from '@/components/Dashboard/Widgets/TraineeAssociationWidget/TraineeAssociationWidget';
 import RoleFlag from '@/components/RoleFlag/RoleFlag';
 
 const WidgetsSection = () => {
@@ -12,7 +12,7 @@ const WidgetsSection = () => {
         <AddNewTraineeWidget />
       </RoleFlag>
       <RoleFlag allowedFor={EUserRole.TRAINEE}>
-        <AcceptInviteWidget />
+        <TraineeAssociationWidget />
       </RoleFlag>
     </Box>
   );

@@ -1,22 +1,17 @@
-import Box from '@mui/material/Box';
 import Image from 'next/image';
+
+import { CenterAlign } from '@/components/StyledComponents';
 
 const Diet = () => {
   return (
-    <Box
-      display='flex'
-      justifyContent='center'
-      alignItems='center'
-      height='100%'
-      width='100%'
-    >
+    <CenterAlign>
       <Image
         src='/coming_soon.svg'
         height='500'
         width='500'
         alt='coming soon'
       />
-    </Box>
+    </CenterAlign>
   );
 };
 

@@ -16,9 +16,11 @@ import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
 import { EInviteStatus } from '@/common/constants';
 import {
+  CenterAlign,
   MaxCharTypography,
   SectionContainer,
 } from '@/components/StyledComponents';
+import { NoResultFound } from '@/components/StyledComponents/NoResultFound';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 
@@ -73,14 +75,51 @@ const ActionButton = ({
     </Box>
   );
 };
-const AcceptInviteWidget = () => {
+const AcceptInvite = () => {
   const { traineeInvites, traineeInvitesById, isTraineeInvitesLoading } =
     useContext(TraineeRelationshipCtx);
+
+  const renderList = () => {
+    if (isTraineeInvitesLoading) {
+      return (
+        <CenterAlign>
+          <CircularProgress />
+        </CenterAlign>
+      );
+    }
+    if (traineeInvites.length === 0)
+      return <NoResultFound text='No invites yet' />;
+    return (
+      <List sx={{ width: '100%', overflowY: 'auto' }}>
+        {traineeInvites.map((id) => {
+          const { invite_status, invited_by } = traineeInvitesById[id];
+          return (
+            <div key={id}>
+              <Box
+                width='100%'
+                display='flex'
+                px={1}
+                py={invite_status === EInviteStatus.PENDING ? 0 : 1}
+                gap={1}
+                alignItems='center'
+              >
+                <Chip label={invite_status} size='small' />
+                <MaxCharTypography maxchars={40} variant='body2'>
+                  {invited_by?.name} ({invited_by?.email})
+                </MaxCharTypography>
+                <ActionButton status={invite_status} inviteId={id as string} />
+              </Box>
+              <Divider />
+            </div>
+          );
+        })}
+      </List>
+    );
+  };
   return (
     <SectionContainer
       sx={{
         height: '500px',
-        width: { sm: '100%', md: '50%' },
         px: 0,
       }}
     >
@@ -96,49 +135,10 @@ const AcceptInviteWidget = () => {
         <Typography variant='h6' px={2}>
           Invites
         </Typography>
-
-        {isTraineeInvitesLoading ? (
-          <Box
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            width='100%'
-            height='100%'
-          >
-            <CircularProgress />
-          </Box>
-        ) : (
-          <List sx={{ width: '100%', overflowY: 'auto' }}>
-            {traineeInvites.map((id) => {
-              const { invite_status, invited_by } = traineeInvitesById[id];
-              return (
-                <div key={id}>
-                  <Box
-                    width='100%'
-                    display='flex'
-                    px={1}
-                    py={invite_status === EInviteStatus.PENDING ? 0 : 1}
-                    gap={1}
-                    alignItems='center'
-                  >
-                    <Chip label={invite_status} size='small' />
-                    <MaxCharTypography maxchars={40} variant='body2'>
-                      {invited_by?.name} ({invited_by?.email})
-                    </MaxCharTypography>
-                    <ActionButton
-                      status={invite_status}
-                      inviteId={id as string}
-                    />
-                  </Box>
-                  <Divider />
-                </div>
-              );
-            })}
-          </List>
-        )}
+        {renderList()}
       </Box>
     </SectionContainer>
   );
 };
 
-export default AcceptInviteWidget;
+export default AcceptInvite;

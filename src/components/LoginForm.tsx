@@ -131,10 +131,17 @@ export const LoginForm = () => {
                   shape='circle'
                   size='large'
                   containerProps={{ style: { transform: 'scale(1.19)' } }}
+                  useOneTap
+                  cancel_on_tap_outside={false}
                 />
               )}
             </Box>
-            <Typography variant='body2' position='absolute' bottom={0}>
+            <Typography
+              variant='body2'
+              position='absolute'
+              bottom={0}
+              textAlign='center'
+            >
               Having queries? Lets connect, you can reach us via{' '}
               <Typography
                 component='a'
@@ -143,13 +150,14 @@ export const LoginForm = () => {
                 sx={{
                   color: theme.palette.text.secondary,
                   textDecoration: 'none',
+                  textAlign: 'center',
                   '&:hover': {
                     color: theme.palette.secondary.main,
                     textDecoration: 'underline',
                   },
                 }}
               >
-                email
+                aniket.chanana@gmail.com
               </Typography>
             </Typography>
           </Box>
