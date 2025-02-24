@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import { EUserRole } from '@/common/constants';
 import TrainerSwitcher from '@/components/AppContainer/TrainerSwitcher';
-import RoleFlag from '@/components/RoleFlag';
+import RoleFlag from '@/components/RoleFlag/RoleFlag';
 import useSession from '@/components/SessionProvider/useSession';
 import {
   MaxCharTypography,

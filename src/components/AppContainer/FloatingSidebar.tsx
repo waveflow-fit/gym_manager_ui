@@ -23,7 +23,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
-import RoleFlag from '@/components/RoleFlag';
+import RoleFlag from '@/components/RoleFlag/RoleFlag';
 import { handleLogout } from '@/components/SessionProvider/auth.utils';
 import { SectionContainer } from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';

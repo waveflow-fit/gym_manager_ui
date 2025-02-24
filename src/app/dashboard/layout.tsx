@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation';
 
 import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
-import AppContainer from '@/components/AppContainer';
-import RoleFlag from '@/components/RoleFlag';
+import AppContainer from '@/components/AppContainer/AppContainer';
+import RoleFlag from '@/components/RoleFlag/RoleFlag';
 import { getSession } from '@/components/SessionProvider/auth.utils';
 import SessionProvider from '@/components/SessionProvider/SessionProvider';
 import UserOnBoarding from '@/components/UserOnBoarding/UserOnBoarding';

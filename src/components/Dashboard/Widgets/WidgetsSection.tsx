@@ -1,9 +1,9 @@
 import { Box } from '@mui/material';
 
 import { EUserRole } from '@/common/constants';
-import AcceptInviteWidget from '@/components/Dashboard/Widgets/AcceptInvite';
-import AddNewTraineeWidget from '@/components/Dashboard/Widgets/AddNewTraineeWidget';
-import RoleFlag from '@/components/RoleFlag';
+import AddNewTraineeWidget from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
+import AcceptInviteWidget from '@/components/Dashboard/Widgets/TraineeAssociationWidget/AcceptInvite';
+import RoleFlag from '@/components/RoleFlag/RoleFlag';
 
 const WidgetsSection = () => {
   return (

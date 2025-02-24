@@ -5,7 +5,7 @@ import { useActionState, useContext, useState } from 'react';
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
 import { convertFormDataToJson } from '@/common/app.utils';
-import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget';
+import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 const addNewTraineeInitValues = {
   traineeEmail: '',

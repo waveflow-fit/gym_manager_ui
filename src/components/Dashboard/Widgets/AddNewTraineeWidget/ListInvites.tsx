@@ -16,7 +16,7 @@ import { api } from '@/common/api.utils';
 import { MANAGEMENT_ENDPOINTS } from '@/common/apiEndpoints';
 import { endpointWithUrlParams } from '@/common/app.utils';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
-import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget';
+import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
 import {
   MaxCharTypography,
   SectionContainer,
