@@ -122,6 +122,14 @@ const FloatingSidebar = () => {
                     key={text}
                     selected={navigateTo === pathname}
                     {...(handleClick ? { onClick: handleClick } : {})}
+                    sx={
+                      isSidebarMinimized
+                        ? {
+                            display: 'flex',
+                            justifyContent: 'center',
+                          }
+                        : {}
+                    }
                   >
                     <ListItemIcon
                       sx={{
