@@ -18,9 +18,9 @@ import { EInviteStatus } from '@/common/constants';
 import {
   CenterAlign,
   MaxCharTypography,
+  NoResultFound,
   SectionContainer,
 } from '@/components/StyledComponents';
-import { NoResultFound } from '@/components/StyledComponents/NoResultFound';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 

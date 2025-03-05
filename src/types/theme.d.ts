@@ -4,6 +4,7 @@ import '@mui/material/styles';
 interface IVariables {
   custom: {
     leftPanelWidthExpanded: string;
+    leftPanelWidthMinimized: string;
     headerHeight: string;
     headerHeight: string;
   };

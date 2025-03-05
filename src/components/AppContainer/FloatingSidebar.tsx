@@ -96,7 +96,15 @@ const FloatingSidebar = () => {
     [isLoggingOut, router, showToast]
   );
   return (
-    <Box width='fit-content' padding='1rem' borderRadius='0.75rem'>
+    <Box
+      width={
+        isSidebarMinimized
+          ? theme.custom.leftPanelWidthMinimized
+          : theme.custom.leftPanelWidthExpanded
+      }
+      padding='1rem'
+      borderRadius='0.75rem'
+    >
       <Box width='100%' height='100%' position='relative'>
         <SectionContainer sx={{ padding: 0 }}>
           <List

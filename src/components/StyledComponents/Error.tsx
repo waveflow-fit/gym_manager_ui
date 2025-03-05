@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import CenterAlign from '@/components/StyledComponents/CenterAlign';
 
-const NoResultFound = ({
+const Error = ({
   text = '',
   imageProps = {},
   textProps = {},
@@ -15,8 +15,8 @@ const NoResultFound = ({
   return (
     <CenterAlign flexDirection='column' gap={2}>
       <Image
-        alt='no results'
-        src='/no_results.svg'
+        alt='something went wrong'
+        src='/broken.svg'
         width={80}
         height={80}
         {...imageProps}
@@ -37,4 +37,4 @@ const NoResultFound = ({
   );
 };
 
-export default NoResultFound;
+export default Error;

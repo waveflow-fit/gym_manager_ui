@@ -13,7 +13,6 @@ type TAppContainer = { children: React.ReactNode };
  */
 const AppContainer = ({ children }: TAppContainer) => {
   const theme = useTheme();
-  const sidebarWidth = theme.custom.leftPanelWidthExpanded;
 
   return (
     <Box
@@ -22,10 +21,17 @@ const AppContainer = ({ children }: TAppContainer) => {
       width='100%'
       bgcolor={theme.palette.background.main}
     >
-      <Box maxWidth={sidebarWidth} display='flex' alignItems='center'>
+      <Box display='flex' alignItems='center'>
         <FloatingSidebar />
       </Box>
-      <Box display='flex' flexDirection='column' height='100%' width='100%'>
+      <Box
+        display='flex'
+        flexDirection='column'
+        height='100%'
+        width='100%'
+        minWidth={`calc(100% - ${theme.custom.leftPanelWidthExpanded})`}
+        maxWidth={`calc(100% - ${theme.custom.leftPanelWidthMinimized})`}
+      >
         <Box height={theme.custom.headerHeight}>
           <FloatingTopBar />
         </Box>

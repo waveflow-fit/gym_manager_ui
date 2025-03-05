@@ -19,9 +19,9 @@ import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTra
 import {
   CenterAlign,
   MaxCharTypography,
+  NoResultFound,
   SectionContainer,
 } from '@/components/StyledComponents';
-import { NoResultFound } from '@/components/StyledComponents/NoResultFound';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const ListInvites = () => {
@@ -132,7 +132,7 @@ const ListInvites = () => {
         </List>
       );
     }
-    return <NoResultFound text='No invites found!' />;
+    return <NoResultFound text='No invites available' />;
   }, [handleDelete, filteredInvites, isLoading]);
 
   return (
@@ -146,11 +146,11 @@ const ListInvites = () => {
         height='100%'
         position='relative'
       >
-        <Typography variant='h6'>Pending invites</Typography>
+        <Typography variant='h6'>Sent invites</Typography>
         <TextField
           value={inputTraineeEmail}
           onChange={(e) => setInputTraineeEmail(e.target.value)}
-          placeholder='Trainee email'
+          placeholder='john@gmail.com'
           fullWidth
           sx={{ '& input': { height: '2rem', py: '0.5rem', px: '1rem' } }}
         />
