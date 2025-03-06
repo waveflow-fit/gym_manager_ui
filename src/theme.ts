@@ -30,7 +30,6 @@ export const gymThemePalette = {
     selected: '#D7E2F2', // Slightly darker light blue background for selected items
     disabled: '#9CA4B2', // Slightly darker muted gray for disabled actions
   },
-  divider: '#C5D0E3', // Slightly darker blue-gray divider color
   error: {
     main: '#E64545', // Slightly darker red for error states
   },
