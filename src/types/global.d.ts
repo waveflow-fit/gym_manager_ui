@@ -46,3 +46,20 @@ interface ReducerAction<T = any> {
   payload?: T;
   type?: string;
 }
+
+interface PaginatedResponse<T = any> {
+  data: T[];
+  total: number;
+  hasNext: boolean;
+  limit: number;
+  page: number;
+}
+
+interface PaginatedRequest<T = any> {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'ASC' | 'DESC';
+  filters?: Partial<T>;
+  attributes?: Record<string, string[]> | string[];
+}

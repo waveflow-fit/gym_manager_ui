@@ -14,6 +14,10 @@ export enum API_KEYS {
 
 export enum PAGINATION {
   DEFAULT_LIMIT = 20,
-  START_OFFSET = 0,
+  DEFAULT_PAGE_NUM = 1,
   LARGE_LIMIT = 100,
+}
+export enum ESortOrder {
+  ASC = 'ASC',
+  DESC = 'DESC',
 }

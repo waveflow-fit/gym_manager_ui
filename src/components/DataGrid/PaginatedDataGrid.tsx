@@ -2,14 +2,14 @@
 
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { get } from 'lodash';
+import { debounce, get, upperCase } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { api } from '@/common/api.utils';
-import { PAGINATION } from '@/common/constants';
-import DynamicRenderer from '@/components/DynamicRenderer/DynamicRenderer';
+import { ESortOrder, PAGINATION } from '@/common/constants';
 import SearchByText from '@/components/Search/SearchByText';
-import { SectionContainer } from '@/components/StyledComponents';
+import { NoResultFound, SectionContainer } from '@/components/StyledComponents';
+import useToast, { EToastType } from '@/components/Toast/useToast';
 
 export enum EColType {
   TEXT = 'TEXT',
@@ -20,6 +20,7 @@ const initData = {
   isLoading: true,
   isError: false,
 };
+
 type Props<T extends { id: string }> = {
   columns: GridColDef[];
   dataEndpoint: string;
@@ -39,21 +40,54 @@ const PaginatedDataGrid = <T extends { id: string }>({
     isLoading: boolean;
     isError: boolean;
   }>(initData);
+  const { showToast } = useToast();
+  const [currLimit, setCurrLimit] = useState(PAGINATION.DEFAULT_LIMIT);
+  const [currPage, setCurrPage] = useState(PAGINATION.DEFAULT_PAGE_NUM);
+  const [totalRowCount, setTotalRowCount] = useState(0);
+  const [sortBy, setSortBy] = useState<null | string>(null);
+  const [sortOrder, setSortOrder] = useState<null | ESortOrder>(null);
+  const [searchTextInput, setSearchTextInput] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const fetchData = useCallback(async () => {
     try {
       setState(initData);
-      const response = await api.post<{ limit: number }, { data: T[] }>(
+      const response = (await api.post<PaginatedRequest, PaginatedResponse<T>>(
         dataEndpoint,
         {
-          limit: PAGINATION.LARGE_LIMIT,
+          limit: currLimit,
+          page: currPage,
+          ...(sortBy ? { sortBy } : {}),
+          ...(sortOrder ? { sortOrder } : {}),
+          ...(searchKey && searchText
+            ? {
+                filters: {
+                  [searchKey]: searchText,
+                },
+              }
+            : {}),
         }
-      );
+      )) as PaginatedResponse<T>;
+
       setState({ data: response.data, isLoading: false, isError: false });
-    } catch {
+      setTotalRowCount(response.total);
+    } catch (e: any) {
       setState({ data: [], isLoading: false, isError: true });
+      showToast({
+        severity: EToastType.ERROR,
+        message: e.message || 'Something went wrong, Unable to get data',
+      });
     }
-  }, [dataEndpoint]);
+  }, [
+    currLimit,
+    currPage,
+    dataEndpoint,
+    searchKey,
+    searchText,
+    showToast,
+    sortBy,
+    sortOrder,
+  ]);
 
   useEffect(() => {
     fetchData();
@@ -70,44 +104,83 @@ const PaginatedDataGrid = <T extends { id: string }>({
       return updatedCol;
     });
   }, [columns]);
+
+  const debouncedSetSearchText = useMemo(
+    () => debounce((text: string) => setSearchText(text), 500),
+    []
+  );
+
+  useEffect(() => {
+    debouncedSetSearchText(searchTextInput);
+  }, [debouncedSetSearchText, searchTextInput]);
+
   return (
     <SectionContainer sx={{ overflowX: 'auto', py: '1rem' }}>
-      <DynamicRenderer isLoading={state.isLoading} isError={state.isError}>
-        <Box
-          sx={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          {searchKey && <SearchByText placeholder='Search...' />}
-          <DataGrid
-            rows={state.data}
-            columns={memoizedColumns}
-            getRowId={getRowId}
-            initialState={{
-              pagination: {
-                paginationModel: { pageSize: 50 },
-              },
-            }}
-            onSortModelChange={(model) => console.log(model)}
-            onPaginationModelChange={(model) => console.log(model)}
-            pageSizeOptions={[5, 20, 50, 100]}
-            checkboxSelection={checkboxSelection}
-            disableRowSelectionOnClick
-            sx={{
-              border: 'none',
-              minWidth: '100%',
-              overflowX: 'auto',
-              '& .MuiDataGrid-viewport': {
-                minWidth: '100%',
-              },
-            }}
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+        }}
+      >
+        {searchKey && (
+          <SearchByText
+            placeholder='Search...'
+            value={searchTextInput}
+            onChange={(e) => setSearchTextInput(e.target.value)}
+            onClearIconClick={() => setSearchTextInput('')}
           />
-        </Box>
-      </DynamicRenderer>
+        )}
+        <DataGrid
+          rows={state.data}
+          columns={memoizedColumns}
+          getRowId={getRowId}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: currLimit, page: currPage - 1 },
+            },
+          }}
+          onPaginationModelChange={({ pageSize, page }) => {
+            setCurrLimit(pageSize);
+            setCurrPage(page + 1);
+          }}
+          onSortModelChange={([model]) => {
+            if (model) {
+              setSortBy(model.field);
+              setSortOrder(upperCase(model.sort as string) as ESortOrder);
+            } else {
+              setSortBy(null);
+              setSortOrder(null);
+            }
+          }}
+          pageSizeOptions={[5, 20, 50, 100]}
+          checkboxSelection={checkboxSelection}
+          disableRowSelectionOnClick
+          rowCount={totalRowCount}
+          paginationMode='server'
+          loading={state.isLoading}
+          slotProps={{
+            loadingOverlay: {
+              variant: 'skeleton',
+              noRowsVariant: 'skeleton',
+            },
+          }}
+          slots={{
+            noRowsOverlay: () => <NoResultFound text='No results found' />,
+            noResultsOverlay: () => <NoResultFound text='No results found' />,
+          }}
+          sx={{
+            border: 'none',
+            minWidth: '100%',
+            overflowX: 'auto',
+            '& .MuiDataGrid-viewport': {
+              minWidth: '100%',
+            },
+          }}
+        />
+      </Box>
     </SectionContainer>
   );
 };

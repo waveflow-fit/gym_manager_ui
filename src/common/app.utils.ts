@@ -8,14 +8,18 @@ export const convertFormDataToJson = (formData: FormData) => {
   }, {});
 };
 
-export const endpointWithQueryParams = (
-  url: string,
-  queryParams: Record<string, any>,
-  addDefaultPagination?: boolean
-) => {
+export const endpointWithQueryParams = ({
+  url,
+  queryParams,
+  addDefaultPagination = undefined,
+}: {
+  url: string;
+  queryParams: Record<string, any>;
+  addDefaultPagination?: boolean;
+}) => {
   const query = Object.entries({
     ...(addDefaultPagination
-      ? { limit: PAGINATION.DEFAULT_LIMIT, offset: PAGINATION.START_OFFSET }
+      ? { limit: PAGINATION.DEFAULT_LIMIT, page: PAGINATION.DEFAULT_PAGE_NUM }
       : {}),
     ...queryParams,
   }).reduce((prevVal, [key, val]) => {

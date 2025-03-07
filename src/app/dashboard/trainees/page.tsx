@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { Suspense } from 'react';
 
 import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';
 import ImageRenderer from '@/components/DataGrid/CellRenderers/ImageRenderer';
@@ -42,11 +43,13 @@ const Trainees = () => {
       height='100%'
       width='100%'
     >
-      <PaginatedDataGrid<TTraineeData>
-        columns={columns}
-        searchKey='trainee.name'
-        dataEndpoint={MANAGEMENT_TRAINER_ENDPOINTS.GET_ALL_ASSOCIATION}
-      />
+      <Suspense fallback='Loading...'>
+        <PaginatedDataGrid<TTraineeData>
+          columns={columns}
+          searchKey='trainee.name'
+          dataEndpoint={MANAGEMENT_TRAINER_ENDPOINTS.GET_ALL_ASSOCIATION}
+        />
+      </Suspense>
     </Box>
   );
 };
