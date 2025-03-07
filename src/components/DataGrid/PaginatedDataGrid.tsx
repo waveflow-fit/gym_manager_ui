@@ -1,5 +1,6 @@
 'use client';
 
+import { CircularProgress, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { debounce, get, upperCase } from 'lodash';
@@ -8,7 +9,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '@/common/api.utils';
 import { ESortOrder, PAGINATION } from '@/common/constants';
 import SearchByText from '@/components/Search/SearchByText';
-import { NoResultFound, SectionContainer } from '@/components/StyledComponents';
+import {
+  CenterAlign,
+  NoResultFound,
+  SectionContainer,
+} from '@/components/StyledComponents';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 export enum EColType {
@@ -48,6 +53,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
   const [sortOrder, setSortOrder] = useState<null | ESortOrder>(null);
   const [searchTextInput, setSearchTextInput] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [isGridReady, setIsGridReady] = useState(false);
 
   const fetchData = useCallback(async () => {
     try {
@@ -123,6 +129,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
+          position: 'relative',
         }}
       >
         {searchKey && (
@@ -132,6 +139,12 @@ const PaginatedDataGrid = <T extends { id: string }>({
             onChange={(e) => setSearchTextInput(e.target.value)}
             onClearIconClick={() => setSearchTextInput('')}
           />
+        )}
+        {!isGridReady && (
+          <CenterAlign flexDirection='column' gap={2}>
+            <CircularProgress />
+            <Typography>Setting up things for you...</Typography>
+          </CenterAlign>
         )}
         <DataGrid
           rows={state.data}
@@ -172,6 +185,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
             noResultsOverlay: () => <NoResultFound text='No results found' />,
           }}
           sx={{
+            zIndex: 1,
             border: 'none',
             minWidth: '100%',
             overflowX: 'auto',
@@ -179,6 +193,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
               minWidth: '100%',
             },
           }}
+          onStateChange={() => setIsGridReady(true)}
         />
       </Box>
     </SectionContainer>
