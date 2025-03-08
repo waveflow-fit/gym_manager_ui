@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
 import AddNewTraineeForm from '@/components/Dashboard/AddNewTraineeForm';
-import { SectionContainer } from '@/components/StyledComponents';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 
 const AddNewTrainee = () => {
   return (
