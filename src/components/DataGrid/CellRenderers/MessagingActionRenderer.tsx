@@ -2,14 +2,7 @@
 
 import EmailIcon from '@mui/icons-material/Email';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import {
-  Box,
-  Button,
-  IconButton,
-  Popover,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, IconButton, Popover, TextField } from '@mui/material';
 import { get } from 'lodash';
 import { useState } from 'react';
 
@@ -80,9 +73,6 @@ const MessagingActionRenderer = ({ colDef, row }) => {
       >
         <Box p={2} minWidth='24.5rem'>
           <CenterAlign flexDirection='column' alignItems='flex-start' gap={1}>
-            <Typography variant='h6' fontSize='1.2rem'>
-              {PopOverNames[popOverType as EMessagingPopover]}
-            </Typography>
             <TextField
               placeholder='Type your message...'
               multiline
@@ -90,6 +80,7 @@ const MessagingActionRenderer = ({ colDef, row }) => {
               fullWidth
               value={textMessage}
               onChange={(e) => setTextMessage(e.target.value)}
+              label={PopOverNames[popOverType as EMessagingPopover]}
             />
             <Button onClick={handleSendMessage} disabled={!textMessage}>
               Send
