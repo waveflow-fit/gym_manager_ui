@@ -39,7 +39,7 @@ const columns: ColDef[] = [
   },
   {
     field: 'actions',
-    headerName: 'Actions',
+    headerName: 'Messaging',
     sortable: false,
     renderCell: MessagingActionRenderer,
     maxWidth: 120,

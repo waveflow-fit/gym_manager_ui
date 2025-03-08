@@ -28,6 +28,8 @@ const MessagingActionRenderer = ({ colDef, row }) => {
   const [popOverType, setPopOverType] = useState<EMessagingPopover | null>(
     null
   );
+  const whatsapp = get(row, colDef?.cellRenderParams?.whatsAppField, '');
+  const email = get(row, colDef?.cellRenderParams?.emailField, '');
   const [textMessage, setTextMessage] = useState('');
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -42,7 +44,6 @@ const MessagingActionRenderer = ({ colDef, row }) => {
   const handleSendMessage = () => {
     const anchor = document.createElement('a');
     if (popOverType === EMessagingPopover.EMAIL) {
-      const email = get(row, colDef?.cellRenderParams?.emailField, '');
       if (email) {
         const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent('Message from your trainer')}&body=${encodeURIComponent(textMessage)}`;
         anchor.href = gmailLink;
@@ -50,11 +51,6 @@ const MessagingActionRenderer = ({ colDef, row }) => {
     }
     anchor.target = '_blank';
     if (popOverType === EMessagingPopover.WHATS_APP) {
-      const whatsapp = get(
-        row,
-        colDef?.cellRenderParams?.whatsAppField,
-        '9588195330'
-      );
       if (whatsapp) {
         anchor.href = `https://web.whatsapp.com/send?phone=${whatsapp}&text=${textMessage}`;
       }
@@ -64,14 +60,18 @@ const MessagingActionRenderer = ({ colDef, row }) => {
   return (
     <>
       <CenterAlign gap={1} justifyContent='flex-start'>
-        <IconButton
-          onClick={(e) => handleClick(e, EMessagingPopover.WHATS_APP)}
-        >
-          <WhatsAppIcon />
-        </IconButton>
-        <IconButton onClick={(e) => handleClick(e, EMessagingPopover.EMAIL)}>
-          <EmailIcon />
-        </IconButton>
+        {whatsapp && (
+          <IconButton
+            onClick={(e) => handleClick(e, EMessagingPopover.WHATS_APP)}
+          >
+            <WhatsAppIcon />
+          </IconButton>
+        )}
+        {email && (
+          <IconButton onClick={(e) => handleClick(e, EMessagingPopover.EMAIL)}>
+            <EmailIcon />
+          </IconButton>
+        )}
       </CenterAlign>
       <Popover
         open={Boolean(anchorEl)}
