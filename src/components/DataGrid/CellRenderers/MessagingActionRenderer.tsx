@@ -20,7 +20,7 @@ enum EMessagingPopover {
   EMAIL = 'EMAIL',
 }
 const PopOverNames = {
-  [EMessagingPopover.WHATS_APP]: 'Whats App',
+  [EMessagingPopover.WHATS_APP]: 'WhatsApp',
   [EMessagingPopover.EMAIL]: 'Email',
 };
 const MessagingActionRenderer = ({ colDef, row }) => {
