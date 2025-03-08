@@ -7,14 +7,11 @@ import ListInvites from '@/components/Dashboard/Widgets/AddNewTraineeWidget/List
 
 export const AddNewTraineeWidgetCtx = createContext<{
   invites: IInvite[];
-  addNewTraineeInvite: (invite: IInvite) => void;
+  addNewTraineeInvite?: (invite: IInvite) => void;
   deleteTraineeInvite: (inviteId: string) => void;
   setInvites: React.Dispatch<SetStateAction<IInvite[]>>;
 }>({
   invites: [],
-  addNewTraineeInvite: (_invite) => {
-    throw new Error('Function not implemented');
-  },
   deleteTraineeInvite: (_inviteId) => {
     throw new Error('Function not implemented');
   },

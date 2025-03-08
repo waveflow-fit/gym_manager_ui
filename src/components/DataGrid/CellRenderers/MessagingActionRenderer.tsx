@@ -96,15 +96,6 @@ const MessagingActionRenderer = ({ colDef, row }) => {
               multiline
               rows={2}
               fullWidth
-              sx={{
-                '& .MuiInputBase-input': {
-                  fontSize: '1.1rem',
-                },
-                '& .MuiInputBase-root': {
-                  p: '0.75rem',
-                  fontSize: '1.1rem',
-                },
-              }}
               value={textMessage}
               onChange={(e) => setTextMessage(e.target.value)}
             />

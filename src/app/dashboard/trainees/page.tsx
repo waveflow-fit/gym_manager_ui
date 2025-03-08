@@ -1,18 +1,18 @@
 import Box from '@mui/material/Box';
-import { Suspense } from 'react';
 
 import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';
 import ImageRenderer from '@/components/DataGrid/CellRenderers/ImageRenderer';
 import MessagingActionRenderer from '@/components/DataGrid/CellRenderers/MessagingActionRenderer';
 import PaymentReminderRenderer from '@/components/DataGrid/CellRenderers/PaymentReminderRenderer';
 import PaginatedDataGrid from '@/components/DataGrid/PaginatedDataGrid';
+import AddNewTraineePopOver from '@/components/Trainee/AddNewTraineePopOver';
 import { ColDef } from '@/types/common';
 
 const columns: ColDef[] = [
   {
     field: 'trainee.image',
     headerName: 'Image',
-    maxWidth: 120,
+    width: 120,
     renderCell: ImageRenderer,
     cellRenderParams: { fallbackField: 'trainee.name' },
     sortable: false,
@@ -35,14 +35,14 @@ const columns: ColDef[] = [
     headerName: 'Payment reminder',
     sortable: false,
     renderCell: PaymentReminderRenderer,
-    maxWidth: 120,
+    width: 120,
   },
   {
     field: 'actions',
     headerName: 'Messaging',
     sortable: false,
     renderCell: MessagingActionRenderer,
-    maxWidth: 120,
+    width: 120,
     cellRenderParams: {
       emailField: 'trainee.email',
       whatsAppField: 'trainee.phone',
@@ -64,13 +64,12 @@ const Trainees = () => {
       height='100%'
       width='100%'
     >
-      <Suspense fallback='Loading...'>
-        <PaginatedDataGrid<TTraineeData>
-          columns={columns}
-          searchKey='trainee.name'
-          dataEndpoint={MANAGEMENT_TRAINER_ENDPOINTS.GET_ALL_ASSOCIATION}
-        />
-      </Suspense>
+      <PaginatedDataGrid<TTraineeData>
+        columns={columns}
+        searchKey='trainee.name'
+        dataEndpoint={MANAGEMENT_TRAINER_ENDPOINTS.GET_ALL_ASSOCIATION}
+        actions={<AddNewTraineePopOver />}
+      />
     </Box>
   );
 };

@@ -33,7 +33,7 @@ const AddNewTraineeForm = () => {
           severity: EToastType.SUCCESS,
           message: response.message,
         });
-        addNewTraineeInvite(response.invite as IInvite);
+        addNewTraineeInvite?.(response.invite as IInvite);
       } catch (e: any) {
         showToast({ severity: EToastType.ERROR, message: e.message });
       }

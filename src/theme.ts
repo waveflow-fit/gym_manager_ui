@@ -137,6 +137,18 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-input': {
+            fontSize: '1.1rem',
+          },
+          '& .MuiInputBase-root': {
+            fontSize: '1.1rem',
+          },
+        },
+      },
+    },
   },
 });
 
