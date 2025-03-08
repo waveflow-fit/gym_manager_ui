@@ -208,6 +208,9 @@ const PaginatedDataGrid = <T extends { id: string }>({
             '& .MuiDataGrid-viewport': {
               minWidth: '100%',
             },
+            '& .MuiDataGrid-cell:focus-within': {
+              outline: 'none',
+            },
           }}
           onStateChange={() => setIsGridReady(true)}
         />
