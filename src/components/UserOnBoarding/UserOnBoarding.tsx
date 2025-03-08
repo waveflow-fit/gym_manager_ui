@@ -195,12 +195,7 @@ const UserOnBoarding = ({ children }) => {
             multiline
           />
 
-          <Button
-            type='submit'
-            variant='contained'
-            color='primary'
-            loading={isPending}
-          >
+          <Button type='submit' color='primary' loading={isPending}>
             Submit
           </Button>
         </form>

@@ -70,6 +70,9 @@ const theme = createTheme({
   },
   components: {
     MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+      },
       styleOverrides: {
         root: {
           textTransform: 'none', // Keep button text case as-is
@@ -133,6 +136,25 @@ const theme = createTheme({
         root: {
           '&:hover': {
             backgroundColor: 'rgba(0, 191, 166, 0.15)', // Subtle secondary color overlay
+          },
+        },
+      },
+    },
+    MuiPopover: {
+      defaultProps: {
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'center',
+        },
+        transformOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+      },
+      styleOverrides: {
+        root: {
+          '& .MuiPopover-paper': {
+            backgroundColor: gymThemePalette.background.main,
           },
         },
       },

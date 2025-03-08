@@ -22,14 +22,6 @@ const AddNewTraineePopOver = () => {
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
       >
         <Box p={2} minWidth='24.5rem'>
           <AddNewTraineeForm />

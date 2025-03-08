@@ -77,14 +77,6 @@ const MessagingActionRenderer = ({ colDef, row }) => {
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
       >
         <Box p={2} minWidth='24.5rem'>
           <CenterAlign flexDirection='column' alignItems='flex-start' gap={1}>
@@ -99,11 +91,7 @@ const MessagingActionRenderer = ({ colDef, row }) => {
               value={textMessage}
               onChange={(e) => setTextMessage(e.target.value)}
             />
-            <Button
-              onClick={handleSendMessage}
-              variant='contained'
-              disabled={!textMessage}
-            >
+            <Button onClick={handleSendMessage} disabled={!textMessage}>
               Send
             </Button>
           </CenterAlign>

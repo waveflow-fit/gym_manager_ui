@@ -56,7 +56,6 @@ const AddNewTraineeForm = () => {
       <Button
         type='submit'
         loading={isPending}
-        variant='contained'
         sx={{ width: 'fit-content' }}
         disabled={!traineeEmailInput}
       >

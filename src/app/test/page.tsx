@@ -24,7 +24,7 @@ const TestPage = () => {
         Hello {state.firstName}
         <TextField name='firstName' defaultValue={state.firstName} />
         <TextField name='lastName' defaultValue={state.lastName} />
-        <Button variant='contained' type='submit' loading={isPending}>
+        <Button type='submit' loading={isPending}>
           Click
         </Button>
       </form>
