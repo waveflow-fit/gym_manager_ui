@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import CenterAlign from '@/components/StyledComponents/CenterAlign';
 
-const Error = ({
+const ErrorComponent = ({
   text = '',
   imageProps = {},
   textProps = {},
@@ -37,4 +37,4 @@ const Error = ({
   );
 };
 
-export default Error;
+export default ErrorComponent;

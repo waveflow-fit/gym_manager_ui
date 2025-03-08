@@ -9,11 +9,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '@/common/api.utils';
 import { ESortOrder, PAGINATION } from '@/common/constants';
 import SearchByText from '@/components/Search/SearchByText';
-import {
-  CenterAlign,
-  NoResultFound,
-  SectionContainer,
-} from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import NoResultFound from '@/components/StyledComponents/NoResultFound';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 export enum EColType {
@@ -32,12 +30,14 @@ type Props<T extends { id: string }> = {
   getRowId?: (item: T) => string | number;
   checkboxSelection?: boolean;
   searchKey?: string;
+  disableColumnMenu?: boolean;
 };
 const PaginatedDataGrid = <T extends { id: string }>({
   columns,
   dataEndpoint,
   getRowId,
   checkboxSelection = false,
+  disableColumnMenu = true,
   searchKey = '',
 }: Props<T>) => {
   const [state, setState] = useState<{
@@ -54,6 +54,24 @@ const PaginatedDataGrid = <T extends { id: string }>({
   const [searchTextInput, setSearchTextInput] = useState('');
   const [searchText, setSearchText] = useState('');
   const [isGridReady, setIsGridReady] = useState(false);
+  const memoizedColumns = useMemo(() => {
+    return columns.map((col) => {
+      const updatedCol: GridColDef = {
+        ...col,
+        ...(Number(col.width) > 0 ? {} : { flex: 1 }),
+        disableColumnMenu,
+        valueGetter: (_value, row) => {
+          return get(row, col.field);
+        },
+      };
+      return updatedCol;
+    });
+  }, [columns, disableColumnMenu]);
+
+  const debouncedSetSearchText = useMemo(
+    () => debounce((text: string) => setSearchText(text), 500),
+    []
+  );
 
   const fetchData = useCallback(async () => {
     try {
@@ -98,23 +116,6 @@ const PaginatedDataGrid = <T extends { id: string }>({
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  const memoizedColumns = useMemo(() => {
-    return columns.map((col) => {
-      const updatedCol: GridColDef = {
-        ...col,
-        valueGetter: (_value, row) => {
-          return get(row, col.field);
-        },
-      };
-      return updatedCol;
-    });
-  }, [columns]);
-
-  const debouncedSetSearchText = useMemo(
-    () => debounce((text: string) => setSearchText(text), 500),
-    []
-  );
 
   useEffect(() => {
     debouncedSetSearchText(searchTextInput);

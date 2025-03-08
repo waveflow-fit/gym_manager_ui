@@ -15,12 +15,10 @@ import { useContext, useState } from 'react';
 import { api } from '@/common/api.utils';
 import { MANAGEMENT_TRAINEE_ENDPOINTS } from '@/common/apiEndpoints';
 import { EInviteStatus } from '@/common/constants';
-import {
-  CenterAlign,
-  MaxCharTypography,
-  NoResultFound,
-  SectionContainer,
-} from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import MaxCharTypography from '@/components/StyledComponents/MaxCharTypography';
+import NoResultFound from '@/components/StyledComponents/NoResultFound';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 

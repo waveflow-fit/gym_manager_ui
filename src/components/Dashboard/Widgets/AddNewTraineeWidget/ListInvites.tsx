@@ -16,12 +16,10 @@ import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';
 import { endpointWithUrlParams } from '@/common/app.utils';
 import { EInviteStatus, PAGINATION } from '@/common/constants';
 import { AddNewTraineeWidgetCtx } from '@/components/Dashboard/Widgets/AddNewTraineeWidget/AddNewTraineeWidget';
-import {
-  CenterAlign,
-  MaxCharTypography,
-  NoResultFound,
-  SectionContainer,
-} from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import MaxCharTypography from '@/components/StyledComponents/MaxCharTypography';
+import NoResultFound from '@/components/StyledComponents/NoResultFound';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const ListInvites = () => {

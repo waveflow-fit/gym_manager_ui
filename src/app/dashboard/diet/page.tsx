@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { CenterAlign } from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
 
 const Diet = () => {
   return (

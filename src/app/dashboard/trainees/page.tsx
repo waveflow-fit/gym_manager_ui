@@ -3,6 +3,8 @@ import { Suspense } from 'react';
 
 import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';
 import ImageRenderer from '@/components/DataGrid/CellRenderers/ImageRenderer';
+import MessagingActionRenderer from '@/components/DataGrid/CellRenderers/MessagingActionRenderer';
+import PaymentReminderRenderer from '@/components/DataGrid/CellRenderers/PaymentReminderRenderer';
 import PaginatedDataGrid from '@/components/DataGrid/PaginatedDataGrid';
 import { ColDef } from '@/types/common';
 
@@ -10,22 +12,32 @@ const columns: ColDef[] = [
   {
     field: 'trainee.image',
     headerName: 'Image',
-    width: 120,
+    maxWidth: 120,
     renderCell: ImageRenderer,
-    disableColumnMenu: true,
     cellRenderParams: { fallbackField: 'trainee.name' },
+    sortable: false,
   },
   {
     field: 'trainee.name',
     headerName: 'Name',
-    flex: 1,
-    disableColumnMenu: true,
   },
   {
     field: 'trainee.email',
     headerName: 'Email',
-    flex: 1,
-    disableColumnMenu: true,
+  },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    sortable: false,
+    renderCell: MessagingActionRenderer,
+    maxWidth: 120,
+  },
+  {
+    field: 'paymentReminder',
+    headerName: 'Payment reminder',
+    sortable: false,
+    renderCell: PaymentReminderRenderer,
+    maxWidth: 120,
   },
 ];
 

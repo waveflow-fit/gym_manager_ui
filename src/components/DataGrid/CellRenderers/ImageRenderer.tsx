@@ -2,7 +2,7 @@
 import { Avatar } from '@mui/material';
 import { get } from 'lodash';
 
-import { CenterAlign } from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
 
 const ImageRenderer = ({ colDef, row }) => {
   return (

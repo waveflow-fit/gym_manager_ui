@@ -2,11 +2,9 @@
 import { Avatar, CircularProgress, Typography } from '@mui/material';
 import { useContext, useMemo } from 'react';
 
-import {
-  CenterAlign,
-  NoResultFound,
-  SectionContainer,
-} from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import NoResultFound from '@/components/StyledComponents/NoResultFound';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 
 const SelectedAssociation = () => {

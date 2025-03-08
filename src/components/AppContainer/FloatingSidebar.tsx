@@ -25,7 +25,7 @@ import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
 import RoleFlag from '@/components/RoleFlag/RoleFlag';
 import { handleLogout } from '@/components/SessionProvider/auth.utils';
-import { SectionContainer } from '@/components/StyledComponents';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import useToast, { EToastType } from '@/components/Toast/useToast';
 
 const FloatingSidebar = () => {

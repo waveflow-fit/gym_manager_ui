@@ -1,11 +1,9 @@
 'use client';
 import { CircularProgress } from '@mui/material';
 
-import {
-  CenterAlign,
-  Error,
-  NoResultFound,
-} from '@/components/StyledComponents';
+import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import ErrorComponent from '@/components/StyledComponents/ErrorComponent';
+import NoResultFound from '@/components/StyledComponents/NoResultFound';
 
 const DynamicRenderer = ({
   children,
@@ -28,7 +26,7 @@ const DynamicRenderer = ({
 
   if (isError) {
     return (
-      <Error
+      <ErrorComponent
         imageProps={{ height: '150', width: '150' }}
         text='Something went wrong, Unable to get data'
       />

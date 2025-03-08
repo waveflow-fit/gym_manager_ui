@@ -5,10 +5,8 @@ import { EUserRole } from '@/common/constants';
 import TrainerSwitcher from '@/components/AppContainer/TrainerSwitcher';
 import RoleFlag from '@/components/RoleFlag/RoleFlag';
 import useSession from '@/components/SessionProvider/useSession';
-import {
-  MaxCharTypography,
-  SectionContainer,
-} from '@/components/StyledComponents';
+import MaxCharTypography from '@/components/StyledComponents/MaxCharTypography';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 
 const FloatingTopBar = () => {
   const { session } = useSession();

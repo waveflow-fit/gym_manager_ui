@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
 import { ROUTE_URLS } from '@/common/appUrls';
-import { SectionContainer } from '@/components/StyledComponents';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import { TraineeRelationshipCtx } from '@/context/TraineeRelationship';
 
 const ITEM_HEIGHT = 48;
