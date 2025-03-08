@@ -3,6 +3,7 @@
 import { CircularProgress, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { format } from 'date-fns';
 import { debounce, get, upperCase } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -24,6 +25,7 @@ const initData = {
   isError: false,
 };
 
+const dateCols = ['date', 'dateTime'];
 type Props<T extends { id: string }> = {
   columns: GridColDef[];
   dataEndpoint: string;
@@ -60,8 +62,21 @@ const PaginatedDataGrid = <T extends { id: string }>({
         ...col,
         ...(Number(col.width) > 0 ? {} : { flex: 1 }),
         disableColumnMenu,
-        valueGetter: (_value, row) => {
-          return get(row, col.field);
+        valueGetter: (_value, row, colDef) => {
+          const type = get(colDef, 'type', '');
+          const value = get(row, col.field);
+          if (dateCols.includes(type)) {
+            return new Date(value);
+          }
+          return value;
+        },
+        valueFormatter: (_value, row, colDef) => {
+          const type = get(colDef, 'type', '');
+          const value = get(row, col.field);
+          if (dateCols.includes(type)) {
+            return format(value, 'dd MMMM yyyy');
+          }
+          return value;
         },
       };
       return updatedCol;

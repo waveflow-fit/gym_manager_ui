@@ -26,11 +26,9 @@ const columns: ColDef[] = [
     headerName: 'Email',
   },
   {
-    field: 'actions',
-    headerName: 'Actions',
-    sortable: false,
-    renderCell: MessagingActionRenderer,
-    maxWidth: 120,
+    field: 'created_at',
+    headerName: 'Start date',
+    type: 'date',
   },
   {
     field: 'paymentReminder',
@@ -38,6 +36,17 @@ const columns: ColDef[] = [
     sortable: false,
     renderCell: PaymentReminderRenderer,
     maxWidth: 120,
+  },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    sortable: false,
+    renderCell: MessagingActionRenderer,
+    maxWidth: 120,
+    cellRenderParams: {
+      emailField: 'trainee.email',
+      whatsAppField: 'trainee.phone',
+    },
   },
 ];
 
