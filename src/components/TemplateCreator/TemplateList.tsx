@@ -21,7 +21,11 @@ const TemplateList = ({
         <Typography variant='h3'>{listName}</Typography>
         <Creator />
       </HStack>
-      <Grid container spacing={2} sx={{ overflowY: 'auto', height: '92%' }}>
+      <Grid
+        container
+        spacing={2}
+        sx={{ overflowY: 'auto', height: '92%', mx: '-0.75rem', px: '0.75rem' }}
+      >
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((e) => (
           <Grid size={3} key={e}>
             <TemplateCard />
