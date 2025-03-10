@@ -23,3 +23,10 @@ export enum ETemplateType {
   WORKOUT = 'WORKOUT',
   DIET = 'DIET',
 }
+
+export enum EExerciseLoggingType {
+  BOOLEAN = 'BOOLEAN',
+  WEIGHT_REP_COUNT = 'WEIGHT_REP_COUNT',
+  TIME = 'TIME',
+  TIME_WEIGHT = 'TIME_WEIGHT',
+}

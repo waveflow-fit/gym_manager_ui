@@ -77,6 +77,7 @@ const theme = createTheme({
         root: {
           textTransform: 'none', // Keep button text case as-is
           borderRadius: '0.5rem', // Softer, rounded corners
+          width: 'fit-content',
         },
         containedPrimary: {
           backgroundColor: gymThemePalette.primary.main, // Primary main (slightly darker soft blue)
@@ -159,14 +160,63 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          paddingBottom: '1rem',
+          paddingTop: '1rem !important',
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          padding: '0rem 1rem 1rem 1rem',
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          paddingBottom: '0rem',
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: { fontSize: '1rem', top: '-0.25rem !important' },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem',
+          '& .MuiSelect-select': {
+            paddingTop: '12px',
+            paddingBottom: '12px',
+            paddingLeft: '12px',
+          },
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
           '& .MuiInputBase-input': {
-            fontSize: '1.1rem',
+            fontSize: '1rem',
+            padding: '0.75rem',
           },
           '& .MuiInputBase-root': {
-            fontSize: '1.1rem',
+            fontSize: '1rem',
+          },
+        },
+      },
+    },
+    MuiInputAdornment: {
+      styleOverrides: {
+        root: {
+          '& .MuiTypography-root': {
+            fontSize: '1rem',
           },
         },
       },
