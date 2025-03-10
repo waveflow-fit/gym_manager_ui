@@ -1,17 +1,14 @@
-import Image from 'next/image';
-
-import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import DietCreator from '@/components/TemplateCreator/Diet/DietCreator';
+import DietTemplateCard from '@/components/TemplateCreator/Diet/DietTemplateCard';
+import TemplateList from '@/components/TemplateCreator/TemplateList';
 
 const Diet = () => {
   return (
-    <CenterAlign>
-      <Image
-        src='/coming_soon.svg'
-        height='500'
-        width='500'
-        alt='coming soon'
-      />
-    </CenterAlign>
+    <TemplateList
+      listName='Diet'
+      creator={DietCreator}
+      templateCard={DietTemplateCard}
+    />
   );
 };
 

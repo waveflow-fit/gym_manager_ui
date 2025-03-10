@@ -1,17 +1,14 @@
-import Image from 'next/image';
-
-import CenterAlign from '@/components/StyledComponents/CenterAlign';
+import TemplateList from '@/components/TemplateCreator/TemplateList';
+import WorkoutCreator from '@/components/TemplateCreator/Workout/WorkoutCreator';
+import WorkoutTemplateCard from '@/components/TemplateCreator/Workout/WorkoutTemplateCard';
 
 const Workout = () => {
   return (
-    <CenterAlign>
-      <Image
-        src='/coming_soon.svg'
-        height='500'
-        width='500'
-        alt='coming soon'
-      />
-    </CenterAlign>
+    <TemplateList
+      listName='Workouts'
+      creator={WorkoutCreator}
+      templateCard={WorkoutTemplateCard}
+    />
   );
 };
 
