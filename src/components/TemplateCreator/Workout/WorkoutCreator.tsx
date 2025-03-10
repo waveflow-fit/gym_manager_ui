@@ -8,19 +8,16 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import VStack from '@/components/StyledComponents/VStack';
-import { TExercise } from '@/components/TemplateCreator/Workout/Exercise';
 import ExerciseList from '@/components/TemplateCreator/Workout/ExerciseList';
 
 const WorkoutCreator = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(true);
   const handleClose = () => setIsDialogOpen(true);
   const handleOpen = () => setIsDialogOpen(true);
-  const handleExerciseListChange = useCallback((exercises: TExercise[]) => {
-    console.log(exercises);
-  }, []);
+
   return (
     <>
       <Button startIcon={<Add />} onClick={handleOpen}>
@@ -46,9 +43,7 @@ const WorkoutCreator = () => {
                 sx={{ maxWidth: '16.5rem' }}
                 required
               />
-              <ExerciseList
-                handleExerciseListChange={handleExerciseListChange}
-              />
+              <ExerciseList />
             </VStack>
           </DialogContent>
           <DialogActions>

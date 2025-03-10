@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { uniqueId } from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { EExerciseLoggingType } from '@/common/constants';
 import VStack from '@/components/StyledComponents/VStack';
@@ -13,11 +13,7 @@ const getBaseExercise = () => ({
   loggingType: EExerciseLoggingType.WEIGHT_REP_COUNT,
   suggestedIntensity: null,
 });
-const ExerciseList = ({
-  handleExerciseListChange,
-}: {
-  handleExerciseListChange: (exerciseList: TExercise[]) => void;
-}) => {
+const ExerciseList = () => {
   const [exercises, setExercises] = useState<TExercise[]>([getBaseExercise()]);
   const addMoreExercise = () => {
     setExercises((prev) => {
@@ -39,9 +35,7 @@ const ExerciseList = ({
       });
     });
   }, []);
-  useEffect(() => {
-    handleExerciseListChange(exercises);
-  }, [exercises, handleExerciseListChange]);
+
   return (
     <VStack gap={2}>
       <VStack gap={2}>
