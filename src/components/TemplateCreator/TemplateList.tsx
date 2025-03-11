@@ -16,7 +16,7 @@ const TemplateList = ({
   templateCard: TemplateCard,
 }: Props) => {
   return (
-    <SectionContainer>
+    <SectionContainer sx={{ py: 1 }}>
       <HStack justifyContent='space-between' height='8%' pb={1}>
         <Typography variant='h3'>{listName}</Typography>
         <Creator />

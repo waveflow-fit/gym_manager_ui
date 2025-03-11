@@ -1,10 +1,16 @@
-import VStack from '@/components/StyledComponents/VStack';
+import { Box, BoxProps } from '@mui/material';
 
-const DrawerContent = ({ children }: { children: React.ReactNode[] }) => {
+const DrawerContent = ({
+  children,
+  containerProps = {},
+}: {
+  containerProps?: BoxProps;
+  children: React.ReactNode[] | React.ReactNode;
+}) => {
   return (
-    <VStack gap={1.5} height='90%'>
+    <Box height='90%' {...containerProps}>
       {children}
-    </VStack>
+    </Box>
   );
 };
 

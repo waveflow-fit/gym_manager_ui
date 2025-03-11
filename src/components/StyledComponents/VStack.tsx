@@ -14,7 +14,7 @@ const VStack = styled(Box)<{
 }>(() => ({
   display: 'flex',
   flexDirection: 'column',
-  height: '100%',
+  height: 'fit-content',
 }));
 
 export default VStack;

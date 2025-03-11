@@ -4,15 +4,7 @@ import HStack from '@/components/StyledComponents/HStack';
 
 const DrawerActionButtons = ({ children }: { children: React.ReactNode[] }) => {
   return (
-    <HStack
-      display='flex'
-      gap={0.5}
-      height='5%'
-      alignItems='center'
-      // right='1rem'
-      // position='absolute'
-      // bottom='1rem'
-    >
+    <HStack display='flex' gap={0.5} height='5%' alignItems='center'>
       <Box display='flex' gap={0.5}>
         {children}
       </Box>

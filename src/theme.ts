@@ -222,6 +222,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          marginRight: '0',
+          '& .MuiFormControlLabel-label': {
+            fontSize: '1rem',
+          },
+          '& .MuiCheckbox-root': {
+            paddingRight: '0.25rem',
+          },
+        },
+      },
+    },
     MuiInputAdornment: {
       styleOverrides: {
         root: {

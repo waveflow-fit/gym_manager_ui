@@ -10,10 +10,11 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { EExerciseLoggingType } from '@/common/constants';
 import HStack from '@/components/StyledComponents/HStack';
+import VStack from '@/components/StyledComponents/VStack';
 import SuggestedIntensity from '@/components/TemplateCreator/Workout/SuggestedIntensity';
 
 export type TSuggestedValue = null | Record<string, number | string>;
@@ -54,55 +55,38 @@ const ExerciseLoggingType = [
 const Exercise = ({
   exerciseProps,
   handleDeleteExercise,
-  handleExerciseChange,
 }: {
   exerciseProps: TExercise;
   handleDeleteExercise?: (id: string) => void;
-  handleExerciseChange: (exercise: TExercise) => void;
 }) => {
-  const [exerciseValue, setExerciseValue] = useState<TExercise>(exerciseProps);
-
-  useEffect(() => {
-    handleExerciseChange(exerciseValue);
-  }, [exerciseValue, handleExerciseChange]);
+  const [loggingType, setLoggingType] = useState(exerciseProps.loggingType);
   return (
-    <HStack alignItems='center' gap={0.5} position='relative'>
-      <IconButton
-        disabled={!handleDeleteExercise}
-        onClick={() => handleDeleteExercise?.(exerciseValue.id)}
-      >
-        <Delete />
-      </IconButton>
-      <TextField
-        placeholder='ex: Leg press'
-        name={`${exerciseProps.id}.exerciseName`}
-        required
-        onChange={(e) => {
-          setExerciseValue({ ...exerciseValue, name: e.target.value });
-        }}
-      />
-      <FormControl>
-        <InputLabel id='exercise-logging-type-selector'>
-          Logging type
-        </InputLabel>
-        <HStack alignItems='center' gap={0.5}>
+    <VStack gap={0.5} height='fit-content !important'>
+      <HStack gap={0.5}>
+        <TextField
+          placeholder='ex: Leg press'
+          name={`${exerciseProps.id}.exerciseName`}
+          required
+          sx={{ width: '8rem' }}
+          defaultValue={exerciseProps.name}
+        />
+        <FormControl>
+          <InputLabel id='exercise-logging-type-selector'>
+            Logging type
+          </InputLabel>
           <Select
-            sx={{ maxWidth: '13.5rem', minWidth: '8.5rem' }}
+            sx={{ width: '10.5rem', minWidth: '8.5rem' }}
             label='Exercise type'
-            value={exerciseValue.loggingType}
             name={`${exerciseProps.id}.exerciseLogType`}
-            onChange={(e) => {
-              setExerciseValue({
-                ...exerciseValue,
-                loggingType: e.target.value as EExerciseLoggingType,
-              });
-            }}
-            defaultValue={EExerciseLoggingType.BOOLEAN}
+            defaultValue={exerciseProps.loggingType}
             input={
               <OutlinedInput label='Training with' sx={{ height: '45px' }} />
             }
             MenuProps={MenuProps}
             size='small'
+            onChange={(e) =>
+              setLoggingType(e.target.value as EExerciseLoggingType)
+            }
           >
             {ExerciseLoggingType.map((e) => {
               return (
@@ -112,18 +96,23 @@ const Exercise = ({
               );
             })}
           </Select>
-          <SuggestedIntensity
-            loggingType={exerciseValue.loggingType}
-            exerciseId={exerciseProps.id}
-          />
-        </HStack>
-      </FormControl>
-      <FormControlLabel
-        name={`${exerciseProps.id}.isOptional`}
-        control={<Checkbox />}
-        label='Optional'
+        </FormControl>
+        <FormControlLabel
+          name={`${exerciseProps.id}.isOptional`}
+          control={<Checkbox />}
+          label='Optional'
+        />
+        {handleDeleteExercise && (
+          <IconButton onClick={() => handleDeleteExercise?.(exerciseProps.id)}>
+            <Delete />
+          </IconButton>
+        )}
+      </HStack>
+      <SuggestedIntensity
+        loggingType={loggingType}
+        exerciseId={exerciseProps.id}
       />
-    </HStack>
+    </VStack>
   );
 };
 

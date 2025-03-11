@@ -1,8 +1,9 @@
-import { InputAdornment, TextField } from '@mui/material';
+import { InputAdornment, TextField, Typography } from '@mui/material';
 import { useMemo } from 'react';
 
 import { EExerciseLoggingType } from '@/common/constants';
 import HStack from '@/components/StyledComponents/HStack';
+import VStack from '@/components/StyledComponents/VStack';
 
 const SuggestedIntensity = ({
   loggingType,
@@ -33,25 +34,28 @@ const SuggestedIntensity = ({
   );
   if (loggingType in loggingFields) {
     return (
-      <HStack key={loggingType} gap={0.5}>
-        {loggingFields[loggingType].map(({ name, label }) => (
-          <TextField
-            key={name}
-            type='number'
-            required
-            name={name}
-            sx={{ width: '16ch' }}
-            slotProps={{
-              input: {
-                inputProps: { min: 1 },
-                endAdornment: (
-                  <InputAdornment position='end'>{label}</InputAdornment>
-                ),
-              },
-            }}
-          />
-        ))}
-      </HStack>
+      <VStack gap={0.5} height='fit-content'>
+        <Typography variant='subtitle2'>Suggested intensity</Typography>
+        <HStack key={loggingType} gap={0.5} height='fit-content'>
+          {loggingFields[loggingType].map(({ name, label }) => (
+            <TextField
+              key={name}
+              type='number'
+              required
+              name={name}
+              sx={{ width: '16ch' }}
+              slotProps={{
+                input: {
+                  inputProps: { min: 1 },
+                  endAdornment: (
+                    <InputAdornment position='end'>{label}</InputAdornment>
+                  ),
+                },
+              }}
+            />
+          ))}
+        </HStack>
+      </VStack>
     );
   }
   return null;
