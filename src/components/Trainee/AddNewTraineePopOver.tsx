@@ -23,7 +23,7 @@ const AddNewTraineePopOver = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
       >
-        <Box p={2} minWidth='24.5rem'>
+        <Box p={1} minWidth='24.5rem'>
           <AddNewTraineeForm />
         </Box>
       </Popover>

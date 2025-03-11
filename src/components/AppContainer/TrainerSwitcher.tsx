@@ -37,8 +37,8 @@ const TrainerSwitcher = () => {
   return (
     <SectionContainer
       sx={{
-        px: 2,
-        py: 1,
+        px: 1,
+        py: 0.5,
         height: '60px',
         width: '280px',
       }}
@@ -54,7 +54,7 @@ const TrainerSwitcher = () => {
             router.push(ROUTE_URLS.dashboard);
           }}
           input={
-            <OutlinedInput label='Training with' sx={{ height: '45px' }} />
+            <OutlinedInput label='Training with' sx={{ height: '2.75rem' }} />
           }
           MenuProps={MenuProps}
           size='small'

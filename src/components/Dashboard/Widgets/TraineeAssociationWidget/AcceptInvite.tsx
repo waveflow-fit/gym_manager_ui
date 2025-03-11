@@ -96,8 +96,8 @@ const AcceptInvite = () => {
               <Box
                 width='100%'
                 display='flex'
-                px={1}
-                py={invite_status === EInviteStatus.PENDING ? 0 : 1}
+                px={0.5}
+                py={invite_status === EInviteStatus.PENDING ? 0 : 0.5}
                 gap={0.5}
                 alignItems='center'
               >
@@ -130,7 +130,7 @@ const AcceptInvite = () => {
         height='100%'
         position='relative'
       >
-        <Typography variant='h6' px={2}>
+        <Typography variant='h6' px={1}>
           Invites
         </Typography>
         {renderList()}

@@ -30,7 +30,7 @@ const SelectedAssociation = () => {
       );
     return (
       <CenterAlign flexDirection='column' gap={2}>
-        <Typography variant='h2' px={2}>
+        <Typography variant='h2' px={1}>
           Training with
         </Typography>
         <Avatar
@@ -48,7 +48,7 @@ const SelectedAssociation = () => {
     <SectionContainer
       sx={{
         height: '500px',
-        px: 2,
+        px: 1,
       }}
     >
       {component}
