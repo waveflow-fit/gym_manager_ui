@@ -43,7 +43,6 @@ const WorkoutCreator = () => {
       },
     ],
   });
-  console.log(workoutPlan);
 
   return (
     <>
