@@ -5,7 +5,7 @@ import CenterAlign from '@/components/StyledComponents/CenterAlign';
 
 const Todo = () => {
   return (
-    <CenterAlign flexDirection='column' gap={2}>
+    <CenterAlign flexDirection='column' gap={0.5}>
       <Image
         src='/coming_soon.svg'
         height='500'

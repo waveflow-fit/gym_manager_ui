@@ -52,7 +52,7 @@ const MessagingActionRenderer = ({ colDef, row }) => {
   };
   return (
     <>
-      <CenterAlign gap={1} justifyContent='flex-start'>
+      <CenterAlign gap={0.25} justifyContent='flex-start'>
         {whatsapp && (
           <IconButton
             onClick={(e) => handleClick(e, EMessagingPopover.WHATS_APP)}
@@ -71,8 +71,8 @@ const MessagingActionRenderer = ({ colDef, row }) => {
         anchorEl={anchorEl}
         onClose={handleClose}
       >
-        <Box p={2} minWidth='24.5rem'>
-          <CenterAlign flexDirection='column' alignItems='flex-start' gap={1}>
+        <Box p={1} minWidth='24.5rem'>
+          <CenterAlign flexDirection='column' alignItems='flex-start' gap={0.5}>
             <TextField
               placeholder='Type your message...'
               multiline

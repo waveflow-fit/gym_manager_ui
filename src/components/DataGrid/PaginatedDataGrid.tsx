@@ -146,7 +146,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          gap: 2,
+          gap: 1,
           position: 'relative',
         }}
       >
@@ -162,7 +162,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
           {actions}
         </Box>
         {!isGridReady && (
-          <CenterAlign flexDirection='column' gap={2}>
+          <CenterAlign flexDirection='column' gap={1}>
             <CircularProgress />
             <Typography>Setting up things for you...</Typography>
           </CenterAlign>

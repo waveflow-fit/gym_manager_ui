@@ -55,7 +55,7 @@ const ActionButton = ({
   };
   if (status !== EInviteStatus.PENDING) return null;
   return (
-    <Box display='flex' gap={1} alignItems='center' marginLeft='auto'>
+    <Box display='flex' gap={0.5} alignItems='center' marginLeft='auto'>
       <IconButton
         onClick={() => handleAction('accept')}
         disabled={isActionPending}
@@ -98,7 +98,7 @@ const AcceptInvite = () => {
                 display='flex'
                 px={1}
                 py={invite_status === EInviteStatus.PENDING ? 0 : 1}
-                gap={1}
+                gap={0.5}
                 alignItems='center'
               >
                 <Chip label={invite_status} size='small' />
@@ -124,7 +124,7 @@ const AcceptInvite = () => {
       <Box
         display='flex'
         flexDirection='column'
-        gap={1}
+        gap={0.5}
         justifyContent='start'
         alignItems='start'
         height='100%'

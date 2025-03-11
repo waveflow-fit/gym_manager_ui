@@ -29,7 +29,7 @@ const SelectedAssociation = () => {
         <NoResultFound text='You are not associated with any trainers yet' />
       );
     return (
-      <CenterAlign flexDirection='column' gap={4}>
+      <CenterAlign flexDirection='column' gap={2}>
         <Typography variant='h2' px={2}>
           Training with
         </Typography>

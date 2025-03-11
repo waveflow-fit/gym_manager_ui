@@ -1,6 +1,8 @@
 import { Delete } from '@mui/icons-material';
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
   IconButton,
   InputLabel,
   MenuItem,
@@ -64,7 +66,7 @@ const Exercise = ({
     handleExerciseChange(exerciseValue);
   }, [exerciseValue, handleExerciseChange]);
   return (
-    <HStack alignItems='center' gap={1} position='relative'>
+    <HStack alignItems='center' gap={0.5} position='relative'>
       <IconButton
         disabled={!handleDeleteExercise}
         onClick={() => handleDeleteExercise?.(exerciseValue.id)}
@@ -83,7 +85,7 @@ const Exercise = ({
         <InputLabel id='exercise-logging-type-selector'>
           Logging type
         </InputLabel>
-        <HStack alignItems='center' gap={1}>
+        <HStack alignItems='center' gap={0.5}>
           <Select
             sx={{ maxWidth: '13.5rem', minWidth: '8.5rem' }}
             label='Exercise type'
@@ -116,6 +118,11 @@ const Exercise = ({
           />
         </HStack>
       </FormControl>
+      <FormControlLabel
+        name={`${exerciseProps.id}.isOptional`}
+        control={<Checkbox />}
+        label='Optional'
+      />
     </HStack>
   );
 };

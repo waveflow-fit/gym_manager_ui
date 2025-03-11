@@ -1,3 +1,4 @@
+import { Add } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { uniqueId } from 'lodash';
 import { useCallback, useState } from 'react';
@@ -37,20 +38,18 @@ const ExerciseList = () => {
   }, []);
 
   return (
-    <VStack gap={2}>
-      <VStack gap={2}>
-        {exercises.map((e, i) => {
-          return (
-            <Exercise
-              exerciseProps={e}
-              key={e.id}
-              handleDeleteExercise={i !== 0 ? handleDeleteExercise : undefined}
-              handleExerciseChange={handleExerciseChange}
-            />
-          );
-        })}
-      </VStack>
-      <Button variant='text' onClick={addMoreExercise}>
+    <VStack gap={1}>
+      {exercises.map((e, i) => {
+        return (
+          <Exercise
+            exerciseProps={e}
+            key={e.id}
+            handleDeleteExercise={i !== 0 ? handleDeleteExercise : undefined}
+            handleExerciseChange={handleExerciseChange}
+          />
+        );
+      })}
+      <Button variant='text' onClick={addMoreExercise} startIcon={<Add />}>
         Add new exercise
       </Button>
     </VStack>

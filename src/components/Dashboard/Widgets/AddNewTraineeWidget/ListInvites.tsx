@@ -138,7 +138,7 @@ const ListInvites = () => {
       <Box
         display='flex'
         flexDirection='column'
-        gap={1}
+        gap={0.5}
         justifyContent='start'
         alignItems='start'
         height='100%'

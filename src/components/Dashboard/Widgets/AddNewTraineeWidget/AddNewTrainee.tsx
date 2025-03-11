@@ -16,7 +16,7 @@ const AddNewTrainee = () => {
       <Box
         display='flex'
         flexDirection='column'
-        gap={1}
+        gap={0.5}
         justifyContent='center'
         height='100%'
         width='100%'

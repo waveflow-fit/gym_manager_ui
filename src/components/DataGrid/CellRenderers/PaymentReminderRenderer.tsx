@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material';
 import CenterAlign from '@/components/StyledComponents/CenterAlign';
 const PaymentReminderRenderer = () => {
   return (
-    <CenterAlign gap={1} justifyContent='flex-start'>
+    <CenterAlign gap={0.5} justifyContent='flex-start'>
       <IconButton>
         <NotificationsIcon />
       </IconButton>

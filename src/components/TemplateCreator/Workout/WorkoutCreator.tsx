@@ -1,21 +1,15 @@
 'use client';
 import Add from '@mui/icons-material/Add';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from '@mui/material';
+import { Button, Drawer, TextField } from '@mui/material';
 import { useState } from 'react';
 
-import VStack from '@/components/StyledComponents/VStack';
-import ExerciseList from '@/components/TemplateCreator/Workout/ExerciseList';
+import DrawerActionButtons from '@/components/StyledComponents/Drawer/DrawerActionButtons';
+import DrawerContent from '@/components/StyledComponents/Drawer/DrawerContent';
+import DrawerHeader from '@/components/StyledComponents/Drawer/DrawerHeader';
 
 const WorkoutCreator = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
-  const handleClose = () => setIsDialogOpen(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const handleClose = () => setIsDialogOpen(false);
   const handleOpen = () => setIsDialogOpen(true);
 
   return (
@@ -23,8 +17,8 @@ const WorkoutCreator = () => {
       <Button startIcon={<Add />} onClick={handleOpen}>
         Create new workout
       </Button>
-      <Dialog open={isDialogOpen} onClose={handleClose} maxWidth='md' fullWidth>
-        <form
+      <Drawer anchor='right' open={isDialogOpen} onClose={handleClose}>
+        {/* <form
           onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
 
@@ -33,27 +27,31 @@ const WorkoutCreator = () => {
 
             console.log(values);
           }}
-        >
-          <DialogTitle>Create workout</DialogTitle>
-          <DialogContent>
-            <VStack gap={3}>
-              <TextField
-                name='workoutName'
-                placeholder='ex: Legs workout'
-                sx={{ maxWidth: '16.5rem' }}
-                required
-              />
-              <ExerciseList />
-            </VStack>
-          </DialogContent>
-          <DialogActions>
-            <Button variant='outlined' onClick={handleClose}>
-              Close
-            </Button>
-            <Button type='submit'>Save</Button>
-          </DialogActions>
-        </form>
-      </Dialog>
+        > */}
+        <DrawerHeader>Create workout</DrawerHeader>
+        <DrawerContent>
+          <TextField
+            name='workoutName'
+            placeholder='ex: Legs workout'
+            sx={{ maxWidth: '16.5rem' }}
+            required
+          />
+          <TextField
+            name='workoutName'
+            placeholder='ex: Legs workout'
+            sx={{ maxWidth: '16.5rem' }}
+            required
+          />
+          {/* <ExerciseList /> */}
+        </DrawerContent>
+        <DrawerActionButtons>
+          <Button variant='outlined' onClick={handleClose}>
+            Close
+          </Button>
+          <Button type='submit'>Save</Button>
+        </DrawerActionButtons>
+        {/* </form> */}
+      </Drawer>
     </>
   );
 };

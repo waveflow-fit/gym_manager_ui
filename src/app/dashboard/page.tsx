@@ -5,7 +5,7 @@ import WidgetsSection from '@/components/Dashboard/Widgets/WidgetsSection';
 
 const Dashboard = () => {
   return (
-    <Box display='flex' flexDirection='column' gap={2}>
+    <Box display='flex' flexDirection='column' gap={0.5}>
       <UserTitle />
 
       <WidgetsSection />

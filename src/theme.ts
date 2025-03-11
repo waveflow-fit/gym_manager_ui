@@ -40,6 +40,7 @@ export const gymThemePalette = {
 
 // Create a theme function for the dark gym theme
 const theme = createTheme({
+  spacing: 16, // spacing 1 means 1rem
   cssVariables: true,
   palette: gymThemePalette,
   custom: {
@@ -192,9 +193,9 @@ const theme = createTheme({
         root: {
           fontSize: '1rem',
           '& .MuiSelect-select': {
-            paddingTop: '12px',
-            paddingBottom: '12px',
-            paddingLeft: '12px',
+            paddingTop: '0.75rem',
+            paddingBottom: '0.75rem',
+            paddingLeft: '0.75rem',
           },
         },
       },
@@ -209,6 +210,15 @@ const theme = createTheme({
           '& .MuiInputBase-root': {
             fontSize: '1rem',
           },
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          padding: '1rem',
+          height: '100%',
+          gap: '1rem',
         },
       },
     },

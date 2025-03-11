@@ -92,7 +92,7 @@ const UserOnBoarding = ({ children }) => {
         p={{ xs: 1, sm: 4, md: 6 }}
         display='flex'
         flexDirection='column'
-        gap={2}
+        gap={1}
       >
         <FormControl>
           <FormLabel sx={{ fontWeight: 'bold' }}>

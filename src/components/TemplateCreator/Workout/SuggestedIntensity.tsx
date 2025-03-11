@@ -33,7 +33,7 @@ const SuggestedIntensity = ({
   );
   if (loggingType in loggingFields) {
     return (
-      <HStack key={loggingType} gap={1}>
+      <HStack key={loggingType} gap={0.5}>
         {loggingFields[loggingType].map(({ name, label }) => (
           <TextField
             key={name}

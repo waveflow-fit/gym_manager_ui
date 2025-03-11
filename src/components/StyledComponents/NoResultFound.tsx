@@ -14,7 +14,7 @@ const NoResultFound = ({
   textProps: Record<string, string>;
 }>) => {
   return (
-    <CenterAlign flexDirection='column' gap={2}>
+    <CenterAlign flexDirection='column' gap={1}>
       <Image
         alt='no results'
         src='/no_results.svg'
