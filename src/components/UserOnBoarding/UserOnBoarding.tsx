@@ -102,6 +102,7 @@ const UserOnBoarding = ({ children }) => {
             row
             value={userRole}
             onChange={(e) => setUserRole(e.target.value as EUserRole)}
+            sx={{ gap: 1 }}
           >
             <FormControlLabel
               value={EUserRole.TRAINER}
