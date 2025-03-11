@@ -17,7 +17,7 @@ const TemplateList = ({
 }: Props) => {
   return (
     <SectionContainer>
-      <HStack justifyContent='space-between' height='8%' pb={2}>
+      <HStack justifyContent='space-between' height='8%' pb={1}>
         <Typography variant='h3'>{listName}</Typography>
         <Creator />
       </HStack>
