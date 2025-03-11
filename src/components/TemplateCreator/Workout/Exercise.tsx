@@ -103,7 +103,7 @@ const Exercise = ({
         </FormControl>
         <FormControlLabel
           name={`${exerciseProps.id}.isOptional`}
-          control={<Checkbox />}
+          control={<Checkbox defaultChecked={exerciseProps.isOptional} />}
           label='Optional'
         />
         {handleDeleteExercise && (

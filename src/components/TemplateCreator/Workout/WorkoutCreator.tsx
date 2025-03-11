@@ -30,6 +30,7 @@ const WorkoutCreator = () => {
         id: getExerciseId(),
         exerciseName: 'Leg press',
         exerciseLogType: EExerciseLoggingType.BOOLEAN,
+        isOptional: true,
       },
       {
         id: getExerciseId(),
@@ -43,7 +44,7 @@ const WorkoutCreator = () => {
       },
     ],
   });
-
+  console.log(workoutPlan);
   return (
     <>
       <Button startIcon={<Add />} onClick={handleOpen}>
@@ -65,11 +66,10 @@ const WorkoutCreator = () => {
             'exercises'
           ) as TWorkoutPlan;
           workoutPlan.exercises = workoutPlan.exercises.map((e) => {
-            if (!e.id) {
-              e.id = getExerciseId();
-            }
             if ((e.isOptional as unknown as string) === 'on') {
               e.isOptional = true;
+            } else {
+              e.isOptional = false;
             }
             return e;
           });

@@ -1,14 +1,14 @@
 import { Add } from '@mui/icons-material';
 import { Button, Card } from '@mui/material';
-import { uniqueId } from 'lodash';
 import { useState } from 'react';
+import { v4 } from 'uuid';
 
 import { EExerciseLoggingType } from '@/common/constants';
 import VStack from '@/components/StyledComponents/VStack';
 import Exercise, {
   TWorkoutExercise,
 } from '@/components/TemplateCreator/Workout/Exercise';
-export const getExerciseId = () => uniqueId('exercises-').toString();
+export const getExerciseId = () => `exercises-${v4()}`;
 const getBaseExercise = () => ({
   id: getExerciseId(),
   exerciseName: '',

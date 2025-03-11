@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash';
+import { set, uniqueId } from 'lodash';
 
 import { PAGINATION } from '@/common/constants';
 
@@ -41,45 +41,25 @@ export const endpointWithUrlParams = (
 
 export const createNestedObject = (
   obj: Record<string, any>,
-  groupKey?: string
-): Record<string, any> => {
+  groupKey: string = ''
+) => {
   const result: Record<string, any> = {};
-  const groupedItems: Record<string, any> = {};
+  const grouped: Record<string, any> = {};
 
-  for (const key in obj) {
-    const value = obj[key];
+  Object.entries(obj).forEach(([key, value]) => {
     const keys = key.split('.');
-
-    if (groupKey && keys[0].startsWith(`${groupKey}-`)) {
-      const uniqueId = keys[0].split('-')[1];
-      const subKeys = keys.slice(1).join('.');
-
-      if (!groupedItems[uniqueId]) groupedItems[uniqueId] = {};
-      let current = groupedItems[uniqueId];
-
-      subKeys.split('.').forEach((k, index, arr) => {
-        if (index === arr.length - 1) {
-          current[k] = value;
-        } else {
-          current[k] = current[k] || {};
-          current = current[k];
-        }
-      });
+    const match = keys[0].match(new RegExp(`^${groupKey}-(.+)$`));
+    if (match) {
+      const id = keys[0];
+      if (!grouped[id]) grouped[id] = { id };
+      set(grouped[id], keys.slice(1).join('.'), value);
     } else {
-      let current = result;
-      keys.forEach((k, index) => {
-        if (index === keys.length - 1) {
-          current[k] = value;
-        } else {
-          current[k] = current[k] || {};
-          current = current[k];
-        }
-      });
+      set(result, key, value);
     }
-  }
+  });
 
-  if (groupKey && Object.keys(groupedItems).length) {
-    result[groupKey] = Object.values(groupedItems);
+  if (Object.keys(grouped).length) {
+    result[groupKey] = Object.values(grouped);
   }
 
   return result;
