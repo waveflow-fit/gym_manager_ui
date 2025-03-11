@@ -3,16 +3,18 @@ import Add from '@mui/icons-material/Add';
 import { Button, Drawer, TextField } from '@mui/material';
 import { useState } from 'react';
 
-import { createNestedObject } from '@/common/app.utils';
+import {
+  createNestedObject,
+  groupByPrefix,
+  replaceKeyValue,
+} from '@/common/app.utils';
 import { EExerciseLoggingType } from '@/common/constants';
 import DrawerActionButtons from '@/components/StyledComponents/Drawer/DrawerActionButtons';
 import DrawerContent from '@/components/StyledComponents/Drawer/DrawerContent';
 import DrawerHeader from '@/components/StyledComponents/Drawer/DrawerHeader';
 import VStack from '@/components/StyledComponents/VStack';
 import { TWorkoutExercise } from '@/components/TemplateCreator/Workout/Exercise';
-import ExerciseList, {
-  getExerciseId,
-} from '@/components/TemplateCreator/Workout/ExerciseList';
+import ExerciseList from '@/components/TemplateCreator/Workout/ExerciseList';
 
 export type TWorkoutPlan = {
   workoutName: string;
@@ -27,13 +29,31 @@ const WorkoutCreator = () => {
     workoutName: 'Legs workout',
     exercises: [
       {
-        id: getExerciseId(),
+        id: 'exercises-76e40117-9714-4c62-b410-837dd3031904',
         exerciseName: 'Leg press',
         exerciseLogType: EExerciseLoggingType.BOOLEAN,
-        isOptional: true,
+        alternateExercise: {
+          'exercises-2bf7d667-da4d-44db-90c0-747594581ebc': {
+            exerciseName: 'jj',
+            exerciseLogType: EExerciseLoggingType.WEIGHT_REP_COUNT,
+            suggestedIntensity: {
+              reps: 1,
+              weight: 1,
+              countPerRep: 1,
+            },
+            id: 'exercises-2bf7d667-da4d-44db-90c0-747594581ebc',
+          },
+          'exercises-d3639ca8-4ea8-4ab8-a6c5-8f2b76f15845': {
+            exerciseName: 'kk',
+            exerciseLogType: EExerciseLoggingType.BOOLEAN,
+            isOptional: true,
+            id: 'exercises-d3639ca8-4ea8-4ab8-a6c5-8f2b76f15845',
+          },
+        },
+        isOptional: false,
       },
       {
-        id: getExerciseId(),
+        id: 'exercises-818da37b-f416-4c7b-b62c-ae11dc513205',
         exerciseName: 'Leg curl',
         exerciseLogType: EExerciseLoggingType.WEIGHT_REP_COUNT,
         suggestedIntensity: {
@@ -41,6 +61,7 @@ const WorkoutCreator = () => {
           weight: 20,
           countPerRep: 12,
         },
+        isOptional: false,
       },
     ],
   });
@@ -61,25 +82,19 @@ const WorkoutCreator = () => {
 
           const formData = new FormData(form);
           const values = Object.fromEntries(formData.entries());
-          const workoutPlan = createNestedObject(
-            values,
-            'exercises'
+          const workoutPlan = replaceKeyValue(
+            groupByPrefix(createNestedObject(values), 'exercises'),
+            'isOptional',
+            'on',
+            true
           ) as TWorkoutPlan;
-          workoutPlan.exercises = workoutPlan.exercises.map((e) => {
-            if ((e.isOptional as unknown as string) === 'on') {
-              e.isOptional = true;
-            } else {
-              e.isOptional = false;
-            }
-            return e;
-          });
           setWorkoutPlan(workoutPlan);
         }}
       >
         <DrawerHeader handleClose={handleClose}>Create workout</DrawerHeader>
         <DrawerContent
           containerProps={{
-            sx: { width: '32rem', overflowY: 'auto', m: '-1rem', p: '1rem' },
+            sx: { width: '36rem', overflowY: 'auto', m: '-1rem', p: '1rem' },
           }}
         >
           <VStack height='100%' gap={1}>

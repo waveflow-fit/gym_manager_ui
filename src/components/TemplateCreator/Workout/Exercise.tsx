@@ -1,6 +1,9 @@
-import { Delete } from '@mui/icons-material';
+import { Add, Delete } from '@mui/icons-material';
 import {
+  Box,
+  Button,
   Checkbox,
+  Divider,
   FormControl,
   FormControlLabel,
   IconButton,
@@ -15,6 +18,7 @@ import { useState } from 'react';
 import { EExerciseLoggingType } from '@/common/constants';
 import HStack from '@/components/StyledComponents/HStack';
 import VStack from '@/components/StyledComponents/VStack';
+import { getExerciseId } from '@/components/TemplateCreator/Workout/ExerciseList';
 import SuggestedIntensity from '@/components/TemplateCreator/Workout/SuggestedIntensity';
 
 export type TSuggestedIntensity =
@@ -27,6 +31,7 @@ export type TWorkoutExercise = {
   exerciseLogType: EExerciseLoggingType;
   suggestedIntensity?: TSuggestedIntensity;
   isOptional?: boolean;
+  alternateExercise?: Record<string, TWorkoutExercise>;
 };
 
 const ITEM_HEIGHT = 50;
@@ -56,20 +61,30 @@ const ExerciseLoggingType = [
     value: EExerciseLoggingType.TIME,
   },
 ];
+
 const Exercise = ({
   exerciseProps,
   handleDeleteExercise,
+  isParentExercise = true,
+  prefix = '',
 }: {
   exerciseProps: TWorkoutExercise;
   handleDeleteExercise?: (id: string) => void;
+  isParentExercise?: boolean;
+  prefix?: string;
 }) => {
   const [loggingType, setLoggingType] = useState(exerciseProps.exerciseLogType);
+  const [altExercise, setAltExercise] = useState<string[]>(
+    exerciseProps.alternateExercise
+      ? Object.keys(exerciseProps.alternateExercise)
+      : []
+  );
   return (
     <VStack gap={0.5} height='fit-content !important'>
       <HStack gap={0.5}>
         <TextField
           placeholder='ex: Leg press'
-          name={`${exerciseProps.id}.exerciseName`}
+          name={`${prefix}${exerciseProps.id}.exerciseName`}
           required
           sx={{ width: '8rem' }}
           defaultValue={exerciseProps.exerciseName}
@@ -81,7 +96,7 @@ const Exercise = ({
           <Select
             sx={{ width: '10.5rem', minWidth: '8.5rem' }}
             label='Exercise type'
-            name={`${exerciseProps.id}.exerciseLogType`}
+            name={`${prefix}${exerciseProps.id}.exerciseLogType`}
             defaultValue={exerciseProps.exerciseLogType}
             input={
               <OutlinedInput label='Training with' sx={{ height: '45px' }} />
@@ -102,7 +117,7 @@ const Exercise = ({
           </Select>
         </FormControl>
         <FormControlLabel
-          name={`${exerciseProps.id}.isOptional`}
+          name={`${prefix}${exerciseProps.id}.isOptional`}
           control={<Checkbox defaultChecked={exerciseProps.isOptional} />}
           label='Optional'
         />
@@ -116,7 +131,47 @@ const Exercise = ({
         loggingType={loggingType}
         exerciseId={exerciseProps.id}
         defaultValue={exerciseProps.suggestedIntensity}
+        prefix={prefix}
       />
+      {altExercise.map((e) => {
+        return (
+          <Box key={e} component='span'>
+            <Divider sx={{ my: 0.75 }}>Or</Divider>
+            <VStack paddingLeft={1.25} gap={0.5}>
+              <Exercise
+                key={e}
+                exerciseProps={
+                  exerciseProps.alternateExercise?.[e] || {
+                    id: e,
+                    exerciseName: '',
+                    exerciseLogType: EExerciseLoggingType.BOOLEAN,
+                  }
+                }
+                isParentExercise={false}
+                handleDeleteExercise={(deleteId: string) => {
+                  setAltExercise((p) => p.filter((id) => id !== deleteId));
+                }}
+                prefix={`${exerciseProps.id}.alternateExercise.`}
+              />
+            </VStack>
+          </Box>
+        );
+      })}
+      <TextField
+        name={`${prefix}${exerciseProps.id}.id`}
+        defaultValue={exerciseProps.id}
+        sx={{ display: 'none' }}
+      />
+      {isParentExercise && (
+        <Button
+          variant='text'
+          startIcon={<Add />}
+          sx={{ mt: 0.5 }}
+          onClick={() => setAltExercise((p) => [...p, getExerciseId()])}
+        >
+          Add alternate
+        </Button>
+      )}
     </VStack>
   );
 };

@@ -19,10 +19,12 @@ const SuggestedIntensity = ({
   loggingType,
   exerciseId,
   defaultValue,
+  prefix = '',
 }: {
   exerciseId: string;
   loggingType: EExerciseLoggingType;
   defaultValue?: TSuggestedIntensity;
+  prefix?: string;
 }) => {
   const loggingFields = useMemo(
     () => ({
@@ -47,7 +49,8 @@ const SuggestedIntensity = ({
         {loggingFields[loggingType].map(({ name, label, ...rest }) => (
           <TextField
             key={name}
-            name={`${exerciseId}.suggestedIntensity.${name}`}
+            required
+            name={`${prefix}${exerciseId}.suggestedIntensity.${name}`}
             defaultValue={defaultValue?.[name] || ''}
             sx={{ width: '16ch' }}
             {...rest}

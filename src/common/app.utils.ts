@@ -1,4 +1,4 @@
-import { set, uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 
 import { PAGINATION } from '@/common/constants';
 
@@ -39,30 +39,66 @@ export const endpointWithUrlParams = (
   }, url);
 };
 
-export const createNestedObject = (
-  obj: Record<string, any>,
-  groupKey: string = ''
-) => {
+export const createNestedObject = (obj: Record<string, any>) => {
   const result: Record<string, any> = {};
-  const grouped: Record<string, any> = {};
 
   Object.entries(obj).forEach(([key, value]) => {
     const keys = key.split('.');
-    const match = keys[0].match(new RegExp(`^${groupKey}-(.+)$`));
-    if (match) {
-      const id = keys[0];
-      if (!grouped[id]) grouped[id] = { id };
-      set(grouped[id], keys.slice(1).join('.'), value);
+    let current = result;
+
+    keys.forEach((k, index) => {
+      if (!current[k]) {
+        current[k] = index === keys.length - 1 ? value : {};
+      }
+      current = current[k];
+    });
+  });
+
+  return result;
+};
+
+export const groupByPrefix = (obj: Record<string, any>, prefix: string) => {
+  const result: Record<string, any> = {};
+  const grouped: Record<string, any>[] = [];
+
+  Object.entries(obj).forEach(([key, value]) => {
+    if (key.startsWith(prefix)) {
+      grouped.push(value);
     } else {
-      set(result, key, value);
+      result[key] = value;
     }
   });
 
-  if (Object.keys(grouped).length) {
-    result[groupKey] = Object.values(grouped);
+  if (grouped.length) {
+    result[prefix] = grouped;
   }
 
   return result;
+};
+
+export const replaceKeyValue = (
+  obj: any,
+  targetKey: string,
+  targetValue: any,
+  newValue: any
+): any => {
+  if (Array.isArray(obj)) {
+    return obj.map((item) =>
+      replaceKeyValue(item, targetKey, targetValue, newValue)
+    );
+  } else if (obj !== null && typeof obj === 'object') {
+    return Object.entries(obj).reduce(
+      (acc, [key, value]) => {
+        acc[key] =
+          key === targetKey && value === targetValue
+            ? newValue
+            : replaceKeyValue(value, targetKey, targetValue, newValue);
+        return acc;
+      },
+      {} as Record<string, any>
+    );
+  }
+  return obj;
 };
 
 export const flattenNestedObject = (
