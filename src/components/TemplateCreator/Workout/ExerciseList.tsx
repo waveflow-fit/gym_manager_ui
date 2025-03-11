@@ -6,16 +6,23 @@ import { useState } from 'react';
 import { EExerciseLoggingType } from '@/common/constants';
 import VStack from '@/components/StyledComponents/VStack';
 import Exercise, {
-  TExercise,
+  TWorkoutExercise,
 } from '@/components/TemplateCreator/Workout/Exercise';
+export const getExerciseId = () => uniqueId('exercises-').toString();
 const getBaseExercise = () => ({
-  id: uniqueId('exercise-').toString(),
-  name: '',
-  loggingType: EExerciseLoggingType.WEIGHT_REP_COUNT,
-  suggestedIntensity: null,
+  id: getExerciseId(),
+  exerciseName: '',
+  exerciseLogType: EExerciseLoggingType.WEIGHT_REP_COUNT,
 });
-const ExerciseList = () => {
-  const [exercises, setExercises] = useState<TExercise[]>([getBaseExercise()]);
+
+const ExerciseList = ({
+  defaultExercises,
+}: {
+  defaultExercises: TWorkoutExercise[];
+}) => {
+  const [exercises, setExercises] = useState<TWorkoutExercise[]>(
+    defaultExercises.length > 0 ? defaultExercises : [getBaseExercise()]
+  );
   const addMoreExercise = () => {
     setExercises((prev) => {
       return [...prev, getBaseExercise()];

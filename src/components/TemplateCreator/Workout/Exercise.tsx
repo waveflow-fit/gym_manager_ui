@@ -17,12 +17,16 @@ import HStack from '@/components/StyledComponents/HStack';
 import VStack from '@/components/StyledComponents/VStack';
 import SuggestedIntensity from '@/components/TemplateCreator/Workout/SuggestedIntensity';
 
-export type TSuggestedValue = null | Record<string, number | string>;
-export type TExercise = {
+export type TSuggestedIntensity =
+  | { reps: number; weight: number; countPerRep: number }
+  | { weight: number; time: number }
+  | { time: number };
+export type TWorkoutExercise = {
   id: string;
-  name: string;
-  loggingType: EExerciseLoggingType;
-  suggestedIntensity: TSuggestedValue;
+  exerciseName: string;
+  exerciseLogType: EExerciseLoggingType;
+  suggestedIntensity?: TSuggestedIntensity;
+  isOptional?: boolean;
 };
 
 const ITEM_HEIGHT = 50;
@@ -56,10 +60,10 @@ const Exercise = ({
   exerciseProps,
   handleDeleteExercise,
 }: {
-  exerciseProps: TExercise;
+  exerciseProps: TWorkoutExercise;
   handleDeleteExercise?: (id: string) => void;
 }) => {
-  const [loggingType, setLoggingType] = useState(exerciseProps.loggingType);
+  const [loggingType, setLoggingType] = useState(exerciseProps.exerciseLogType);
   return (
     <VStack gap={0.5} height='fit-content !important'>
       <HStack gap={0.5}>
@@ -68,7 +72,7 @@ const Exercise = ({
           name={`${exerciseProps.id}.exerciseName`}
           required
           sx={{ width: '8rem' }}
-          defaultValue={exerciseProps.name}
+          defaultValue={exerciseProps.exerciseName}
         />
         <FormControl>
           <InputLabel id='exercise-logging-type-selector'>
@@ -78,7 +82,7 @@ const Exercise = ({
             sx={{ width: '10.5rem', minWidth: '8.5rem' }}
             label='Exercise type'
             name={`${exerciseProps.id}.exerciseLogType`}
-            defaultValue={exerciseProps.loggingType}
+            defaultValue={exerciseProps.exerciseLogType}
             input={
               <OutlinedInput label='Training with' sx={{ height: '45px' }} />
             }
@@ -103,7 +107,7 @@ const Exercise = ({
           label='Optional'
         />
         {handleDeleteExercise && (
-          <IconButton onClick={() => handleDeleteExercise?.(exerciseProps.id)}>
+          <IconButton onClick={() => handleDeleteExercise?.(exerciseProps?.id)}>
             <Delete />
           </IconButton>
         )}
@@ -111,6 +115,7 @@ const Exercise = ({
       <SuggestedIntensity
         loggingType={loggingType}
         exerciseId={exerciseProps.id}
+        defaultValue={exerciseProps.suggestedIntensity}
       />
     </VStack>
   );

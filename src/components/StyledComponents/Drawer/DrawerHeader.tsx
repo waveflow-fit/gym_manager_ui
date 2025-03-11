@@ -11,7 +11,12 @@ const DrawerHeader = ({
   handleClose?: () => void;
 }) => {
   return (
-    <HStack height='5%' alignItems='center' justifyContent='space-between'>
+    <HStack
+      height='6%'
+      p='1rem 0rem'
+      alignItems='center'
+      justifyContent='space-between'
+    >
       <Typography variant='h6'>{children}</Typography>
       {handleClose && (
         <IconButton onClick={handleClose}>

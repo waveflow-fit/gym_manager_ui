@@ -1,3 +1,5 @@
+import { uniqueId } from 'lodash';
+
 import { PAGINATION } from '@/common/constants';
 
 export const convertFormDataToJson = (formData: FormData) => {
@@ -49,8 +51,8 @@ export const createNestedObject = (
     const keys = key.split('.');
 
     if (groupKey && keys[0].startsWith(`${groupKey}-`)) {
-      const uniqueId = keys[0].split('-')[1]; // Extract unique identifier
-      const subKeys = keys.slice(1).join('.'); // Remaining key path
+      const uniqueId = keys[0].split('-')[1];
+      const subKeys = keys.slice(1).join('.');
 
       if (!groupedItems[uniqueId]) groupedItems[uniqueId] = {};
       let current = groupedItems[uniqueId];
@@ -80,5 +82,33 @@ export const createNestedObject = (
     result[groupKey] = Object.values(groupedItems);
   }
 
+  return result;
+};
+
+export const flattenNestedObject = (
+  obj: Record<string, any>,
+  groupKey?: string
+): Record<string, any> => {
+  const result: Record<string, any> = {};
+
+  const recurse = (currObj: Record<string, any>, parent = ''): void => {
+    Object.entries(currObj).forEach(([key, value]) => {
+      const newKey = parent ? `${parent}.${key}` : key;
+
+      if (groupKey && key === groupKey && Array.isArray(value)) {
+        value.forEach((item) => recurse(item, uniqueId(`${groupKey}-`)));
+      } else if (
+        typeof value === 'object' &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
+        recurse(value, newKey);
+      } else {
+        result[newKey] = value;
+      }
+    });
+  };
+
+  recurse(obj);
   return result;
 };

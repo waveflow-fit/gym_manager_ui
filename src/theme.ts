@@ -216,7 +216,7 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          padding: '1rem',
+          padding: '0rem 1rem',
           height: '100%',
           gap: '1rem',
         },

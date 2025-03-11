@@ -4,16 +4,46 @@ import { Button, Drawer, TextField } from '@mui/material';
 import { useState } from 'react';
 
 import { createNestedObject } from '@/common/app.utils';
+import { EExerciseLoggingType } from '@/common/constants';
 import DrawerActionButtons from '@/components/StyledComponents/Drawer/DrawerActionButtons';
 import DrawerContent from '@/components/StyledComponents/Drawer/DrawerContent';
 import DrawerHeader from '@/components/StyledComponents/Drawer/DrawerHeader';
 import VStack from '@/components/StyledComponents/VStack';
-import ExerciseList from '@/components/TemplateCreator/Workout/ExerciseList';
+import { TWorkoutExercise } from '@/components/TemplateCreator/Workout/Exercise';
+import ExerciseList, {
+  getExerciseId,
+} from '@/components/TemplateCreator/Workout/ExerciseList';
+
+export type TWorkoutPlan = {
+  workoutName: string;
+  exercises: TWorkoutExercise[];
+};
 
 const WorkoutCreator = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const handleClose = () => setIsDialogOpen(false);
   const handleOpen = () => setIsDialogOpen(true);
+  const [workoutPlan, setWorkoutPlan] = useState<TWorkoutPlan>({
+    workoutName: 'Legs workout',
+    exercises: [
+      {
+        id: getExerciseId(),
+        exerciseName: 'Leg press',
+        exerciseLogType: EExerciseLoggingType.BOOLEAN,
+      },
+      {
+        id: getExerciseId(),
+        exerciseName: 'Leg curl',
+        exerciseLogType: EExerciseLoggingType.WEIGHT_REP_COUNT,
+        suggestedIntensity: {
+          reps: 3,
+          weight: 20,
+          countPerRep: 12,
+        },
+      },
+    ],
+  });
+  console.log(workoutPlan);
 
   return (
     <>
@@ -31,8 +61,20 @@ const WorkoutCreator = () => {
 
           const formData = new FormData(form);
           const values = Object.fromEntries(formData.entries());
-
-          console.log(createNestedObject(values, 'exercise'));
+          const workoutPlan = createNestedObject(
+            values,
+            'exercises'
+          ) as TWorkoutPlan;
+          workoutPlan.exercises = workoutPlan.exercises.map((e) => {
+            if (!e.id) {
+              e.id = getExerciseId();
+            }
+            if ((e.isOptional as unknown as string) === 'on') {
+              e.isOptional = true;
+            }
+            return e;
+          });
+          setWorkoutPlan(workoutPlan);
         }}
       >
         <DrawerHeader handleClose={handleClose}>Create workout</DrawerHeader>
@@ -47,8 +89,9 @@ const WorkoutCreator = () => {
               placeholder='ex: Legs workout'
               sx={{ maxWidth: '16.5rem' }}
               required
+              defaultValue={workoutPlan.workoutName}
             />
-            <ExerciseList />
+            <ExerciseList defaultExercises={workoutPlan.exercises} />
           </VStack>
         </DrawerContent>
         <DrawerActionButtons>

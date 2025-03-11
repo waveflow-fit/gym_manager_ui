@@ -8,7 +8,7 @@ const DrawerContent = ({
   children: React.ReactNode[] | React.ReactNode;
 }) => {
   return (
-    <Box height='90%' {...containerProps}>
+    <Box height='86%' {...containerProps}>
       {children}
     </Box>
   );
