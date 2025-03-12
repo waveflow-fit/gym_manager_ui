@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import type { Metadata } from 'next';
 
 import NavigationLoader from '@/components/NavigationLoader/NavigationLoader';
+import MaxScreenSizeRestrictOverlay from '@/components/StyledComponents/MaxScreenSizeRestrictOverlay';
 import ToastProvider from '@/components/Toast/ToastProvider';
 import theme from '@/theme';
 
@@ -29,6 +30,7 @@ const RootLayout = async ({
             </AppRouterCacheProvider>
           </ToastProvider>
         </NavigationLoader>
+        <MaxScreenSizeRestrictOverlay />
       </body>
     </html>
   );
