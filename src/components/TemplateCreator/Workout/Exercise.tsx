@@ -94,13 +94,11 @@ const Exercise = ({
             Logging type
           </InputLabel>
           <Select
-            sx={{ width: '8.5rem' }}
-            label='Exercise type'
+            sx={{ width: { xs: '8.5rem', sm: '12.5rem' } }}
+            label='Logging type'
             name={`${prefix}${exerciseProps.id}.exerciseLogType`}
             defaultValue={exerciseProps.exerciseLogType}
-            input={
-              <OutlinedInput label='Training with' sx={{ height: '45px' }} />
-            }
+            input={<OutlinedInput label='Logging type' />}
             MenuProps={MenuProps}
             size='small'
             onChange={(e) =>
