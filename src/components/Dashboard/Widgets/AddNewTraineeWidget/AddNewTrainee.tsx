@@ -8,7 +8,6 @@ const AddNewTrainee = () => {
     <SectionContainer
       sx={{
         width: '100%',
-        minHeight: '200px',
         display: 'flex',
         alignItems: 'center',
       }}

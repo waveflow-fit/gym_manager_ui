@@ -21,16 +21,23 @@ const AppContainer = ({ children }: TAppContainer) => {
       width='100%'
       bgcolor={theme.palette.background.main}
     >
-      <Box display='flex' alignItems='center'>
+      <Box display={{ xs: 'none', sm: 'flex' }} alignItems='center'>
         <FloatingSidebar />
       </Box>
+
       <Box
         display='flex'
         flexDirection='column'
         height='100%'
         width='100%'
-        minWidth={`calc(100% - ${theme.custom.leftPanelWidthExpanded})`}
-        maxWidth={`calc(100% - ${theme.custom.leftPanelWidthMinimized})`}
+        minWidth={{
+          xs: '100%',
+          sm: `calc(100% - ${theme.custom.leftPanelWidthExpanded})`,
+        }}
+        maxWidth={{
+          xs: '100%',
+          sm: `calc(100% - ${theme.custom.leftPanelWidthMinimized})`,
+        }}
       >
         <Box height={theme.custom.headerHeight}>
           <FloatingTopBar />

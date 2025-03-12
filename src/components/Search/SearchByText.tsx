@@ -16,7 +16,6 @@ const SearchByText = ({
         width: '16.5rem',
         '& .MuiInputBase-input': {
           py: 0.5,
-          fontSize: '1rem',
         },
         ...sx,
       }}

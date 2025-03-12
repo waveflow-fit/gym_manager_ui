@@ -94,7 +94,7 @@ const Exercise = ({
             Logging type
           </InputLabel>
           <Select
-            sx={{ width: '10.5rem', minWidth: '8.5rem' }}
+            sx={{ width: '8.5rem' }}
             label='Exercise type'
             name={`${prefix}${exerciseProps.id}.exerciseLogType`}
             defaultValue={exerciseProps.exerciseLogType}
@@ -136,8 +136,8 @@ const Exercise = ({
       {altExercise.map((e) => {
         return (
           <Box key={e} component='span'>
-            <Divider sx={{ my: 0.75 }}>Or</Divider>
-            <VStack paddingLeft={1.25} gap={0.5}>
+            <Divider sx={{ my: 1 }}>Or</Divider>
+            <VStack gap={0.5}>
               <Exercise
                 key={e}
                 exerciseProps={

@@ -1,3 +1,5 @@
+'use client';
+
 import Box from '@mui/material/Box';
 
 import { MANAGEMENT_TRAINER_ENDPOINTS } from '@/common/apiEndpoints';

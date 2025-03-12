@@ -40,7 +40,10 @@ export const gymThemePalette = {
 
 // Create a theme function for the dark gym theme
 const theme = createTheme({
-  spacing: 16, // spacing 1 means 1rem
+  spacing: (factor: number) => {
+    console.log(factor);
+    return `calc(${factor} * 1rem)`;
+  },
   cssVariables: true,
   palette: gymThemePalette,
   custom: {
@@ -50,7 +53,6 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontSize: 16,
     h1: {
       fontSize: '2.75rem',
       fontWeight: 700,
@@ -70,15 +72,23 @@ const theme = createTheme({
     body2: { fontSize: '1rem', color: gymThemePalette.text.secondary },
   },
   components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          padding: '0.375rem 0.75rem !important',
+          fontSize: '1rem !important',
+        },
+      },
+    },
     MuiButton: {
       defaultProps: {
         variant: 'contained',
       },
       styleOverrides: {
         root: {
-          textTransform: 'none', // Keep button text case as-is
-          borderRadius: '0.5rem', // Softer, rounded corners
+          borderRadius: '0.5rem',
           width: 'fit-content',
+          textTransform: 'none',
         },
         containedPrimary: {
           backgroundColor: gymThemePalette.primary.main, // Primary main (slightly darker soft blue)
@@ -118,9 +128,9 @@ const theme = createTheme({
     MuiList: {
       styleOverrides: {
         root: {
-          backgroundColor: '#FFFFFF', // White background for lists
-          borderRadius: '0.5rem', // Rounded corners
-          padding: '0.5rem', // Consistent padding
+          backgroundColor: '#FFFFFF',
+          borderRadius: '0.5rem',
+          padding: '0.25rem',
         },
       },
     },
@@ -128,7 +138,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&:hover': {
-            backgroundColor: 'rgba(0, 191, 166, 0.15)', // Subtle secondary color overlay
+            backgroundColor: 'rgba(0, 191, 166, 0.15)',
           },
         },
       },
@@ -200,16 +210,11 @@ const theme = createTheme({
         },
       },
     },
-    MuiTextField: {
+    MuiOutlinedInput: {
       styleOverrides: {
-        root: {
-          '& .MuiInputBase-input': {
-            fontSize: '1rem',
-            padding: '0.75rem',
-          },
-          '& .MuiInputBase-root': {
-            fontSize: '1rem',
-          },
+        input: {
+          padding: '0.75rem',
+          fontSize: '1rem',
         },
       },
     },

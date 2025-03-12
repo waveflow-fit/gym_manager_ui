@@ -5,7 +5,7 @@ import SelectedAssociation from '@/components/Dashboard/Widgets/TraineeAssociati
 
 const TraineeAssociationWidget = () => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={1}>
       <Grid size={{ xs: 12, md: 4 }} height='fit-content'>
         <SelectedAssociation />
       </Grid>

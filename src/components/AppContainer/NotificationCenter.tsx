@@ -1,11 +1,12 @@
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Badge } from '@mui/material';
 
-import { SectionContainer } from '@/components/StyledComponents';
+import SectionContainer from '@/components/StyledComponents/SectionContainer';
+
 const NotificationCenter = () => {
   return (
     <Badge badgeContent={2000} color='primary' max={10} overlap='circular'>
-      <SectionContainer sx={{ p: 2 }}>
+      <SectionContainer>
         <NotificationsNoneIcon />
       </SectionContainer>
     </Badge>

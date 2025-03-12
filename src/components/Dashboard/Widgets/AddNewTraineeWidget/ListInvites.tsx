@@ -134,7 +134,7 @@ const ListInvites = () => {
   }, [handleDelete, filteredInvites, isLoading]);
 
   return (
-    <SectionContainer sx={{ height: '500px' }}>
+    <SectionContainer sx={{ minHeight: '24.5rem', maxHeight: '31rem' }}>
       <Box
         display='flex'
         flexDirection='column'
@@ -150,7 +150,6 @@ const ListInvites = () => {
           onChange={(e) => setInputTraineeEmail(e.target.value)}
           placeholder='john@gmail.com'
           fullWidth
-          sx={{ '& input': { height: '2rem', py: '0.5rem', px: '1rem' } }}
         />
         <Box
           sx={{
