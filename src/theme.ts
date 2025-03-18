@@ -65,8 +65,8 @@ const theme = createTheme({
       fontWeight: 500,
       color: gymThemePalette.text.primary,
     },
-    body1: { fontSize: '1.25rem', color: gymThemePalette.text.secondary },
-    body2: { fontSize: '1rem', color: gymThemePalette.text.secondary },
+    body1: { fontSize: '1rem', color: gymThemePalette.text.secondary },
+    body2: { fontSize: '0.75rem', color: gymThemePalette.text.secondary },
   },
   components: {
     MuiButtonBase: {
