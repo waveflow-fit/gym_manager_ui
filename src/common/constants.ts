@@ -30,3 +30,13 @@ export enum EExerciseLoggingType {
   TIME = 'TIME',
   TIME_WEIGHT = 'TIME_WEIGHT',
 }
+
+export enum EMealType {
+  BREAKFAST = 'BREAKFAST',
+  POST_BREAKFAST = 'POST_BREAKFAST',
+  LUNCH = 'LUNCH',
+  EVENING_SNACKS = 'EVENING_SNACKS',
+  DINNER = 'DINNER',
+  POST_DINNER = 'POST_DINNER',
+  MUNCHING = 'MUNCHING',
+}

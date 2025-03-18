@@ -1,5 +1,6 @@
 'use client';
 
+import { Add } from '@mui/icons-material';
 import { Box, Button, Popover } from '@mui/material';
 import { useState } from 'react';
 
@@ -17,7 +18,9 @@ const AddNewTraineePopOver = () => {
 
   return (
     <>
-      <Button onClick={handleClick}>Add new Trainee</Button>
+      <Button onClick={handleClick} startIcon={<Add />}>
+        Add new Trainee
+      </Button>
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}

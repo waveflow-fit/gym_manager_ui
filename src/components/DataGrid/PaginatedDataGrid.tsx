@@ -139,14 +139,14 @@ const PaginatedDataGrid = <T extends { id: string }>({
   }, [debouncedSetSearchText, searchTextInput]);
 
   return (
-    <SectionContainer sx={{ overflowX: 'auto', py: 1 }}>
+    <SectionContainer sx={{ py: 1 }}>
       <Box
         sx={{
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          gap: 1,
+          gap: 0.5,
           position: 'relative',
         }}
       >

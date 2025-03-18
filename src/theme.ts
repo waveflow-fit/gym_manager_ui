@@ -40,10 +40,7 @@ export const gymThemePalette = {
 
 // Create a theme function for the dark gym theme
 const theme = createTheme({
-  spacing: (factor: number) => {
-    console.log(factor);
-    return `calc(${factor} * 1rem)`;
-  },
+  spacing: (factor: number) => `calc(${factor} * 1rem)`,
   cssVariables: true,
   palette: gymThemePalette,
   custom: {
@@ -88,6 +85,7 @@ const theme = createTheme({
         root: {
           borderRadius: '0.5rem',
           width: 'fit-content',
+          height: 'fit-content',
           textTransform: 'none',
         },
         containedPrimary: {

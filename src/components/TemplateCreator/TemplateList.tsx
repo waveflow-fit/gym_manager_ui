@@ -17,7 +17,7 @@ const TemplateList = ({
 }: Props) => {
   return (
     <SectionContainer sx={{ py: 1 }}>
-      <HStack justifyContent='space-between' height='8%' pb={1}>
+      <HStack justifyContent='space-between' pb={0.5}>
         <Typography variant='h3'>{listName}</Typography>
         <Creator />
       </HStack>
@@ -27,7 +27,7 @@ const TemplateList = ({
         sx={{ overflowY: 'auto', height: '92%', mx: '-0.75rem', px: '0.75rem' }}
       >
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((e) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={e}>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }} key={e}>
             <TemplateCard />
           </Grid>
         ))}
