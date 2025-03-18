@@ -18,8 +18,9 @@ import { useState } from 'react';
 import { EExerciseLoggingType } from '@/common/constants';
 import HStack from '@/components/StyledComponents/HStack';
 import VStack from '@/components/StyledComponents/VStack';
-import { getExerciseId } from '@/components/TemplateCreator/Workout/ExerciseList';
+import { TItem } from '@/components/TemplateCreator/ItemList';
 import SuggestedIntensity from '@/components/TemplateCreator/Workout/SuggestedIntensity';
+import { getExerciseId } from '@/components/TemplateCreator/Workout/WorkoutCreator';
 
 export type TSuggestedIntensity =
   | { reps: number; weight: number; countPerRep: number }
@@ -62,32 +63,25 @@ const ExerciseLoggingType = [
   },
 ];
 
-const Exercise = ({
-  exerciseProps,
-  handleDeleteExercise,
-  isParentExercise = true,
+const ExerciseItem = ({
+  itemProps,
+  handleDelete,
+  isParent = true,
   prefix = '',
-}: {
-  exerciseProps: TWorkoutExercise;
-  handleDeleteExercise?: (id: string) => void;
-  isParentExercise?: boolean;
-  prefix?: string;
-}) => {
-  const [loggingType, setLoggingType] = useState(exerciseProps.exerciseLogType);
+}: TItem<TWorkoutExercise>) => {
+  const [loggingType, setLoggingType] = useState(itemProps.exerciseLogType);
   const [altExercise, setAltExercise] = useState<string[]>(
-    exerciseProps.alternateExercise
-      ? Object.keys(exerciseProps.alternateExercise)
-      : []
+    itemProps.alternateExercise ? Object.keys(itemProps.alternateExercise) : []
   );
   return (
-    <VStack gap={0.5} height='fit-content !important'>
+    <VStack gap={0.75} height='fit-content !important'>
       <HStack gap={0.5}>
         <TextField
           placeholder='ex: Leg press'
-          name={`${prefix}${exerciseProps.id}.exerciseName`}
+          name={`${prefix}${itemProps.id}.exerciseName`}
           required
           sx={{ width: '8rem' }}
-          defaultValue={exerciseProps.exerciseName}
+          defaultValue={itemProps.exerciseName}
         />
         <FormControl>
           <InputLabel id='exercise-logging-type-selector'>
@@ -96,8 +90,8 @@ const Exercise = ({
           <Select
             sx={{ width: { xs: '8.5rem', sm: '12.5rem' } }}
             label='Logging type'
-            name={`${prefix}${exerciseProps.id}.exerciseLogType`}
-            defaultValue={exerciseProps.exerciseLogType}
+            name={`${prefix}${itemProps.id}.exerciseLogType`}
+            defaultValue={itemProps.exerciseLogType}
             input={<OutlinedInput label='Logging type' />}
             MenuProps={MenuProps}
             size='small'
@@ -115,20 +109,20 @@ const Exercise = ({
           </Select>
         </FormControl>
         <FormControlLabel
-          name={`${prefix}${exerciseProps.id}.isOptional`}
-          control={<Checkbox defaultChecked={exerciseProps.isOptional} />}
+          name={`${prefix}${itemProps.id}.isOptional`}
+          control={<Checkbox defaultChecked={itemProps.isOptional} />}
           label='Optional'
         />
-        {handleDeleteExercise && (
-          <IconButton onClick={() => handleDeleteExercise?.(exerciseProps?.id)}>
+        {handleDelete && (
+          <IconButton onClick={() => handleDelete?.(itemProps?.id)}>
             <Delete />
           </IconButton>
         )}
       </HStack>
       <SuggestedIntensity
         loggingType={loggingType}
-        exerciseId={exerciseProps.id}
-        defaultValue={exerciseProps.suggestedIntensity}
+        exerciseId={itemProps.id}
+        defaultValue={itemProps.suggestedIntensity}
         prefix={prefix}
       />
       {altExercise.map((e) => {
@@ -136,31 +130,31 @@ const Exercise = ({
           <Box key={e} component='span'>
             <Divider sx={{ my: 1 }}>Or</Divider>
             <VStack gap={0.5}>
-              <Exercise
+              <ExerciseItem
                 key={e}
-                exerciseProps={
-                  exerciseProps.alternateExercise?.[e] || {
+                itemProps={
+                  itemProps.alternateExercise?.[e] || {
                     id: e,
                     exerciseName: '',
                     exerciseLogType: EExerciseLoggingType.BOOLEAN,
                   }
                 }
-                isParentExercise={false}
-                handleDeleteExercise={(deleteId: string) => {
+                isParent={false}
+                handleDelete={(deleteId: string) => {
                   setAltExercise((p) => p.filter((id) => id !== deleteId));
                 }}
-                prefix={`${exerciseProps.id}.alternateExercise.`}
+                prefix={`${itemProps.id}.alternateExercise.`}
               />
             </VStack>
           </Box>
         );
       })}
       <TextField
-        name={`${prefix}${exerciseProps.id}.id`}
-        defaultValue={exerciseProps.id}
+        name={`${prefix}${itemProps.id}.id`}
+        defaultValue={itemProps.id}
         sx={{ display: 'none' }}
       />
-      {isParentExercise && (
+      {isParent && (
         <Button
           variant='text'
           startIcon={<Add />}
@@ -174,4 +168,4 @@ const Exercise = ({
   );
 };
 
-export default Exercise;
+export default ExerciseItem;

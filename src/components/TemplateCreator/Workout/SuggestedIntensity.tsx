@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { EExerciseLoggingType } from '@/common/constants';
 import HStack from '@/components/StyledComponents/HStack';
 import VStack from '@/components/StyledComponents/VStack';
-import { TSuggestedIntensity } from '@/components/TemplateCreator/Workout/Exercise';
+import { TSuggestedIntensity } from '@/components/TemplateCreator/Workout/ExerciseItem';
 
 const handleTimeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
   const val = e.target.value;
@@ -43,7 +43,7 @@ const SuggestedIntensity = ({
   );
 
   return loggingType in loggingFields ? (
-    <VStack gap={0.5}>
+    <VStack gap={0.25}>
       <Typography variant='subtitle2'>Suggested intensity</Typography>
       <HStack gap={0.5}>
         {loggingFields[loggingType].map(({ name, label, ...rest }) => (

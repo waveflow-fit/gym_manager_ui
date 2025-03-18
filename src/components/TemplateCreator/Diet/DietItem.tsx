@@ -18,7 +18,8 @@ import { useState } from 'react';
 import { EMealType } from '@/common/constants';
 import HStack from '@/components/StyledComponents/HStack';
 import VStack from '@/components/StyledComponents/VStack';
-import { getDietId } from '@/components/TemplateCreator/Diet/DietItemList';
+import { getDietId } from '@/components/TemplateCreator/Diet/DietCreator';
+import { TItem } from '@/components/TemplateCreator/ItemList';
 
 export type TDietItem = {
   id: string;
@@ -71,38 +72,35 @@ const DietItemLogType = [
 ];
 
 const DietItem = ({
-  dietItem,
-  handleDeleteDietItem,
-  isParentDiet = true,
+  itemProps,
+  handleDelete,
+  isParent = true,
   prefix = '',
-}: {
-  dietItem: TAltDietItem;
-  handleDeleteDietItem?: (id: string) => void;
-  isParentDiet?: boolean;
-  prefix?: string;
-}) => {
-  const [_mealType, setMealType] = useState((dietItem as TDietItem).mealType);
+}: TItem<TAltDietItem>) => {
+  const [_mealType, setMealType] = useState((itemProps as TDietItem).mealType);
   const [altFoodItem, setAltFoodItem] = useState<string[]>(
-    dietItem.alternateFoodItems ? Object.keys(dietItem.alternateFoodItems) : []
+    itemProps.alternateFoodItems
+      ? Object.keys(itemProps.alternateFoodItems)
+      : []
   );
   return (
     <VStack gap={0.5} height='fit-content !important'>
       <HStack gap={0.5}>
         <TextField
           placeholder='ex: Oat meal'
-          name={`${prefix}${dietItem.id}.foodItemName`}
+          name={`${prefix}${itemProps.id}.foodItemName`}
           required
           sx={{ minWidth: '10rem', maxWidth: '12rem' }}
-          defaultValue={dietItem.foodItemName}
+          defaultValue={itemProps.foodItemName}
         />
-        {isParentDiet && (
+        {isParent && (
           <FormControl>
             <InputLabel id='diet-type-selector'>Meal type</InputLabel>
             <Select
               sx={{ width: { xs: '6.5rem', sm: '10.5rem' } }}
               label='Logging type'
-              name={`${prefix}${dietItem.id}.mealType`}
-              defaultValue={(dietItem as TDietItem).mealType}
+              name={`${prefix}${itemProps.id}.mealType`}
+              defaultValue={(itemProps as TDietItem).mealType}
               input={<OutlinedInput label='Meal type' />}
               MenuProps={MenuProps}
               size='small'
@@ -119,12 +117,12 @@ const DietItem = ({
           </FormControl>
         )}
         <FormControlLabel
-          name={`${prefix}${dietItem.id}.isOptional`}
-          control={<Checkbox defaultChecked={dietItem.isOptional} />}
+          name={`${prefix}${itemProps.id}.isOptional`}
+          control={<Checkbox defaultChecked={itemProps.isOptional} />}
           label='Optional'
         />
-        {handleDeleteDietItem && (
-          <IconButton onClick={() => handleDeleteDietItem?.(dietItem?.id)}>
+        {handleDelete && (
+          <IconButton onClick={() => handleDelete?.(itemProps?.id)}>
             <Delete />
           </IconButton>
         )}
@@ -137,28 +135,28 @@ const DietItem = ({
             <VStack gap={0.5}>
               <DietItem
                 key={e}
-                dietItem={
-                  dietItem.alternateFoodItems?.[e] || {
+                itemProps={
+                  itemProps.alternateFoodItems?.[e] || {
                     id: e,
                     foodItemName: '',
                   }
                 }
-                isParentDiet={false}
-                handleDeleteDietItem={(deleteId: string) => {
+                isParent={false}
+                handleDelete={(deleteId: string) => {
                   setAltFoodItem((p) => p.filter((id) => id !== deleteId));
                 }}
-                prefix={`${dietItem.id}.alternateFoodItems.`}
+                prefix={`${itemProps.id}.alternateFoodItems.`}
               />
             </VStack>
           </Box>
         );
       })}
       <TextField
-        name={`${prefix}${dietItem.id}.id`}
-        defaultValue={dietItem.id}
+        name={`${prefix}${itemProps.id}.id`}
+        defaultValue={itemProps.id}
         sx={{ display: 'none' }}
       />
-      {isParentDiet && (
+      {isParent && (
         <Button
           variant='text'
           startIcon={<Add />}
