@@ -1,7 +1,7 @@
 // api.utils.ts - Generic API Wrapper
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-
+console.log(API_BASE_URL);
 interface RequestOptions<T = unknown> {
   method: string;
   body?: T;
