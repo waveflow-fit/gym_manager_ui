@@ -3,7 +3,6 @@ import { USER_ENDPOINTS } from '@/common/apiEndpoints';
 import { TUserSession } from '@/components/SessionProvider/SessionProvider';
 
 export const getSession = async (token?: string) => {
-  console.log('---getting session---');
   try {
     const headers = token ? { token } : {};
     const userSessionDetails = (await api.get(
