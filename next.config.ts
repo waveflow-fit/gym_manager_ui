@@ -5,8 +5,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: 'https', hostname: '*' }],
   },
   reactStrictMode: false,
-  env: {
-    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.BACKEND_URL}/api/:path*`,
+      },
+    ];
   },
 };
 
