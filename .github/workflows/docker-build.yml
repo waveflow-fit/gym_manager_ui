@@ -8,6 +8,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  SOURCE_REPO: waveflow-fit/gym_manager_ui
+  DESTINATION_REPO: aniketchanana/gym_manager_ui
 
 jobs:
   build-and-push:
@@ -43,3 +45,62 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  copy-source-code:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: main
+          path: source
+
+      - name: Checkout destination repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.DESTINATION_REPO }}
+          token: ${{ secrets.DESTINATION_PAT }}
+          path: destination
+
+      - name: Copy source code
+        run: |
+          # Create a temporary directory for the source code
+          mkdir -p destination/src
+
+          # Copy only the src directory and necessary config files
+          cp -r source/src/* destination/src/
+          cp source/package.json destination/
+          cp source/package-lock.json destination/
+          cp source/tsconfig.json destination/
+          cp source/next.config.ts destination/
+          cp source/.env* destination/ || true
+
+          # Create a .gitignore if it doesn't exist
+          touch destination/.gitignore
+
+          # Add common Node.js ignores
+          cat << EOF > destination/.gitignore
+          node_modules/
+          .next/
+          .env
+          .env.local
+          .env.development.local
+          .env.test.local
+          .env.production.local
+          npm-debug.log*
+          yarn-debug.log*
+          yarn-error.log*
+          EOF
+
+      - name: Commit and push changes
+        run: |
+          cd destination
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          git commit -m "chore: update source code from ${{ env.SOURCE_REPO }} [skip ci]"
+          git push
