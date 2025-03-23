@@ -1,5 +1,4 @@
 // api.utils.ts - Generic API Wrapper
-const API_BASE_URL = '';
 
 interface RequestOptions<T = unknown> {
   method: string;
@@ -20,6 +19,7 @@ const request = async <T = unknown, R = unknown>(
     ...(body ? { body: JSON.stringify(body) } : {}),
     credentials: 'include',
   };
+  const API_BASE_URL = process.env.__NEXT_PRIVATE_ORIGIN || '';
 
   const response = await fetch(`${API_BASE_URL}${url}`, config);
 
