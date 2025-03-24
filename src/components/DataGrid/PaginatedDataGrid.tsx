@@ -34,6 +34,7 @@ type Props<T extends { id: string }> = {
   searchKey?: string;
   disableColumnMenu?: boolean;
   actions?: React.ReactNode;
+  searchPlaceholder?: string;
 };
 const PaginatedDataGrid = <T extends { id: string }>({
   columns,
@@ -43,6 +44,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
   disableColumnMenu = true,
   searchKey = '',
   actions = null,
+  searchPlaceholder = 'Search...',
 }: Props<T>) => {
   const [state, setState] = useState<{
     data: T[];
@@ -153,7 +155,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
         <Box width='100%' justifyContent='space-between' display='flex'>
           {searchKey && (
             <SearchByText
-              placeholder='Search...'
+              placeholder={searchPlaceholder}
               value={searchTextInput}
               onChange={(e) => setSearchTextInput(e.target.value)}
               onClearIconClick={() => setSearchTextInput('')}
