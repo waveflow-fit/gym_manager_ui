@@ -13,7 +13,7 @@ export type TDietPlan = {
   dietName: string;
   dietFoodItems: TDietItem[];
 };
-
+const dietCreatorPrefix = 'dietFoodItems';
 export const getDietId = () => `dietFoodItems-${v4()}`;
 const getBaseDiet = () => ({
   id: getDietId(),
@@ -40,7 +40,7 @@ const DietCreator = () => {
         dietName: '',
         dietFoodItems: [],
       }}
-      groupPrefix='dietFoodItems'
+      groupPrefix={dietCreatorPrefix}
       createNewBtnText='Create new diet'
       drawerHeader='Create diet'
       planNameKey='dietName'

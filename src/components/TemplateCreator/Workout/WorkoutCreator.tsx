@@ -13,8 +13,8 @@ export type TWorkoutPlan = {
   workoutName: string;
   workoutExercises: TWorkoutExercise[];
 };
-
-export const getExerciseId = () => `exercises-${v4()}`;
+const workoutCreatorPrefix = 'workoutExercises';
+export const getExerciseId = () => `${workoutCreatorPrefix}-${v4()}`;
 
 const getBaseExercise = () => ({
   id: getExerciseId(),
@@ -44,7 +44,7 @@ const WorkoutCreator = () => {
         workoutName: '',
         workoutExercises: [],
       }}
-      groupPrefix='workoutExercises'
+      groupPrefix={workoutCreatorPrefix}
       createNewBtnText='Create new workout'
       drawerHeader='Create workout'
       planNameKey='workoutName'

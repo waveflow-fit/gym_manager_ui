@@ -33,6 +33,7 @@ const Creator = <T, K>({
   const handleClose = () => setIsDrawerOpen(false);
   const handleOpen = () => setIsDrawerOpen(true);
   const [plan, setPlan] = useState<T>(initState);
+  console.log(plan);
   return (
     <>
       <Button startIcon={<Add />} onClick={handleOpen}>

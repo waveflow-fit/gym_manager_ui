@@ -57,7 +57,7 @@ const SuggestedIntensity = ({
             type={rest.placeholder ? 'string' : 'number'}
             slotProps={{
               input: {
-                inputProps: { min: 1 },
+                inputProps: { min: 0 },
                 endAdornment: label && (
                   <InputAdornment position='end'>{label}</InputAdornment>
                 ),
