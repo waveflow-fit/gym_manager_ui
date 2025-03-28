@@ -2,7 +2,7 @@
 
 import { v4 } from 'uuid';
 
-import { EMealType } from '@/common/constants';
+import { EMealType, ETemplateType } from '@/common/constants';
 import Creator from '@/components/TemplateCreator/Creator';
 import DietItem, {
   TDietItem,
@@ -45,6 +45,7 @@ const DietCreator = () => {
       drawerHeader='Create diet'
       planNameKey='dietName'
       list={DietItemList}
+      templateType={ETemplateType.DIET}
     />
   );
 };

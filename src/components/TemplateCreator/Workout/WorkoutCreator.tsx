@@ -2,7 +2,7 @@
 
 import { v4 } from 'uuid';
 
-import { EExerciseLoggingType } from '@/common/constants';
+import { EExerciseLoggingType, ETemplateType } from '@/common/constants';
 import Creator from '@/components/TemplateCreator/Creator';
 import ItemList from '@/components/TemplateCreator/ItemList';
 import ExerciseItem, {
@@ -49,6 +49,7 @@ const WorkoutCreator = () => {
       drawerHeader='Create workout'
       planNameKey='workoutName'
       list={ExerciseList}
+      templateType={ETemplateType.WORKOUT}
     />
   );
 };

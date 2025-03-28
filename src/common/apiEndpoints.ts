@@ -20,3 +20,11 @@ export const MANAGEMENT_TRAINEE_ENDPOINTS = Object.freeze({
   REJECT_INVITE: (inviteId: string) =>
     `/api/management/trainee/reject-invite/${inviteId}`,
 });
+
+export const TEMPLATE_CREATOR_ENDPOINTS = Object.freeze({
+  CREATE_TEMPLATE: '/api/template/create',
+  GET_ALL_TEMPLATES: '/api/template/get-all',
+  GET_TEMPLATE_BY_ID: '/api/template/get-by-id/:templateId',
+  UPDATE_TEMPLATE: '/api/template/update/:templateId',
+  DELETE_TEMPLATE: '/api/template/delete/:templateId',
+});

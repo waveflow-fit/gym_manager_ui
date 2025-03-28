@@ -6,7 +6,9 @@ import HStack from '@/components/StyledComponents/HStack';
 const DrawerHeader = ({
   children,
   handleClose,
+  isCreatingTemplate = false,
 }: {
+  isCreatingTemplate?: boolean;
   children: string;
   handleClose?: () => void;
 }) => {
@@ -19,7 +21,7 @@ const DrawerHeader = ({
     >
       <Typography variant='h6'>{children}</Typography>
       {handleClose && (
-        <IconButton onClick={handleClose}>
+        <IconButton onClick={handleClose} disabled={isCreatingTemplate}>
           <Close />
         </IconButton>
       )}
