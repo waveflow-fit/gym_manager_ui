@@ -35,8 +35,10 @@ const DietItemList = ({ defaultItems }: { defaultItems: TDietItem[] }) => {
 
 const DietCreator = ({
   appendNewTemplate,
+  viewTemplate = null,
 }: {
   appendNewTemplate: (newTemplate: ITemplate) => void;
+  viewTemplate: Record<string, any> | null;
 }) => {
   return (
     <Creator<TDietPlan, TDietItem>
@@ -51,6 +53,7 @@ const DietCreator = ({
       list={DietItemList}
       templateType={ETemplateType.DIET}
       appendNewTemplate={appendNewTemplate}
+      viewTemplate={viewTemplate}
     />
   );
 };

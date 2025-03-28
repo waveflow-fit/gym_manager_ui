@@ -17,9 +17,11 @@ import useTemplateDelete from '@/components/TemplateCreator/useTemplateDelete';
 const WorkoutTemplateCard = ({
   template,
   removeTemplate,
+  viewTemplate,
 }: {
   template: ITemplate;
   removeTemplate: (templateId: string) => void;
+  viewTemplate: (templateId: string) => void;
 }) => {
   const { isDeleting, handleDeleteTemplate } = useTemplateDelete({
     removeTemplate,
@@ -55,7 +57,7 @@ const WorkoutTemplateCard = ({
           />
         </Box>
         <Box display='flex'>
-          <IconButton size='small'>
+          <IconButton size='small' onClick={() => viewTemplate(template.id)}>
             <VisibilityIcon />
           </IconButton>
           <IconButton

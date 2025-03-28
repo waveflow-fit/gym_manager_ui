@@ -17,15 +17,19 @@ type Props = {
   listName: string;
   creator: ({
     appendNewTemplate,
+    viewTemplate,
   }: {
     appendNewTemplate: (newTemplate: ITemplate) => void;
+    viewTemplate: Record<string, any> | null;
   }) => JSX.Element;
   templateCard: ({
     template,
     removeTemplate,
+    viewTemplate,
   }: {
     template: ITemplate;
     removeTemplate: (templateId: string) => void;
+    viewTemplate: (templateId: string) => void;
   }) => JSX.Element;
   templateType: ETemplateType;
 };
@@ -39,6 +43,10 @@ const TemplateList = ({
   const [templates, setTemplates] = useState<ITemplate[]>([]);
   const [isFetchingTemplates, setIsFetchingTemplates] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<Record<
+    string,
+    any
+  > | null>(null);
   const { showToast } = useToast();
   const { searchText, setInputVal, inputVal } = useDebounceInput();
   const appendNewTemplate = (newTemplate: ITemplate) => {
@@ -47,6 +55,11 @@ const TemplateList = ({
   const removeTemplate = (templateId: string) => {
     setTemplates(templates.filter((template) => template.id !== templateId));
   };
+  const viewTemplate = (templateId: string) => {
+    const template = templates.find((template) => template.id === templateId);
+    setSelectedTemplate(template || null);
+  };
+
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
@@ -87,7 +100,10 @@ const TemplateList = ({
             onChange={(e) => setInputVal(e.target.value)}
             onClearIconClick={() => setInputVal('')}
           />
-          <Creator appendNewTemplate={appendNewTemplate} />
+          <Creator
+            appendNewTemplate={appendNewTemplate}
+            viewTemplate={selectedTemplate}
+          />
         </Box>
       </HStack>
       <DynamicRenderer
@@ -116,6 +132,7 @@ const TemplateList = ({
               <TemplateCard
                 template={template}
                 removeTemplate={removeTemplate}
+                viewTemplate={viewTemplate}
               />
             </Grid>
           ))}

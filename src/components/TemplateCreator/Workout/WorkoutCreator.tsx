@@ -39,8 +39,10 @@ const ExerciseList = ({
 
 const WorkoutCreator = ({
   appendNewTemplate,
+  viewTemplate = null,
 }: {
   appendNewTemplate: (newTemplate: ITemplate) => void;
+  viewTemplate: Record<string, any> | null;
 }) => {
   return (
     <Creator<TWorkoutPlan, TWorkoutExercise>
@@ -55,6 +57,7 @@ const WorkoutCreator = ({
       list={ExerciseList}
       templateType={ETemplateType.WORKOUT}
       appendNewTemplate={appendNewTemplate}
+      viewTemplate={viewTemplate}
     />
   );
 };

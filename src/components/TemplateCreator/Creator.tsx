@@ -1,7 +1,8 @@
 'use client';
 import Add from '@mui/icons-material/Add';
 import { Button, Drawer, TextField } from '@mui/material';
-import { JSX, useState } from 'react';
+import { isEmpty } from 'lodash';
+import { JSX, useEffect, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { TEMPLATE_CREATOR_ENDPOINTS } from '@/common/apiEndpoints';
@@ -26,6 +27,7 @@ type Props<T, K> = {
   list: ({ defaultItems }: { defaultItems: K[] }) => JSX.Element;
   templateType: ETemplateType;
   appendNewTemplate: (newTemplate: ITemplate) => void;
+  viewTemplate: Record<string, any> | null;
 };
 const Creator = <T, K>({
   initState,
@@ -36,15 +38,25 @@ const Creator = <T, K>({
   planNameKey,
   templateType,
   appendNewTemplate,
+  viewTemplate = null,
 }: Props<T, K>) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { showToast } = useToast();
   const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
+  const [isViewOnlyMode, setIsViewOnlyMode] = useState(false);
   const handleClose = () => {
     setIsDrawerOpen(false);
     setPlan(initState);
   };
-  const handleOpen = () => setIsDrawerOpen(true);
+  const handleOpen = () => {
+    setIsViewOnlyMode(false);
+    setIsDrawerOpen(true);
+    setPlan(initState);
+  };
+  const handleViewModeOpen = () => {
+    setIsDrawerOpen(true);
+    setIsViewOnlyMode(true);
+  };
   const [plan, setPlan] = useState<T>(initState);
 
   const handleSavePlan = async (plan: T) => {
@@ -77,6 +89,16 @@ const Creator = <T, K>({
     }
   };
 
+  useEffect(() => {
+    if (!isEmpty(viewTemplate)) {
+      setPlan({
+        ...viewTemplate.template,
+        [planNameKey]: viewTemplate.template_name,
+      });
+      handleViewModeOpen();
+    }
+  }, [planNameKey, viewTemplate]);
+
   return (
     <>
       <Button startIcon={<Add />} onClick={handleOpen}>
@@ -93,6 +115,7 @@ const Creator = <T, K>({
           const form = event.currentTarget as HTMLFormElement;
 
           const formData = new FormData(form);
+          console.log(Object.fromEntries(formData.entries()));
           const values = createNestedObject(
             Object.fromEntries(formData.entries())
           );
@@ -106,13 +129,23 @@ const Creator = <T, K>({
           handleSavePlan(plan);
         }}
       >
-        <DrawerHeader handleClose={handleClose}>{drawerHeader}</DrawerHeader>
+        <DrawerHeader handleClose={handleClose} isViewOnlyMode={isViewOnlyMode}>
+          {drawerHeader}
+        </DrawerHeader>
         <DrawerContent
           containerProps={{
             sx: { width: '36rem', overflowY: 'auto', m: '-1rem', p: '1rem' },
           }}
         >
-          <VStack height='100%' gap={1}>
+          <VStack
+            height='100%'
+            gap={1}
+            sx={{
+              ...(isViewOnlyMode
+                ? { pointerEvents: 'none', opacity: 0.7 }
+                : {}),
+            }}
+          >
             <TextField
               name={planNameKey}
               placeholder='Plan name'
@@ -131,9 +164,11 @@ const Creator = <T, K>({
           >
             Close
           </Button>
-          <Button type='submit' loading={isCreatingTemplate}>
-            Save
-          </Button>
+          {!isViewOnlyMode && (
+            <Button type='submit' loading={isCreatingTemplate}>
+              Save
+            </Button>
+          )}
         </DrawerActionButtons>
       </Drawer>
     </>
