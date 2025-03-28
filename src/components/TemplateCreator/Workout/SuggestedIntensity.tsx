@@ -29,9 +29,9 @@ const SuggestedIntensity = ({
   const loggingFields = useMemo(
     () => ({
       [EExerciseLoggingType.WEIGHT_REP_COUNT]: [
+        { name: 'countPerRep', label: 'Count' },
         { name: 'reps', label: 'Reps' },
         { name: 'weight', label: 'kg' },
-        { name: 'countPerRep', label: 'Count' },
       ],
       [EExerciseLoggingType.TIME_WEIGHT]: [
         { name: 'weight', label: 'kg' },

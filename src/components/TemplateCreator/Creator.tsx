@@ -25,6 +25,7 @@ type Props<T, K> = {
   planNameKey: string;
   list: ({ defaultItems }: { defaultItems: K[] }) => JSX.Element;
   templateType: ETemplateType;
+  appendNewTemplate: (newTemplate: ITemplate) => void;
 };
 const Creator = <T, K>({
   initState,
@@ -34,6 +35,7 @@ const Creator = <T, K>({
   list: List,
   planNameKey,
   templateType,
+  appendNewTemplate,
 }: Props<T, K>) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { showToast } = useToast();
@@ -49,18 +51,22 @@ const Creator = <T, K>({
     setIsCreatingTemplate(true);
 
     try {
-      const response = await api.post(
+      const response = await api.post<unknown, ITemplate>(
         TEMPLATE_CREATOR_ENDPOINTS.CREATE_TEMPLATE,
         {
-          template: { workoutExercises: plan[groupPrefix] },
+          template: {
+            [String(groupPrefix)]: plan[groupPrefix],
+          },
           templateType,
           templateName: plan[planNameKey],
         }
       );
+      appendNewTemplate(response);
       showToast({
         message: 'Template created',
         severity: EToastType.SUCCESS,
       });
+      handleClose();
     } catch (e: any) {
       showToast({
         severity: EToastType.ERROR,

@@ -33,7 +33,11 @@ const DietItemList = ({ defaultItems }: { defaultItems: TDietItem[] }) => {
   );
 };
 
-const DietCreator = () => {
+const DietCreator = ({
+  appendNewTemplate,
+}: {
+  appendNewTemplate: (newTemplate: ITemplate) => void;
+}) => {
   return (
     <Creator<TDietPlan, TDietItem>
       initState={{
@@ -46,6 +50,7 @@ const DietCreator = () => {
       planNameKey='dietName'
       list={DietItemList}
       templateType={ETemplateType.DIET}
+      appendNewTemplate={appendNewTemplate}
     />
   );
 };

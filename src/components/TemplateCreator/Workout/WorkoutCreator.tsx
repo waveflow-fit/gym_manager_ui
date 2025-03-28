@@ -37,7 +37,11 @@ const ExerciseList = ({
   );
 };
 
-const WorkoutCreator = () => {
+const WorkoutCreator = ({
+  appendNewTemplate,
+}: {
+  appendNewTemplate: (newTemplate: ITemplate) => void;
+}) => {
   return (
     <Creator<TWorkoutPlan, TWorkoutExercise>
       initState={{
@@ -50,6 +54,7 @@ const WorkoutCreator = () => {
       planNameKey='workoutName'
       list={ExerciseList}
       templateType={ETemplateType.WORKOUT}
+      appendNewTemplate={appendNewTemplate}
     />
   );
 };

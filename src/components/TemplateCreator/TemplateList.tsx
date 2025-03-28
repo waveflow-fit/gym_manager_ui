@@ -5,7 +5,7 @@ import { JSX, useEffect, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { TEMPLATE_CREATOR_ENDPOINTS } from '@/common/apiEndpoints';
-import { ETemplateType } from '@/common/constants';
+import { ETemplateType, PAGINATION } from '@/common/constants';
 import DynamicRenderer from '@/components/DynamicRenderer/DynamicRenderer';
 import SearchByText from '@/components/Search/SearchByText';
 import HStack from '@/components/StyledComponents/HStack';
@@ -15,8 +15,18 @@ import useDebounceInput from '@/hooks/useDebounceInput';
 
 type Props = {
   listName: string;
-  creator: () => JSX.Element;
-  templateCard: () => JSX.Element;
+  creator: ({
+    appendNewTemplate,
+  }: {
+    appendNewTemplate: (newTemplate: ITemplate) => void;
+  }) => JSX.Element;
+  templateCard: ({
+    template,
+    removeTemplate,
+  }: {
+    template: ITemplate;
+    removeTemplate: (templateId: string) => void;
+  }) => JSX.Element;
   templateType: ETemplateType;
 };
 
@@ -31,7 +41,12 @@ const TemplateList = ({
   const [isError, setIsError] = useState(false);
   const { showToast } = useToast();
   const { searchText, setInputVal, inputVal } = useDebounceInput();
-
+  const appendNewTemplate = (newTemplate: ITemplate) => {
+    setTemplates([newTemplate, ...templates]);
+  };
+  const removeTemplate = (templateId: string) => {
+    setTemplates(templates.filter((template) => template.id !== templateId));
+  };
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
@@ -40,6 +55,7 @@ const TemplateList = ({
         const response = await api.post(
           TEMPLATE_CREATOR_ENDPOINTS.GET_ALL_TEMPLATES,
           {
+            limit: PAGINATION.LARGE_LIMIT,
             filters: {
               ...(searchText ? { template_name: searchText } : {}),
               template_type: templateType,
@@ -62,7 +78,7 @@ const TemplateList = ({
 
   return (
     <SectionContainer sx={{ py: 1 }}>
-      <HStack justifyContent='space-between' pb={0.5}>
+      <HStack justifyContent='space-between' pb={1}>
         <Typography variant='h3'>{listName}</Typography>
         <Box display='flex' gap={1}>
           <SearchByText
@@ -71,29 +87,40 @@ const TemplateList = ({
             onChange={(e) => setInputVal(e.target.value)}
             onClearIconClick={() => setInputVal('')}
           />
-          <Creator />
+          <Creator appendNewTemplate={appendNewTemplate} />
         </Box>
       </HStack>
-      <Grid
-        container
-        spacing={1}
-        sx={{ overflowY: 'auto', height: '92%', mx: '-0.75rem', px: '0.75rem' }}
+      <DynamicRenderer
+        isLoading={isFetchingTemplates}
+        isError={isError}
+        isNoResultFound={!isFetchingTemplates && templates.length === 0}
+        height='92%'
       >
-        <DynamicRenderer
-          isLoading={isFetchingTemplates}
-          isError={isError}
-          isNoResultFound={!isFetchingTemplates && templates.length === 0}
+        <Grid
+          container
+          spacing={1}
+          sx={{
+            overflowY: 'auto',
+            mx: '-0.75rem',
+            px: '0.75rem',
+            height: 'fit-content',
+            maxHeight: '92%',
+          }}
         >
           {templates.map((template) => (
             <Grid
               size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
+              sx={{ height: 'fit-content' }}
               key={template.id}
             >
-              <TemplateCard />
+              <TemplateCard
+                template={template}
+                removeTemplate={removeTemplate}
+              />
             </Grid>
           ))}
-        </DynamicRenderer>
-      </Grid>
+        </Grid>
+      </DynamicRenderer>
     </SectionContainer>
   );
 };

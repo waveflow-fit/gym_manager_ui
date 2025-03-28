@@ -24,7 +24,10 @@ export const MANAGEMENT_TRAINEE_ENDPOINTS = Object.freeze({
 export const TEMPLATE_CREATOR_ENDPOINTS = Object.freeze({
   CREATE_TEMPLATE: '/api/template/create',
   GET_ALL_TEMPLATES: '/api/template/get-all',
-  GET_TEMPLATE_BY_ID: '/api/template/get-by-id/:templateId',
-  UPDATE_TEMPLATE: '/api/template/update/:templateId',
-  DELETE_TEMPLATE: '/api/template/delete/:templateId',
+  GET_TEMPLATE_BY_ID: (templateId = ':templateId') =>
+    `/api/template/get-by-id/${templateId}`,
+  UPDATE_TEMPLATE: (templateId = ':templateId') =>
+    `/api/template/update/${templateId}`,
+  DELETE_TEMPLATE: (templateId = ':templateId') =>
+    `/api/template/delete/${templateId}`,
 });
